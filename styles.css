@@ -967,30 +967,41 @@ img.loaded {
 .hero-stats-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 3rem;
+    gap: 2rem;
     margin-top: 5rem;
     padding-top: 4rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    z-index: 2;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 .hero-stat-item {
     text-align: center;
+    min-width: 0;
+    overflow: hidden;
+    padding: 0 0.5rem;
 }
 
 .hero-stat-number {
     font-family: var(--font-display);
-    font-size: clamp(2.5rem, 4vw, 4rem);
+    font-size: clamp(2rem, 3.5vw, 3.5rem);
     font-weight: 300;
-    color: var(--color-primary);
-    line-height: 1;
+    line-height: 1.1;
     margin-bottom: 0.5rem;
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-text-light) 50%, var(--color-primary) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    background-size: 200% 200%;
-    animation: gradientShift 3s ease infinite;
     position: relative;
+    white-space: nowrap;
+    overflow: visible;
+    word-break: keep-all;
+    display: inline-block;
+    color: var(--color-primary);
+    opacity: 1 !important;
+    visibility: visible !important;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
 @keyframes gradientShift {
@@ -1002,20 +1013,45 @@ img.loaded {
     }
 }
 
-    .hero-stat-label {
-        font-size: clamp(0.75rem, 1vw, 0.9rem);
-        color: var(--color-text-light);
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        font-weight: 300;
-    }
+.hero-stat-label {
+    font-size: clamp(0.75rem, 1vw, 0.9rem);
+    color: var(--color-text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 300;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
 
+@media (max-width: 1024px) {
     .hero-stats-container {
         grid-template-columns: repeat(2, 1fr);
         gap: 2rem;
         margin-top: 3rem;
         padding-top: 3rem;
     }
+    
+    .hero-stat-number {
+        font-size: clamp(2rem, 4vw, 3rem);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-stats-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        margin-top: 3rem;
+        padding-top: 3rem;
+    }
+    
+    .hero-stat-number {
+        font-size: clamp(1.75rem, 5vw, 2.5rem);
+    }
+    
+    .hero-stat-label {
+        font-size: clamp(0.65rem, 1.2vw, 0.8rem);
+    }
+}
 
 .hero-title {
     font-family: var(--font-display);
@@ -1158,12 +1194,9 @@ img.loaded {
     background: linear-gradient(180deg, var(--color-primary) 0%, transparent 100%);
 }
 
-/* Section Dividers */
-.section-divider {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+/* Section Dividers - HR Tags */
+hr {
+    border: none;
     height: 1px;
     background: linear-gradient(90deg, 
         transparent 0%, 
@@ -1171,31 +1204,23 @@ img.loaded {
         rgba(255, 255, 255, 0.2) 50%, 
         rgba(255, 255, 255, 0.1) 80%, 
         transparent 100%);
+    margin: 0;
+    padding: 0;
 }
 
-.section-divider-top {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        rgba(255, 255, 255, 0.1) 20%, 
-        rgba(255, 255, 255, 0.2) 50%, 
-        rgba(255, 255, 255, 0.1) 80%, 
-        transparent 100%);
+section hr {
+    margin: var(--spacing-xxl) 0;
 }
 
 /* Philosophy Section */
 .philosophy {
     padding: calc(var(--spacing-xxl) + 70px) 2rem var(--spacing-xxl);
-    background-color: var(--color-bg-section);
+    background-color: var(--color-bg-dark);
     position: relative;
     background: 
         radial-gradient(circle at 10% 20%, rgba(196, 30, 58, 0.02) 0%, transparent 50%),
         radial-gradient(circle at 90% 80%, rgba(196, 30, 58, 0.02) 0%, transparent 50%),
-        var(--color-bg-section);
+        var(--color-bg-dark);
 }
 
 .container {
@@ -1274,13 +1299,13 @@ img.loaded {
 /* Clients Section */
 .clients {
     padding: calc(var(--spacing-xxl) + 70px) 0 var(--spacing-xxl);
-    background-color: var(--color-bg-section);
+    background-color: var(--color-bg-dark);
     position: relative;
     overflow: hidden;
     background: 
         radial-gradient(circle at 20% 50%, rgba(196, 30, 58, 0.03) 0%, transparent 50%),
         radial-gradient(circle at 80% 50%, rgba(196, 30, 58, 0.03) 0%, transparent 50%),
-        var(--color-bg-section);
+        var(--color-bg-dark);
 }
 
 .architectural-accent {
@@ -1603,7 +1628,7 @@ img.loaded {
 /* About Section */
 .about {
     padding: calc(var(--spacing-xxl) + 70px) 2rem var(--spacing-xxl);
-    background-color: var(--color-bg-section);
+    background-color: var(--color-bg-dark);
 }
 
 .about-page {
@@ -1706,7 +1731,7 @@ img.loaded {
 .philosophy-page {
     min-height: 80vh;
     padding: calc(var(--spacing-xxl) + 70px) 2rem var(--spacing-xxl);
-    background-color: var(--color-bg-section);
+    background-color: var(--color-bg-dark);
     display: flex;
     align-items: center;
 }
@@ -1964,7 +1989,7 @@ img.loaded {
 .projects-page {
     min-height: 80vh;
     padding: calc(var(--spacing-xxl) + 70px) 2rem var(--spacing-xxl);
-    background-color: var(--color-bg-section);
+    background-color: var(--color-bg-dark);
 }
 
 .contact-page {
@@ -2042,7 +2067,7 @@ img.loaded {
 /* Leadership Section */
 .leadership-section {
     padding: calc(var(--spacing-xxl) + 70px) 2rem var(--spacing-xxl);
-    background-color: var(--color-bg-section);
+    background-color: var(--color-bg-dark);
     position: relative;
     overflow: hidden;
 }
@@ -2425,7 +2450,7 @@ img.loaded {
 /* Projects Section */
 .projects {
     padding: calc(var(--spacing-xxl) + 70px) 2rem var(--spacing-xxl);
-    background-color: var(--color-bg-section);
+    background-color: var(--color-bg-dark);
 }
 
 .projects-content {
