@@ -34,8 +34,6 @@
 html {
     scroll-behavior: smooth;
     font-size: 16px;
-    scroll-snap-type: y mandatory;
-    overflow-y: scroll;
 }
 
 body {
@@ -178,8 +176,6 @@ body {
     background: linear-gradient(180deg, #000000 0%, #0a0a0a 100%);
     overflow: hidden;
     transition: opacity 0.8s ease, transform 0.8s ease;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
 }
 
 .section-hidden {
@@ -955,8 +951,9 @@ img.loaded {
     color: var(--color-text-light);
     margin-bottom: 1rem;
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    will-change: opacity, transform;
 }
 
 .hero-subtitle.animate-in {
@@ -987,8 +984,9 @@ img.loaded {
     color: var(--color-text-light);
     margin-bottom: 1rem;
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    will-change: opacity, transform;
 }
 
 .hero-tagline.animate-in {
@@ -1003,9 +1001,10 @@ img.loaded {
     color: var(--color-primary);
     margin-top: 2rem;
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    will-change: opacity, transform;
 }
 
 .hero-blessing.animate-in {
@@ -1111,11 +1110,12 @@ img.loaded {
     margin-bottom: 2rem;
     color: var(--color-primary);
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateY(15px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
     text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
     letter-spacing: -0.02em;
     position: relative;
+    will-change: opacity, transform;
 }
 
 .hero-title.animate-in {
@@ -1277,8 +1277,6 @@ section hr {
         radial-gradient(circle at 90% 80%, rgba(196, 30, 58, 0.02) 0%, transparent 50%),
         var(--color-bg-dark);
     transition: opacity 0.8s ease, transform 0.8s ease;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1298,8 +1296,9 @@ section hr {
     text-align: center;
     font-weight: 300;
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateY(15px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    will-change: opacity, transform;
 }
 
 .section-label.animate-in {
@@ -1321,10 +1320,11 @@ section hr {
     max-width: 900px;
     margin-left: auto;
     opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
     margin-right: auto;
     position: relative;
+    will-change: opacity, transform;
 }
 
 .philosophy-title.animate-in {
@@ -1364,8 +1364,9 @@ section hr {
     margin-bottom: 1.5rem;
     font-weight: 300;
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateY(15px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    will-change: opacity, transform;
 }
 
 .philosophy-paragraph.animate-in {
@@ -1391,8 +1392,6 @@ section hr {
         radial-gradient(circle at 80% 50%, rgba(196, 30, 58, 0.03) 0%, transparent 50%),
         var(--color-bg-dark);
     transition: opacity 0.8s ease, transform 0.8s ease;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1426,14 +1425,15 @@ section hr {
 
 .clients-description {
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateY(15px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
     font-size: clamp(1rem, 1.5vw, 1.125rem);
     line-height: 1.8;
     color: var(--color-text-light);
     max-width: 800px;
     margin: 2rem auto 0;
     font-weight: 300;
+    will-change: opacity, transform;
 }
 
 .clients-description.animate-in {
@@ -1771,8 +1771,6 @@ section hr {
     align-items: center;
     position: relative;
     overflow: hidden;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
 }
 
 .about-page::before {
@@ -1868,16 +1866,12 @@ section hr {
     background-color: var(--color-bg-dark);
     display: flex;
     align-items: center;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
 }
 
 .services-page {
     min-height: 100vh;
     padding: calc(var(--spacing-xxl) + 70px) 2rem var(--spacing-xxl);
     background-color: var(--color-bg-dark);
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
 }
 
 .services-intro {
@@ -1892,6 +1886,15 @@ section hr {
     color: var(--color-text-light);
     margin: 2rem 0;
     font-weight: 300;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    will-change: opacity, transform;
+}
+
+.services-intro-text.animate-in {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .services-approach {
@@ -1903,11 +1906,29 @@ section hr {
     margin-top: 2rem;
     padding-top: 2rem;
     border-top: 1px solid var(--color-arch-line);
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    will-change: opacity, transform;
+}
+
+.services-approach.animate-in {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .service-category {
     margin-bottom: 8rem;
     position: relative;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    will-change: opacity, transform;
+}
+
+.service-category.animate-in {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .service-category-header {
@@ -1924,7 +1945,15 @@ section hr {
     font-weight: 300;
     color: var(--color-accent);
     line-height: 1;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    will-change: opacity, transform;
+}
+
+.service-category.animate-in .service-category-number {
     opacity: 0.3;
+    transform: scale(1);
 }
 
 .service-category-title {
@@ -1934,6 +1963,15 @@ section hr {
     color: var(--color-primary);
     margin-bottom: 1rem;
     letter-spacing: -0.02em;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out 0.1s, transform 0.6s ease-out 0.1s;
+    will-change: opacity, transform;
+}
+
+.service-category.animate-in .service-category-title {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .service-category-subtitle {
@@ -1942,6 +1980,15 @@ section hr {
     color: var(--color-primary);
     margin-bottom: 1.5rem;
     font-weight: 400;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.5s ease-out 0.2s, transform 0.5s ease-out 0.2s;
+    will-change: opacity, transform;
+}
+
+.service-category.animate-in .service-category-subtitle {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .service-category-description {
@@ -1949,6 +1996,15 @@ section hr {
     line-height: 1.8;
     color: var(--color-text-light);
     font-weight: 300;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.5s ease-out 0.3s, transform 0.5s ease-out 0.3s;
+    will-change: opacity, transform;
+}
+
+.service-category.animate-in .service-category-description {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .expertise-grid {
@@ -1964,6 +2020,15 @@ section hr {
     border-radius: 4px;
     transition: all 0.4s ease;
     background: rgba(255, 255, 255, 0.01);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out, border-color 0.3s ease, background 0.3s ease;
+    will-change: opacity, transform;
+}
+
+.expertise-item.animate-in {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .expertise-item:hover {
@@ -1973,10 +2038,16 @@ section hr {
 }
 
 .expertise-icon {
-    width: 40px;
+    width: 0;
     height: 2px;
     background: var(--color-accent);
     margin-bottom: 1.5rem;
+    opacity: 0.6;
+    transition: width 0.6s ease-out 0.2s, opacity 0.6s ease-out 0.2s;
+}
+
+.expertise-item.animate-in .expertise-icon {
+    width: 40px;
     opacity: 0.6;
 }
 
@@ -2076,6 +2147,11 @@ section hr {
     font-weight: 400;
     color: var(--color-primary);
     margin-bottom: 0.75rem;
+    transition: color 0.3s ease;
+}
+
+.expertise-item:hover h3 {
+    color: var(--color-accent);
 }
 
 .expertise-item p {
@@ -2084,6 +2160,11 @@ section hr {
     color: var(--color-text-light);
     font-weight: 300;
     opacity: 0.9;
+    transition: opacity 0.3s ease;
+}
+
+.expertise-item:hover p {
+    opacity: 1;
 }
 
 .service-outcome {
@@ -2092,6 +2173,15 @@ section hr {
     border-left: 2px solid var(--color-accent);
     background: rgba(196, 30, 58, 0.05);
     position: relative;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    will-change: opacity, transform;
+}
+
+.service-category.animate-in .service-outcome {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .outcome-icon {
@@ -2114,6 +2204,15 @@ section hr {
     color: var(--color-accent);
     margin-bottom: 0.5rem;
     font-weight: 400;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease-out 0.1s, transform 0.5s ease-out 0.1s;
+    will-change: opacity, transform;
+}
+
+.service-category.animate-in .outcome-label {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .outcome-text {
@@ -2122,22 +2221,49 @@ section hr {
     color: var(--color-text-light);
     font-weight: 300;
     font-style: italic;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease-out 0.2s, transform 0.5s ease-out 0.2s;
+    will-change: opacity, transform;
+}
+
+.service-category.animate-in .outcome-text {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .projects-page {
     min-height: 100vh;
     padding: calc(var(--spacing-xxl) + 70px) 2rem var(--spacing-xxl);
     background-color: var(--color-bg-dark);
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
 }
 
 .contact-page {
     min-height: 100vh;
     padding: calc(var(--spacing-xxl) + 70px) 2rem var(--spacing-xxl);
     background-color: var(--color-bg-dark);
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
+}
+
+.section-title {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--color-primary);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    margin-bottom: 3rem;
+    text-align: center;
+    letter-spacing: -0.02em;
+    position: relative;
+    text-transform: uppercase;
+    will-change: opacity, transform;
+}
+
+.section-title.animate-in {
+    opacity: 0.95;
+    transform: translateY(0);
 }
 
 .section-title::after {
@@ -2157,8 +2283,6 @@ section hr {
     transform: translateX(-50%) scaleX(1);
 }
 
-/* Removed duplicate - using the one above */
-
 .about-text {
     font-size: clamp(1.125rem, 2vw, 1.25rem);
     line-height: 1.8;
@@ -2177,8 +2301,6 @@ section hr {
     background-color: var(--color-bg-dark);
     position: relative;
     overflow: hidden;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
 }
 
 .leadership-section::before {
@@ -2223,8 +2345,9 @@ section hr {
     margin-left: auto;
     margin-right: auto;
     opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    will-change: opacity, transform;
 }
 
 .leadership-title.animate-in {
@@ -2241,8 +2364,9 @@ section hr {
     text-align: center;
     font-weight: 300;
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateY(15px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    will-change: opacity, transform;
 }
 
 .leadership-intro.animate-in {

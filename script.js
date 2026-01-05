@@ -82,170 +82,78 @@ animateElements.forEach((el, index) => {
     }
 });
 
-// Scroll-triggered section animations with enhanced text animations
+// Optimized scroll-triggered section animations - less aggressive for smoother scrolling
 const sectionObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.classList.add('section-visible');
-            
-            // Animate section labels first
-            const labels = entry.target.querySelectorAll('.section-label');
-            labels.forEach((el, index) => {
-                setTimeout(() => {
-                    el.classList.add('animate-in');
-                }, index * 150);
-            });
-            
-            // Animate titles with delay
-            setTimeout(() => {
-                const titles = entry.target.querySelectorAll('.section-title, .philosophy-title, .leadership-title');
-                titles.forEach((el, index) => {
-                    setTimeout(() => {
-                        el.classList.add('animate-in');
-                    }, index * 200);
-                });
-            }, 200);
-            
-            // Animate descriptions and paragraphs
-            setTimeout(() => {
-                const descriptions = entry.target.querySelectorAll('.clients-description, .philosophy-paragraph, .leadership-intro, .about-text');
-                descriptions.forEach((el, index) => {
-                    setTimeout(() => {
-                        el.classList.add('animate-in');
-                    }, index * 100);
-                });
-            }, 400);
-            
-            // Animate leadership members
-            setTimeout(() => {
-                const members = entry.target.querySelectorAll('.leadership-member');
-                members.forEach((member, index) => {
-                    setTimeout(() => {
-                        member.classList.add('animate-in');
-                    }, index * 150);
-                });
-            }, 600);
-            
-            // Animate logos and other elements
-            setTimeout(() => {
-                const logos = entry.target.querySelectorAll('.client-logo');
-                logos.forEach((el, index) => {
-                    setTimeout(() => {
-                        el.classList.add('animate-in');
-                    }, index * 50);
-                });
-            }, 600);
+            // Only trigger if not already animated
+            if (!entry.target.classList.contains('section-visible')) {
+                // Use the shared function to trigger animations
+                triggerSectionAnimations(entry.target);
+            }
         }
     });
 }, {
-    threshold: 0.15,
-    rootMargin: '0px 0px -50px 0px'
+    threshold: 0.1,
+    rootMargin: '0px 0px -80px 0px'
 });
 
-// Scroll snap functionality - snap to sections on scroll
-let isScrolling = false;
-let scrollTimeout;
+// Removed aggressive scroll snap - using CSS-only smooth scrolling
 
-function snapToSection(direction) {
-    if (isScrolling) return;
+// Function to trigger animations for a section
+function triggerSectionAnimations(section) {
+    section.classList.add('section-visible');
     
-    // Get all sections that should snap (works on all pages)
-    const sections = document.querySelectorAll('section.hero, section.clients, section.philosophy, section.about-page, section.leadership-section, section.philosophy-page, section.services-page, section.projects-page, section.contact-page');
-    const currentScroll = window.pageYOffset;
-    const viewportHeight = window.innerHeight;
-    
-    let targetSection = null;
-    let currentIndex = -1;
-    
-    // Find which section we're currently in
-    sections.forEach((section, index) => {
-        const sectionTop = section.offsetTop;
-        const sectionBottom = sectionTop + section.offsetHeight;
+    requestAnimationFrame(() => {
+        // Animate section labels
+        const labels = section.querySelectorAll('.section-label');
+        labels.forEach((el) => {
+            el.classList.add('animate-in');
+        });
         
-        // Check if we're currently viewing this section (with some tolerance)
-        if (currentScroll >= sectionTop - viewportHeight * 0.3 && currentScroll < sectionBottom - viewportHeight * 0.3) {
-            currentIndex = index;
-        }
+        // Animate titles
+        const titles = section.querySelectorAll('.section-title, .philosophy-title, .leadership-title');
+        titles.forEach((el) => {
+            el.classList.add('animate-in');
+        });
+        
+        // Animate descriptions and paragraphs
+        const descriptions = section.querySelectorAll('.clients-description, .philosophy-paragraph, .leadership-intro, .about-text, .services-intro-text, .services-approach');
+        descriptions.forEach((el) => {
+            el.classList.add('animate-in');
+        });
+        
+        // Animate leadership members with minimal stagger
+        const members = section.querySelectorAll('.leadership-member');
+        members.forEach((member, index) => {
+            setTimeout(() => {
+                member.classList.add('animate-in');
+            }, index * 50);
+        });
+        
+        // Animate logos
+        const logos = section.querySelectorAll('.client-logo');
+        logos.forEach((el) => {
+            el.classList.add('animate-in');
+        });
+        
+        // Animate service categories with stagger
+        const serviceCategories = section.querySelectorAll('.service-category');
+        serviceCategories.forEach((category, index) => {
+            setTimeout(() => {
+                category.classList.add('animate-in');
+                
+                // Animate expertise items within each category
+                const expertiseItems = category.querySelectorAll('.expertise-item');
+                expertiseItems.forEach((item, itemIndex) => {
+                    setTimeout(() => {
+                        item.classList.add('animate-in');
+                    }, itemIndex * 100);
+                });
+            }, index * 200);
+        });
     });
-    
-    // If we're in a section, navigate to next/previous
-    if (currentIndex >= 0) {
-        if (direction === 'down' && currentIndex < sections.length - 1) {
-            targetSection = sections[currentIndex + 1];
-        } else if (direction === 'up' && currentIndex > 0) {
-            targetSection = sections[currentIndex - 1];
-        }
-    } else {
-        // If we're between sections, find the closest one
-        let minDistance = Infinity;
-        sections.forEach((section) => {
-            const sectionTop = section.offsetTop;
-            const distance = Math.abs(currentScroll - sectionTop);
-            if (distance < minDistance) {
-                minDistance = distance;
-                if ((direction === 'down' && currentScroll < sectionTop) || 
-                    (direction === 'up' && currentScroll > sectionTop)) {
-                    targetSection = section;
-                }
-            }
-        });
-    }
-    
-    if (targetSection) {
-        isScrolling = true;
-        targetSection.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
-        
-        setTimeout(() => {
-            isScrolling = false;
-        }, 1000);
-    }
 }
-
-// Enhanced wheel event for scroll snapping with debounce
-let wheelTimeout;
-let lastWheelTime = 0;
-window.addEventListener('wheel', (e) => {
-    const now = Date.now();
-    
-    // Only trigger if enough time has passed since last wheel event
-    if (now - lastWheelTime < 500) {
-        return;
-    }
-    
-    clearTimeout(wheelTimeout);
-    lastWheelTime = now;
-    
-    wheelTimeout = setTimeout(() => {
-        const direction = e.deltaY > 0 ? 'down' : 'up';
-        snapToSection(direction);
-    }, 200);
-}, { passive: true });
-
-// Keyboard navigation for scroll snap
-window.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowDown' || e.key === 'PageDown') {
-        e.preventDefault();
-        snapToSection('down');
-    } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-        e.preventDefault();
-        snapToSection('up');
-    } else if (e.key === 'Home') {
-        e.preventDefault();
-        const sections = document.querySelectorAll('section.hero, section.clients, section.philosophy, section.about-page, section.leadership-section, section.philosophy-page, section.services-page, section.projects-page, section.contact-page');
-        if (sections.length > 0) {
-            sections[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-    } else if (e.key === 'End') {
-        e.preventDefault();
-        const sections = document.querySelectorAll('section.hero, section.clients, section.philosophy, section.about-page, section.leadership-section, section.philosophy-page, section.services-page, section.projects-page, section.contact-page');
-        if (sections.length > 0) {
-            sections[sections.length - 1].scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-    }
-});
 
 // Observe all sections
 document.addEventListener('DOMContentLoaded', () => {
@@ -254,6 +162,17 @@ document.addEventListener('DOMContentLoaded', () => {
         section.classList.add('section-hidden');
         sectionObserver.observe(section);
     });
+    
+    // Check all sections on load and trigger animations for visible ones
+    setTimeout(() => {
+        sections.forEach(section => {
+            const rect = section.getBoundingClientRect();
+            const isInViewport = rect.top < window.innerHeight * 1.2 && rect.bottom > -100;
+            if (isInViewport && !section.classList.contains('section-visible')) {
+                triggerSectionAnimations(section);
+            }
+        });
+    }, 100);
     
     // First section (hero) should be visible immediately with animations
     const heroSection = document.querySelector('.hero');
