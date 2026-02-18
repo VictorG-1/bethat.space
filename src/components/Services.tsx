@@ -15,7 +15,7 @@ export function Services() {
     const updateOffset = () => {
       if (cardsGridRef.current) {
         const gridHeight = cardsGridRef.current.offsetHeight;
-        setPanelOffset(gridHeight / 3);
+        setPanelOffset((gridHeight * 2) / 3);
       }
     };
     updateOffset();
@@ -48,7 +48,12 @@ export function Services() {
           description: 'We integrate mechanical, electrical, plumbing, and fire systems thoughtfully. These invisible systems sustain comfort, efficiency, and wellness—the foundation of great spaces.'
         }
       ],
-      outcome: 'Spaces that breathe, adapt, and empower people to thrive. We\'ve seen it happen—environments that truly support their occupants become catalysts for growth and success.'
+      outcome: 'Spaces that breathe, adapt, and empower people to thrive. We\'ve seen it happen—environments that truly support their occupants become catalysts for growth and success.',
+      paragraphs: [
+        'Creative & sustainable design interventions that bridge tangible needs with intangible aspirations. We translate vision into space with empathy, logic, and aesthetic clarity.',
+        'From strategy to detailing, our design approach is rooted in purpose and shaped for performance. Every material, every detail, every choice serves both function and feeling.',
+        'Spaces that breathe, adapt, and empower people to thrive. Environments that truly support their occupants become catalysts for growth and success.'
+      ]
     },
     {
       title: 'Design & Build',
@@ -66,7 +71,12 @@ export function Services() {
           description: 'When design and construction work as one, magic happens. Our unified delivery model ensures what we design gets built exactly as intended—with efficiency, speed, and unwavering fidelity to the vision.'
         }
       ],
-      outcome: 'Projects realized with confidence, care, and craftsmanship. When design intent meets construction excellence, the result speaks for itself.'
+      outcome: 'Projects realized with confidence, care, and craftsmanship. When design intent meets construction excellence, the result speaks for itself.',
+      paragraphs: [
+        'Efficient & seamless design+build solutions that merge creative precision with accountable execution. We believe building is an act of design—where intent meets integrity.',
+        'Our integrated delivery ensures seamless coordination, transparent processes, and consistent quality. When design and construction work as one, what we design gets built exactly as intended.',
+        'Projects realized with confidence, care, and craftsmanship. When design intent meets construction excellence, the result speaks for itself.'
+      ]
     },
     {
       title: 'Collaboration',
@@ -96,7 +106,12 @@ export function Services() {
           description: 'EGD partners help us tell stories through space—wayfinding, branding, and identity woven into the built environment.'
         }
       ],
-      outcome: 'Integrated, future-ready environments that are technically sound, experientially rich, and deeply human. These are spaces that work beautifully on every level—from the systems that power them to the experiences they enable.'
+      outcome: 'Integrated, future-ready environments that are technically sound, experientially rich, and deeply human. These are spaces that work beautifully on every level—from the systems that power them to the experiences they enable.',
+      paragraphs: [
+        'Specialist partnerships that amplify design depth and project performance. We collaborate with experts who share our belief that the best spaces are created together.',
+        'Each partner adds a layer of intelligence, precision, and soul to the project. From structural and façade design to sustainability and acoustics—we integrate expertise that elevates every outcome.',
+        'Integrated, future-ready environments that are technically sound, experientially rich, and deeply human. Spaces that work beautifully on every level.'
+      ]
     }
   ];
 
@@ -135,14 +150,17 @@ export function Services() {
           <div ref={cardsGridRef} className="grid grid-cols-1 md:grid-cols-3 gap-6" data-service-cards>
             {services.map((service, index) => {
               const isExpanded = expandedService === index;
+              const showRightBorder = index < services.length - 1;
               return (
                 <div
                   key={index}
                   className={`group relative overflow-hidden bg-neutral-900 transition-all duration-500 ${
-                    isExpanded ? 'border-2 border-red-600' : 'border border-white/10 hover:border-red-600/50'
-                  }`}
+                    isExpanded
+                      ? 'border-2 border-red-600 m-3'
+                      : 'border border-white/10 hover:border-red-600/50'
+                  } ${showRightBorder ? 'md:border-r-2 md:border-r-black' : ''}`}
                 >
-                  {/* Card: aspect-square, top 2/3 image, bottom 1/3 info when expanded */}
+                  {/* Card: aspect-square, top 1/3 image, bottom 2/3 info when expanded */}
                   <div className="relative aspect-square overflow-hidden cursor-pointer" onClick={() => toggleExpand(index)}>
                     <ImageWithFallback
                       src={service.image}
@@ -152,10 +170,10 @@ export function Services() {
                       }`}
                     />
 
-                    {/* Dark gradient - when expanded, only over top 2/3 so bottom 1/3 is for info box */}
+                    {/* Dark gradient - when expanded, only over top 1/3 so bottom 2/3 is for info box */}
                     <div
                       className="absolute left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent pointer-events-none"
-                      style={{ top: 0, height: isExpanded ? '66.666%' : '100%' }}
+                      style={{ top: 0, height: isExpanded ? '33.333%' : '100%' }}
                     />
 
                     {expandedService !== null && expandedService !== index && (
@@ -184,17 +202,17 @@ export function Services() {
                       </div>
                     ) : (
                       <>
-                        {/* Expanded: top 2/3 - title in visible image area */}
-                        <div className="absolute left-0 right-0 p-4 lg:p-6" style={{ top: 0, height: '66.666%' }}>
+                        {/* Expanded: top 1/3 - title in visible image area */}
+                        <div className="absolute left-0 right-0 p-4 lg:p-6" style={{ top: 0, height: '33.333%' }}>
                           <h3 className="text-xl lg:text-2xl text-white font-semibold tracking-tight absolute bottom-4 left-4 right-4 lg:bottom-6 lg:left-6 lg:right-6">
                             {service.title}
                           </h3>
                         </div>
 
-                        {/* Expanded: bottom 1/3 - red-bordered start (connector to white stack below) */}
+                        {/* Expanded: bottom 2/3 - red-bordered start (connector to white stack below) */}
                         <div
                           className="absolute left-0 right-0 bottom-0 border-t-2 border-l-2 border-r-2 border-red-600 bg-white"
-                          style={{ height: '33.333%' }}
+                          style={{ height: '66.666%' }}
                           onClick={(e) => e.stopPropagation()}
                         />
                       </>
@@ -209,46 +227,71 @@ export function Services() {
             })}
           </div>
 
-          {/* White info stack - starts from bottom 1/3 of the row (below image), extends down past last service */}
+          {/* 1.5rem vertical gap (same as horizontal gap between cards) below all cards, then full-width read-more container */}
           {expandedService !== null && (
-            <div
-              className="relative z-20 bg-white border-2 border-red-600 animate-in fade-in duration-300"
-              style={{ marginTop: panelOffset > 0 ? -panelOffset : 0 }}
-            >
-              <div className="max-w-[1440px] mx-auto px-6 lg:px-12 py-8 lg:py-12">
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="w-16 h-16 border-2 border-red-600/30 flex items-center justify-center shrink-0">
-                    <span className="text-red-600 font-bold text-2xl">{services[expandedService].watermark}</span>
+            <>
+              {(() => {
+                const service = services[expandedService];
+                const paragraphs = service.paragraphs ?? [
+                  service.intro,
+                  service.description,
+                  service.outcome
+                ];
+
+                const panel = (
+                  <div className="bg-white border-2 border-red-600 border-t-4 border-t-black animate-in fade-in duration-300 w-full">
+                    <div className="px-6 lg:px-12 py-8 lg:py-12">
+                      <div className="flex items-center gap-4 mb-8">
+                        <div className="w-16 h-16 border-2 border-red-600/30 flex items-center justify-center shrink-0">
+                          <span className="text-red-600 font-bold text-2xl">{service.watermark}</span>
+                        </div>
+                        <h3 className="text-3xl lg:text-4xl text-black font-semibold tracking-tight">
+                          {service.title}
+                        </h3>
+                      </div>
+
+                      {/* 3 paragraphs aligned below the 3 service cards */}
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        {paragraphs.slice(0, 3).map((para, i) => (
+                          <p key={i} className="text-black/70 text-sm lg:text-base leading-relaxed font-light text-justify">
+                            {para}
+                          </p>
+                        ))}
+                      </div>
+
+                      <div className="flex justify-center">
+                        <button
+                          onClick={() => setExpandedService(null)}
+                          className="flex items-center gap-2 text-black/80 hover:text-red-600 transition-colors duration-300 group/btn"
+                        >
+                          <div className="w-5 h-5 rounded-full border border-black/80 group-hover/btn:border-red-600 flex items-center justify-center transition-colors duration-300">
+                            <Minus className="w-3 h-3" />
+                          </div>
+                          <span className="text-xs font-medium uppercase tracking-wider">Show Less</span>
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                  <h3 className="text-3xl lg:text-4xl text-black font-semibold tracking-tight">
-                    {services[expandedService].title}
-                  </h3>
-                </div>
+                );
 
-                <div className="grid md:grid-cols-2 gap-6 mb-8">
-                  {services[expandedService].subServices.map((sub, subIndex) => (
-                    <div key={subIndex} className="border-l-2 border-red-600/30 pl-6">
-                      <h4 className="text-black font-semibold text-lg mb-2">{sub.name}</h4>
-                      <p className="text-black/60 text-sm lg:text-base leading-relaxed font-light text-justify">
-                        {sub.description}
-                      </p>
+                return (
+                  <>
+                    {/* Mobile: full width, overlap for connection */}
+                    <div
+                      className="relative z-20 md:hidden"
+                      style={{ marginTop: panelOffset > 0 ? -panelOffset : 0 }}
+                    >
+                      {panel}
                     </div>
-                  ))}
-                </div>
 
-                <div className="flex justify-center">
-                  <button
-                    onClick={() => setExpandedService(null)}
-                    className="flex items-center gap-2 text-black/80 hover:text-red-600 transition-colors duration-300 group/btn"
-                  >
-                    <div className="w-5 h-5 rounded-full border border-black/80 group-hover/btn:border-red-600 flex items-center justify-center transition-colors duration-300">
-                      <Minus className="w-3 h-3" />
+                    {/* Desktop: 1.5rem (gap-6) vertical gap below cards row, then full-width container aligned with cards */}
+                    <div className="relative z-20 hidden md:block mt-6">
+                      {panel}
                     </div>
-                    <span className="text-xs font-medium uppercase tracking-wider">Show Less</span>
-                  </button>
-                </div>
-              </div>
-            </div>
+                  </>
+                );
+              })()}
+            </>
           )}
         </div>
 

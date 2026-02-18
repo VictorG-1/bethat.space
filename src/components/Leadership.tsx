@@ -1,6 +1,15 @@
-import { ChevronDown, Plus, Minus, Linkedin, Instagram } from 'lucide-react';
-import { useState } from 'react';
+import { ChevronDown, Plus, Minus, Linkedin, Instagram, Target, Users, Lightbulb, Heart, Globe, Award } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+
+const VALUES = [
+  { icon: Target, title: 'Excellence', description: 'We pursue the highest standards in every project, never settling for mediocrity. Our commitment to excellence drives us to continuously innovate and refine our craft.' },
+  { icon: Users, title: 'Collaboration', description: 'Great design emerges from diverse perspectives working together. We foster a culture of open communication, mutual respect, and collective problem-solving.' },
+  { icon: Lightbulb, title: 'Innovation', description: 'We embrace new ideas, technologies, and methodologies. Innovation is not just encouraged—it\'s expected, celebrated, and integrated into our daily practice.' },
+  { icon: Heart, title: 'Integrity', description: 'Honesty, transparency, and ethical conduct guide all our relationships—with clients, partners, and each other. We do what\'s right, even when it\'s difficult.' },
+  { icon: Globe, title: 'Sustainability', description: 'Environmental responsibility is central to our design philosophy. We create spaces that minimize ecological impact and contribute to a sustainable future.' },
+  { icon: Award, title: 'Client-Centricity', description: 'Our clients\' visions, needs, and aspirations drive everything we do. We listen deeply, communicate clearly, and deliver beyond expectations.' },
+];
 
 const PEOPLE = [
   { name: 'Priya Sharma', designation: 'Associate Director - Architecture', bio: 'With over 12 years of experience in sustainable architecture, Priya leads innovative residential and commercial projects. Her expertise in eco-friendly design has earned multiple Green Building certifications and industry recognition.', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop', linkedin: 'https://linkedin.com/in/priyasharma', instagram: 'https://instagram.com/priyasharma' },
@@ -16,37 +25,86 @@ const PEOPLE = [
 
 export function Leadership() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const toggleExpand = (index: number) => {
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
-  const handleNavigation = (path: string) => {
-    sessionStorage.setItem('lastSection', 'leadership');
-    window.history.pushState({}, '', path);
-    window.dispatchEvent(new PopStateEvent('popstate'));
-  };
-
   return (
-    <section id="leadership" className="relative min-h-screen bg-black py-20 lg:py-32 flex items-center">
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0" style={{
-          backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
-          backgroundSize: '80px 80px'
-        }} />
-      </div>
-
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12 w-full">
-        <div className="text-center mb-12 lg:mb-16">
-          <h2 className="text-3xl lg:text-5xl tracking-tight text-white mb-6 font-semibold">
-            People & Culture
-          </h2>
-          <div className="flex justify-center">
-            <div className="h-px w-32 bg-gradient-to-r from-transparent via-red-600/50 to-transparent" />
-          </div>
+    <>
+      {/* Video section - Culture & People title + 6 value cards on video */}
+      <section id="leadership" className="relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <iframe
+            className="absolute top-1/2 left-1/2 w-screen h-screen"
+            style={{
+              transform: 'translate(-50%, -50%)',
+              minWidth: '100vw',
+              minHeight: '100vh',
+              width: '177.78vh',
+              height: '56.25vw',
+            }}
+            src="https://www.youtube.com/embed/Y7cpCDlRfV0?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&loop=0&modestbranding=1&playsinline=1"
+            title="Culture Background Video"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black pointer-events-none" />
         </div>
 
-        <div>
+        <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12 w-full py-20 lg:py-32">
+          {/* Section title - match other sections (Services, Projects, About) */}
+          <div className="text-center mb-12 lg:mb-16">
+            <h2 className="text-3xl lg:text-5xl tracking-tight font-semibold text-white mb-6">
+              Culture & People
+            </h2>
+            <div className="flex justify-center">
+              <div className="h-px w-32 bg-gradient-to-r from-transparent via-red-600/50 to-transparent" />
+            </div>
+          </div>
+
+          {/* 6 value cards on video */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {VALUES.map((value, index) => (
+              <div
+                key={index}
+                className="group relative bg-black/40 backdrop-blur-md border border-white/10 hover:border-red-600/50 p-8 transition-all duration-500 overflow-hidden"
+                style={{
+                  transform: `translateY(-${scrollY * (0.02 + index * 0.01)}px)`,
+                  transition: 'transform 0.1s linear'
+                }}
+              >
+                <value.icon className="w-12 h-12 text-red-600 mb-6 transition-transform duration-700 group-hover:scale-105" />
+                <h3 className="text-2xl text-white font-semibold mb-4">
+                  {value.title}
+                </h3>
+                <p className="text-white/70 text-sm leading-relaxed font-light text-justify">
+                  {value.description}
+                </p>
+                <div className="absolute bottom-0 left-0 right-0 h-1 w-0 bg-red-600 group-hover:w-full transition-all duration-700 ease-out" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 9 people team - new section below video */}
+      <section className="relative min-h-screen bg-black py-20 lg:py-32 flex items-center">
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
+            backgroundSize: '80px 80px'
+          }} />
+        </div>
+
+        <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12 w-full">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
               {PEOPLE.map((person, index) => (
                 <div
@@ -100,25 +158,12 @@ export function Leadership() {
                 </div>
               ))}
             </div>
-        </div>
-
-        {/* Read more - below 9 people */}
-        <div className="flex justify-center mt-16 lg:mt-20">
-          <button
-            onClick={() => handleNavigation('/culture')}
-            className="flex items-center gap-2 text-white/80 hover:text-red-600 transition-colors duration-300 group/btn"
-          >
-            <div className="w-5 h-5 rounded-full border border-white/80 group-hover/btn:border-red-600 flex items-center justify-center transition-colors duration-300">
-              <Plus className="w-3 h-3" />
-            </div>
-            <span className="text-xs font-medium uppercase tracking-wider">Read More</span>
-          </button>
-        </div>
 
         <a href="#services" className="flex justify-center mt-12 lg:mt-16">
           <ChevronDown className="w-8 h-8 text-white/30" />
         </a>
-      </div>
-    </section>
+        </div>
+      </section>
+    </>
   );
 }

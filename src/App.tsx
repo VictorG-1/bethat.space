@@ -4,7 +4,6 @@ import { MainSite } from './components/MainSite';
 import { WhyWeChanged } from './components/WhyWeChanged';
 import { AboutUsPage } from './components/AboutUsPage';
 import { ServiceDetail } from './components/ServiceDetail';
-import { CulturePage } from './components/CulturePage';
 import { CareersPage } from './components/CareersPage';
 
 export default function App() {
@@ -23,8 +22,6 @@ export default function App() {
     } else if (path.startsWith('/service/')) {
       setCurrentPage('service');
       setServiceSlug(path.replace('/service/', ''));
-    } else if (path === '/culture') {
-      setCurrentPage('culture');
     } else if (path === '/careers') {
       setCurrentPage('careers');
     } else {
@@ -43,8 +40,6 @@ export default function App() {
       } else if (path.startsWith('/service/')) {
         setCurrentPage('service');
         setServiceSlug(path.replace('/service/', ''));
-      } else if (path === '/culture') {
-        setCurrentPage('culture');
       } else if (path === '/careers') {
         setCurrentPage('careers');
       } else {
@@ -70,10 +65,6 @@ export default function App() {
 
   if (currentPage === 'service' && serviceSlug) {
     return <ServiceDetail slug={serviceSlug} />;
-  }
-
-  if (currentPage === 'culture') {
-    return <CulturePage />;
   }
 
   if (currentPage === 'careers') {

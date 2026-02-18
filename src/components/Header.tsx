@@ -53,6 +53,20 @@ export function Header() {
 
   const isSubPage = currentPath !== '/explore' && currentPath !== '/';
 
+  const handleLogoClick = () => {
+    if (currentPath !== '/' && currentPath !== '/explore') {
+      window.history.pushState({}, '', '/explore');
+      window.dispatchEvent(new PopStateEvent('popstate'));
+      setTimeout(() => {
+        const el = document.getElementById('philosophy');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      const el = document.getElementById('philosophy');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const handleBackToMain = () => {
     const lastSection = sessionStorage.getItem('lastSection');
     window.history.pushState({}, '', '/explore');
@@ -74,7 +88,7 @@ export function Header() {
     // Store current section if navigating to a subpage
     if (href.startsWith('/') && !href.startsWith('/#')) {
       // Get current section from scroll position
-      const sections = ['hero', 'punchline', 'about', 'leadership', 'services', 'projects', 'footer'];
+      const sections = ['hero', 'philosophy', 'about', 'leadership', 'services', 'projects', 'footer'];
       const scrollPosition = window.scrollY + window.innerHeight / 2;
       
       let currentSection = 'hero';
@@ -93,7 +107,7 @@ export function Header() {
     { name: 'Home', href: '/' },
     { name: 'Philosophy', href: '#philosophy' },
     { name: 'About Us', href: '#about' },
-    { name: 'People & Culture', href: '#leadership' },
+    { name: 'Culture & People', href: '#leadership' },
     { name: 'Services', href: '/services' },
     { name: 'Projects', href: '#projects' },
     { name: 'Careers', href: '/careers' },
@@ -101,31 +115,44 @@ export function Header() {
 
   return (
     <>
-      <header className={`fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-md border-b border-white/10 z-50 transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
+      <header className={`fixed top-0 left-0 right-0 bg-black/50 backdrop-blur-md border-b border-white/10 z-50 transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
         <div className="max-w-[1440px] mx-auto px-6 lg:px-12 py-4 flex items-center justify-between">
-          <img src={logo} alt="BeThatSpace™" className="h-12 lg:h-16 w-auto" />
+          <button type="button" onClick={handleLogoClick} className="focus:outline-none focus:ring-0">
+            <img src={logo} alt="BeThatSpace™" className="h-12 lg:h-16 w-auto" />
+          </button>
           
-          {/* Burger Menu Button OR Back Button */}
+          {/* Burger Menu Button OR Back/Explore Button */}
           {isSubPage ? (
-            <button
-              onClick={handleBackToMain}
-              className="flex items-center gap-2 text-white/60 hover:text-red-600 transition-colors duration-300 group p-2"
-            >
-              <ArrowLeft className="w-7 h-7" />
-              <span className="text-sm font-medium uppercase tracking-wider hidden sm:inline">Back to Main</span>
-            </button>
+            currentPath === '/why-we-changed' ? (
+              <button
+                onClick={handleBackToMain}
+                className="px-6 py-3 bg-transparent group"
+              >
+                <span className="tracking-[0.2em] text-sm font-medium text-white group-hover:text-red-600 transition-colors inline-block">
+                  Explore BeThatSpace™
+                </span>
+              </button>
+            ) : (
+              <button
+                onClick={handleBackToMain}
+                className="flex items-center gap-2 text-white/60 hover:text-red-600 transition-colors duration-300 group p-2"
+              >
+                <ArrowLeft className="w-7 h-7" />
+                <span className="text-sm font-medium uppercase tracking-wider hidden sm:inline">Back to Main</span>
+              </button>
+            )
           ) : (
             <button 
               onClick={() => setMenuOpen(!menuOpen)}
-              className="p-2 hover:bg-white/10 transition-colors rounded font-medium"
+              className="p-2 transition-colors rounded font-medium group"
             >
               {menuOpen ? (
-                <X className="w-7 h-7 text-white" />
+                <X className="w-7 h-7 text-white group-hover:text-red-600 transition-colors" />
               ) : (
                 <div className="flex flex-col gap-1.5">
-                  <div className="w-7 h-0.5 bg-white transition-all" />
-                  <div className="w-7 h-0.5 bg-white transition-all" />
-                  <div className="w-7 h-0.5 bg-white transition-all" />
+                  <div className="w-7 h-0.5 bg-white group-hover:bg-red-600 transition-all" />
+                  <div className="w-7 h-0.5 bg-white group-hover:bg-red-600 transition-all" />
+                  <div className="w-7 h-0.5 bg-white group-hover:bg-red-600 transition-all" />
                 </div>
               )}
             </button>
@@ -142,7 +169,7 @@ export function Header() {
                 key={item.name}
                 href={item.href}
                 onClick={() => handleNavClick(item.href)}
-                className="text-white text-2xl lg:text-3xl uppercase tracking-wider font-semibold hover:text-red-600 transition-colors duration-300"
+                className="text-white text-2xl lg:text-3xl tracking-wider font-semibold hover:text-red-600 transition-colors duration-300 capitalize"
               >
                 {item.name}
               </a>

@@ -3,7 +3,7 @@ import { ChevronDown } from 'lucide-react';
 export function Punchline() {
   return (
     <section 
-      id="punchline" 
+      id="philosophy" 
       className="relative min-h-screen flex items-center justify-center py-32 lg:py-40 overflow-hidden"
     >
       <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12 text-center">

@@ -4,6 +4,7 @@ import { About } from './About';
 import { Leadership } from './Leadership';
 import { Services } from './Services';
 import { ProjectsClients } from './ProjectsClients';
+import { Media } from './Media';
 import { Footer } from './Footer';
 import bgImage from 'figma:asset/c621f8e2b94cd37ccbe0edbb8d8595d829d1df5c.png';
 
@@ -33,6 +34,7 @@ export function MainSite() {
         <Leadership />
         <Services />
         <ProjectsClients />
+        <Media />
       </main>
       
       <Footer />

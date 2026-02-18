@@ -166,7 +166,7 @@ export function ProjectsClients() {
 
       <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12 w-full">
         {/* PROJECTS SECTION */}
-        <div className="text-center mb-20">
+        <div className="text-center mb-12">
           <h2 className="text-3xl lg:text-5xl tracking-tight text-white mb-6 font-semibold">
             Projects
           </h2>
@@ -174,6 +174,10 @@ export function ProjectsClients() {
             <div className="h-px w-32 bg-gradient-to-r from-transparent via-red-600/50 to-transparent" />
           </div>
         </div>
+
+        <p className="text-white/70 text-center text-base lg:text-lg font-light max-w-2xl mx-auto mb-12">
+          Spaces we've designed and built for leading brands and institutions.
+        </p>
 
         {/* Desktop: Grid of 6 Projects */}
         <div className="hidden lg:grid lg:grid-cols-3 gap-8 mb-20">
@@ -363,8 +367,8 @@ export function ProjectsClients() {
 
       {/* Project Modal */}
       {selectedProject !== null && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm p-4 lg:p-8 animate-in fade-in duration-300">
-          <div className="relative w-full max-w-7xl bg-neutral-900 border border-white/10">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md p-4 lg:p-8 animate-in fade-in duration-300">
+          <div className="relative w-full max-w-7xl bg-black border border-white/20 shadow-2xl">
             {/* Close Button */}
             <button 
               onClick={closeModal}

@@ -209,6 +209,82 @@ export function AboutUsPage() {
           </div>
         </section>
 
+        {/* Our Values Section */}
+        <section className="relative bg-black py-20 lg:py-32">
+          <div className="absolute inset-0 opacity-5">
+            <div className="absolute inset-0" style={{
+              backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
+              backgroundSize: '80px 80px'
+            }} />
+          </div>
+
+          <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-4xl lg:text-6xl tracking-tight font-semibold text-white mb-16 text-center">
+                Our Values
+              </h2>
+
+              <div className="space-y-12">
+                <div className="group">
+                  <div className="flex items-start gap-6">
+                    <div className="flex-shrink-0 w-16 h-16 rounded-full border-2 border-red-600 flex items-center justify-center group-hover:bg-red-600 transition-colors duration-300">
+                      <span className="text-2xl text-white font-semibold">01</span>
+                    </div>
+                    <div>
+                      <h3 className="text-2xl lg:text-3xl text-white mb-3 font-semibold group-hover:text-red-600 transition-colors duration-300">Excellence</h3>
+                      <p className="text-white/70 leading-relaxed text-base lg:text-lg font-light text-justify">
+                        We are committed to excellence in every aspect of our work, from initial concept to final execution. Quality is never compromised, and every detail matters.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="group">
+                  <div className="flex items-start gap-6">
+                    <div className="flex-shrink-0 w-16 h-16 rounded-full border-2 border-red-600 flex items-center justify-center group-hover:bg-red-600 transition-colors duration-300">
+                      <span className="text-2xl text-white font-semibold">02</span>
+                    </div>
+                    <div>
+                      <h3 className="text-2xl lg:text-3xl text-white mb-3 font-semibold group-hover:text-red-600 transition-colors duration-300">Innovation</h3>
+                      <p className="text-white/70 leading-relaxed text-base lg:text-lg font-light text-justify">
+                        We constantly push boundaries and explore new possibilities, embracing cutting-edge technologies and sustainable practices to create forward-thinking designs.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="group">
+                  <div className="flex items-start gap-6">
+                    <div className="flex-shrink-0 w-16 h-16 rounded-full border-2 border-red-600 flex items-center justify-center group-hover:bg-red-600 transition-colors duration-300">
+                      <span className="text-2xl text-white font-semibold">03</span>
+                    </div>
+                    <div>
+                      <h3 className="text-2xl lg:text-3xl text-white mb-3 font-semibold group-hover:text-red-600 transition-colors duration-300">Sustainability</h3>
+                      <p className="text-white/70 leading-relaxed text-base lg:text-lg font-light text-justify">
+                        Environmental responsibility is woven into the fabric of our practice. We design with the future in mind, creating spaces that are sustainable and responsible.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="group">
+                  <div className="flex items-start gap-6">
+                    <div className="flex-shrink-0 w-16 h-16 rounded-full border-2 border-red-600 flex items-center justify-center group-hover:bg-red-600 transition-colors duration-300">
+                      <span className="text-2xl text-white font-semibold">04</span>
+                    </div>
+                    <div>
+                      <h3 className="text-2xl lg:text-3xl text-white mb-3 font-semibold group-hover:text-red-600 transition-colors duration-300">Human-Centered Design</h3>
+                      <p className="text-white/70 leading-relaxed text-base lg:text-lg font-light text-justify">
+                        At the heart of every project is the human experience. We design spaces that enhance wellbeing, inspire creativity, and foster meaningful connections.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Stats Section */}
         <section className="bg-neutral-950 py-20 lg:py-32">
           <div className="max-w-[1440px] mx-auto px-6 lg:px-12">

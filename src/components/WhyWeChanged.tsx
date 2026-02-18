@@ -1,12 +1,7 @@
-import { ArrowLeft } from 'lucide-react';
 import { Header } from './Header';
 import { Footer } from './Footer';
 
 export function WhyWeChanged() {
-  const goBack = () => {
-    window.location.href = '/';
-  };
-
   return (
     <div className="min-h-screen bg-black scroll-smooth font-sans">
       <Header />
@@ -22,17 +17,6 @@ export function WhyWeChanged() {
           </div>
 
           <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12 w-full">
-            {/* Back Button */}
-            <button 
-              onClick={goBack}
-              className="group flex items-center gap-3 text-white/60 hover:text-red-600 transition-colors duration-300 mb-12"
-            >
-              <div className="w-10 h-10 rounded-full border border-white/60 group-hover:border-red-600 flex items-center justify-center transition-colors duration-300">
-                <ArrowLeft className="w-5 h-5" />
-              </div>
-              <span className="text-sm font-medium uppercase tracking-wider">Back to Home</span>
-            </button>
-
             {/* Visual box */}
             <div className="max-w-4xl mx-auto">
               <div className="aspect-video bg-neutral-900 border border-white/10 flex items-center justify-center relative my-12">

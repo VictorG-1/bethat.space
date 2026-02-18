@@ -11,9 +11,9 @@ export function Hero() {
   }, []);
 
   const scrollToPunchline = () => {
-    const punchlineSection = document.getElementById('punchline');
-    if (punchlineSection) {
-      punchlineSection.scrollIntoView({ behavior: 'smooth' });
+    const philosophySection = document.getElementById('philosophy');
+    if (philosophySection) {
+      philosophySection.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -52,9 +52,8 @@ export function Hero() {
             onClick={goToWhyWeChanged} 
             className="px-10 py-5 bg-transparent group min-w-[240px]"
           >
-            <span className="tracking-[0.2em] text-sm font-medium text-white group-hover:text-red-600 transition-colors relative inline-block">
+            <span className="tracking-[0.2em] text-sm font-medium text-white group-hover:text-red-600 transition-colors inline-block">
               Why We Changed
-              <span className="absolute bottom-0 left-0 h-px w-0 bg-red-600 group-hover:w-full transition-all duration-300 ease-out" />
             </span>
           </button>
 
@@ -63,9 +62,8 @@ export function Hero() {
             onClick={goToExplore}
             className="px-10 py-5 bg-transparent group min-w-[240px]"
           >
-            <span className="tracking-[0.2em] text-sm font-medium text-white group-hover:text-red-600 transition-colors relative inline-block">
+            <span className="tracking-[0.2em] text-sm font-medium text-white group-hover:text-red-600 transition-colors inline-block">
               Explore BeThatSpace™
-              <span className="absolute bottom-0 left-0 h-px w-0 bg-red-600 group-hover:w-full transition-all duration-300 ease-out" />
             </span>
           </button>
         </div>
