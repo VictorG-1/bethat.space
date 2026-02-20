@@ -33,14 +33,14 @@ export function Hero() {
       {/* Solid black background overlay to prevent any background images from showing */}
       <div className="absolute inset-0 bg-black z-0" />
       
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12 py-32 text-center w-full flex flex-col justify-between min-h-screen lg:justify-center">
+      <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-14 py-32 text-center w-full flex flex-col justify-between min-h-screen lg:justify-center">
         <div className="flex-1 flex items-center justify-center lg:flex-none lg:mb-20">
           <div className="mb-16 lg:mb-0">
             <img 
               key={gifKey}
               src={`${heroGif}?${gifKey}`}
               alt="BeThatSpace™" 
-              className="mx-auto max-w-full lg:max-w-2xl h-auto mb-12 animate-fade-in object-contain"
+              className="mx-auto max-w-full max-h-[55vh] lg:max-w-2xl lg:max-h-[50vh] w-auto h-auto mb-12 animate-fade-in object-contain"
             />
           </div>
         </div>

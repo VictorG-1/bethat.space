@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 export function Footer() {
   const [hoveredSocial, setHoveredSocial] = useState<string | null>(null);
+  const [hoveredMapIndex, setHoveredMapIndex] = useState<number | null>(null);
 
   const socialLinks = [
     {
@@ -50,7 +51,7 @@ export function Footer() {
         }} />
       </div>
 
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12">
+      <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-14">
         {/* Main Content */}
         <div className="flex flex-col lg:flex-row justify-between items-start gap-12 lg:gap-20 mb-12">
           {/* Left Side: Three Address Columns */}
@@ -67,16 +68,43 @@ export function Footer() {
                       </span>
                     ))}
                   </p>
-                  {/* Google Maps Pin */}
-                  <a 
-                    href={location.mapUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-white/40 hover:text-red-600 transition-colors duration-300 group"
+                  {/* Google Maps Pin - QR on hover */}
+                  <div
+                    className="relative inline-block"
+                    onMouseEnter={() => setHoveredMapIndex(index)}
+                    onMouseLeave={() => setHoveredMapIndex(null)}
                   >
-                    <MapPin className="w-4 h-4" />
-                    <span className="text-xs uppercase tracking-wider font-medium">View on Map</span>
-                  </a>
+                    <a 
+                      href={location.mapUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-white/40 hover:text-red-600 transition-colors duration-300 group"
+                    >
+                      <MapPin className="w-4 h-4" />
+                      <span className="text-xs uppercase tracking-wider font-medium">View on Map</span>
+                    </a>
+                    {/* QR Code Popup - View on Map (Desktop Only) */}
+                    {hoveredMapIndex === index && (
+                      <div className="hidden lg:block absolute bottom-full left-0 mb-4 pointer-events-none z-50">
+                        <div className="bg-white p-4 rounded-lg shadow-2xl border-2 border-gray-300">
+                          <div className="text-center">
+                            <div className="w-[140px] h-[140px] bg-white flex items-center justify-center mb-3">
+                              <img
+                                src={`https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(location.mapUrl)}`}
+                                alt={`${location.name} Map QR Code`}
+                                className="w-full h-full"
+                                style={{ imageRendering: 'pixelated' }}
+                              />
+                            </div>
+                            <p className="text-xs text-gray-700 font-semibold whitespace-nowrap">View on Map</p>
+                          </div>
+                          <div className="absolute top-full left-6 -mt-[9px]">
+                            <div className="w-4 h-4 bg-white border-r-2 border-b-2 border-gray-300 transform rotate-45" />
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
@@ -100,7 +128,7 @@ export function Footer() {
             {/* Contact Info & Social */}
             <div className="text-right">
               <p className="text-white text-xs mb-4 leading-relaxed font-bold">
-                P: <a href="tel:+910266641800" className="hover:text-red-600 transition-colors">+91 (0) 26664 1800</a> <span className="font-bold">|</span> F: +91 (0) 26664 1809 <span className="font-bold">|</span> <a href="mailto:info@bethat.space" className="hover:text-red-600 transition-colors">info@bethat.space</a>
+                P: <a href="tel:+910266641800" className="hover:text-red-600 transition-colors">+91 (0) 26664 1800</a> <span className="font-bold">|</span> <span className="hover:text-red-600 transition-colors cursor-default">F: +91 (0) 26664 1809</span> <span className="font-bold">|</span> <a href="mailto:info@bethat.space" className="hover:text-red-600 transition-colors">info@bethat.space</a>
               </p>
               <div className="flex gap-3 justify-end">
                 {socialLinks.map((social) => {

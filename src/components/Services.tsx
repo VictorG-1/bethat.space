@@ -129,7 +129,7 @@ export function Services() {
         }} />
       </div>
 
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12 w-full">
+      <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-14 w-full">
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-3xl lg:text-5xl tracking-tight text-white mb-6 font-semibold">

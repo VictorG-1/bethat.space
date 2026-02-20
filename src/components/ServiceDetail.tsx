@@ -160,7 +160,7 @@ export function ServiceDetail({ slug }: ServiceDetailProps) {
           }} />
         </div>
 
-        <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12 w-full">
+        <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-14 w-full">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left: Title */}
             <div>
@@ -199,7 +199,7 @@ export function ServiceDetail({ slug }: ServiceDetailProps) {
           DESIGN
         </div>
 
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-12 relative z-10">
+        <div className="max-w-[1440px] mx-auto px-8 lg:px-14 relative z-10">
           <div className="grid lg:grid-cols-3 gap-16">
             {/* Title Column */}
             <div>
@@ -258,7 +258,7 @@ export function ServiceDetail({ slug }: ServiceDetailProps) {
 
       {/* Services Offered - Card Grid */}
       <section className="bg-neutral-950 py-32 lg:py-40">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
+        <div className="max-w-[1440px] mx-auto px-8 lg:px-14">
           <div className="flex items-end justify-between mb-16">
             <h2 className="text-3xl lg:text-4xl text-white font-semibold tracking-tight">
               What We Offer
@@ -296,7 +296,7 @@ export function ServiceDetail({ slug }: ServiceDetailProps) {
 
       {/* Expertise - Minimal List */}
       <section className="bg-black py-32 lg:py-40">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
+        <div className="max-w-[1440px] mx-auto px-8 lg:px-14">
           <div className="grid lg:grid-cols-5 gap-16">
             {/* Title - Takes 2 columns */}
             <div className="lg:col-span-2">
@@ -357,7 +357,7 @@ export function ServiceDetail({ slug }: ServiceDetailProps) {
           BeThatSpace™
         </div>
 
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-12 text-center relative z-10">
+        <div className="max-w-[1440px] mx-auto px-8 lg:px-14 text-center relative z-10">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-4xl lg:text-6xl text-white font-semibold mb-8 tracking-tight leading-tight">
               Let's Create Something<br />

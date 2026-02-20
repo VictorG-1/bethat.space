@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { X, ArrowLeft } from 'lucide-react';
-import logo from 'figma:asset/aa11cddccf649bb4189ffcfb3f0474378376d096.png';
+import logo from '../assets/Bethat Space White Logo Transparent Background-01-RGB.png';
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -22,25 +22,19 @@ export function Header() {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
-      const footerThreshold = documentHeight - windowHeight - 200;
+      const scrollingDown = currentScrollY > lastScrollY.current;
 
-      // Always show at top (first 100px)
-      if (currentScrollY < 100) {
+      // At top of page: always show
+      if (currentScrollY <= 80) {
         setIsVisible(true);
       }
-      // Always show near footer
-      else if (currentScrollY >= footerThreshold) {
-        setIsVisible(true);
+      // Scrolling down: force hide (any downward scroll)
+      else if (scrollingDown) {
+        setIsVisible(false);
       }
-      // Show on scroll up, hide on scroll down
+      // Scrolling up: show
       else {
-        if (currentScrollY < lastScrollY.current) {
-          setIsVisible(true);
-        } else if (currentScrollY > lastScrollY.current + 5) {
-          setIsVisible(false);
-        }
+        setIsVisible(true);
       }
 
       lastScrollY.current = currentScrollY;
@@ -116,7 +110,7 @@ export function Header() {
   return (
     <>
       <header className={`fixed top-0 left-0 right-0 bg-black/50 backdrop-blur-md border-b border-white/10 z-50 transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-12 py-4 flex items-center justify-between">
+        <div className="max-w-[1440px] mx-auto px-8 lg:px-14 py-4 flex items-center justify-between w-full">
           <button type="button" onClick={handleLogoClick} className="focus:outline-none focus:ring-0">
             <img src={logo} alt="BeThatSpace™" className="h-12 lg:h-16 w-auto" />
           </button>

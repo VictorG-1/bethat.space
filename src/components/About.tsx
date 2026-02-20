@@ -7,7 +7,7 @@ export function About() {
       id="about" 
       className="relative min-h-screen flex items-center justify-center py-20 lg:py-32"
     >
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12 w-full">
+      <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-14 w-full">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-5xl tracking-tight font-semibold text-white mb-6">

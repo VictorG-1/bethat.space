@@ -2,6 +2,11 @@ import { Header } from './Header';
 import { Footer } from './Footer';
 
 export function WhyWeChanged() {
+  const goToMain = () => {
+    window.history.pushState({}, '', '/explore');
+    window.dispatchEvent(new PopStateEvent('popstate'));
+  };
+
   return (
     <div className="min-h-screen bg-black scroll-smooth font-sans">
       <Header />
@@ -16,7 +21,19 @@ export function WhyWeChanged() {
             }} />
           </div>
 
-          <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12 w-full">
+          <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-14 w-full">
+            {/* Skip video - redirects to main page */}
+            <div className="flex justify-end mb-4">
+              <button
+                onClick={goToMain}
+                className="px-10 py-5 bg-transparent group min-w-[200px]"
+              >
+                <span className="tracking-[0.2em] text-sm font-medium text-white group-hover:text-red-600 transition-colors inline-block">
+                  Skip video
+                </span>
+              </button>
+            </div>
+
             {/* Visual box */}
             <div className="max-w-4xl mx-auto">
               <div className="aspect-video bg-neutral-900 border border-white/10 flex items-center justify-center relative my-12">

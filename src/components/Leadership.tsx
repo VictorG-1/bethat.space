@@ -59,7 +59,7 @@ export function Leadership() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black pointer-events-none" />
         </div>
 
-        <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12 w-full py-20 lg:py-32">
+        <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-14 w-full py-20 lg:py-32">
           {/* Section title - match other sections (Services, Projects, About) */}
           <div className="text-center mb-12 lg:mb-16">
             <h2 className="text-3xl lg:text-5xl tracking-tight font-semibold text-white mb-6">
@@ -104,15 +104,19 @@ export function Leadership() {
           }} />
         </div>
 
-        <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12 w-full">
+        <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-14 w-full">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
               {PEOPLE.map((person, index) => (
                 <div
                   key={index}
-                  className="group relative bg-white/5 backdrop-blur-sm border border-white/10 hover:border-red-600/50 transition-all duration-500 overflow-hidden p-4"
+                  onClick={() => toggleExpand(index)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleExpand(index); } }}
+                  className="group relative bg-white/5 backdrop-blur-sm border border-white/10 hover:border-red-600/50 transition-all duration-500 overflow-hidden pt-5 pl-5 pb-5 pr-5 cursor-pointer"
                 >
-                  <div className="flex gap-4">
-                    <div className="flex-shrink-0">
+                  <div className="flex gap-4 items-start">
+                    <div className="flex-shrink-0 pt-0">
                       <div className="aspect-square w-20 lg:w-24 bg-neutral-900 border border-white/10 overflow-hidden hover:border-red-600/50 transition-all duration-500 relative">
                         <ImageWithFallback
                           src={person.image}
@@ -121,37 +125,35 @@ export function Leadership() {
                         />
                       </div>
                     </div>
-                    <div className="flex-1 min-w-0">
+                    <div className="flex-1 min-w-0 pt-0">
                       <h4 className="text-sm lg:text-base text-white mb-1 font-semibold">
                         {person.name}
                       </h4>
                       <p className="text-white/70 text-[10px] lg:text-xs uppercase tracking-wider font-medium mb-3">
                         {person.designation}
                       </p>
-                      <div className="flex gap-2 mb-3">
-                        <a href={person.linkedin} target="_blank" rel="noopener noreferrer" className="w-6 h-6 lg:w-7 lg:h-7 rounded-full border border-white/20 hover:border-red-600 hover:bg-red-600 flex items-center justify-center transition-all duration-300 group/social">
-                          <Linkedin className="w-3 h-3 lg:w-3.5 lg:h-3.5 text-white/60 group-hover/social:text-white transition-colors duration-300" />
-                        </a>
-                        <a href={person.instagram} target="_blank" rel="noopener noreferrer" className="w-6 h-6 lg:w-7 lg:h-7 rounded-full border border-white/20 hover:border-red-600 hover:bg-red-600 flex items-center justify-center transition-all duration-300 group/social">
-                          <Instagram className="w-3 h-3 lg:w-3.5 lg:h-3.5 text-white/60 group-hover/social:text-white transition-colors duration-300" />
-                        </a>
+                      <div className="flex items-center gap-3 mb-3">
+                        <div className="flex gap-2" onClick={(e) => e.stopPropagation()}>
+                          <a href={person.linkedin} target="_blank" rel="noopener noreferrer" className="w-6 h-6 lg:w-7 lg:h-7 rounded-full border border-white/20 hover:border-red-600 hover:bg-red-600 flex items-center justify-center transition-all duration-300 group/social">
+                            <Linkedin className="w-3 h-3 lg:w-3.5 lg:h-3.5 text-white/60 group-hover/social:text-white transition-colors duration-300" />
+                          </a>
+                          <a href={person.instagram} target="_blank" rel="noopener noreferrer" className="w-6 h-6 lg:w-7 lg:h-7 rounded-full border border-white/20 hover:border-red-600 hover:bg-red-600 flex items-center justify-center transition-all duration-300 group/social">
+                            <Instagram className="w-3 h-3 lg:w-3.5 lg:h-3.5 text-white/60 group-hover/social:text-white transition-colors duration-300" />
+                          </a>
+                        </div>
+                        <span className="text-white/40 text-sm select-none" aria-hidden>|</span>
+                        <span className="text-[10px] lg:text-xs font-medium text-white/80 group-hover:text-red-600 transition-colors flex items-center gap-1.5 shrink-0 mr-4">
+                          <span className="w-4 h-4 lg:w-5 lg:h-5 rounded-full border border-white/80 group-hover:border-red-600 flex items-center justify-center transition-colors duration-300 inline-flex">
+                            {expandedIndex === index ? <Minus className="w-2 h-2 lg:w-2.5 lg:h-2.5" /> : <Plus className="w-2 h-2 lg:w-2.5 lg:h-2.5" />}
+                          </span>
+                          {expandedIndex === index ? 'Show Less' : 'Read More'}
+                        </span>
                       </div>
                       {expandedIndex === index && (
                         <p className="text-white/60 leading-relaxed text-[10px] lg:text-xs text-justify font-light mb-2 animate-in fade-in duration-300">
                           {person.bio}
                         </p>
                       )}
-                      <button
-                        onClick={() => toggleExpand(index)}
-                        className="flex items-center gap-1.5 text-white/80 hover:text-red-600 transition-colors duration-300 group/btn"
-                      >
-                        <div className="w-4 h-4 lg:w-5 lg:h-5 rounded-full border border-white/80 group-hover/btn:border-red-600 flex items-center justify-center transition-colors duration-300">
-                          {expandedIndex === index ? <Minus className="w-2 h-2 lg:w-2.5 lg:h-2.5" /> : <Plus className="w-2 h-2 lg:w-2.5 lg:h-2.5" />}
-                        </div>
-                        <span className="text-[10px] lg:text-xs font-medium">
-                          {expandedIndex === index ? 'Show Less' : 'Read More'}
-                        </span>
-                      </button>
                     </div>
                   </div>
                   <div className="absolute bottom-0 left-0 right-0 h-1 w-0 bg-red-600 group-hover:w-full transition-all duration-700 ease-out" />

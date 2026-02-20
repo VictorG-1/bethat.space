@@ -64,7 +64,7 @@ export function CareersPage() {
           }} />
         </div>
 
-        <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12 text-center">
+        <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-14 text-center">
           <div className="h-1 w-20 bg-red-600 mx-auto mb-8" />
           <h1 className="text-4xl lg:text-6xl text-white font-semibold mb-6 tracking-tight">
             Join Our Team
@@ -83,7 +83,7 @@ export function CareersPage() {
 
       {/* Application Form */}
       <section className="bg-neutral-950 py-20 lg:py-32">
-        <div className="max-w-3xl mx-auto px-6 lg:px-12">
+        <div className="max-w-3xl mx-auto px-8 lg:px-14">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl tracking-tight text-white mb-4 font-semibold">
               Apply Now
@@ -216,7 +216,7 @@ export function CareersPage() {
 
       {/* Why Join Us */}
       <section className="bg-black py-20 lg:py-32">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
+        <div className="max-w-[1440px] mx-auto px-8 lg:px-14">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl text-white font-semibold mb-6 tracking-tight">
               Why Join BeThatSpace™?

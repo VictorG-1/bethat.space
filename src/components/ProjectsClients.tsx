@@ -35,6 +35,7 @@ export function ProjectsClients() {
       year: '2024',
       area: '50,000 sq ft',
       value: '₹150 Cr',
+      description: 'A landmark corporate headquarters redefining workplace design. The project integrates sustainable systems, collaborative zones, and premium finishes to create an environment that supports innovation and wellbeing. Client aspirations were realised through a rigorous design process from concept to handover.',
       images: [
         'https://images.unsplash.com/photo-1497366216548-37526070297c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
         'https://images.unsplash.com/photo-1497366754035-f200968a6e72?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
@@ -47,6 +48,7 @@ export function ProjectsClients() {
       year: '2023',
       area: '85,000 sq ft',
       value: '₹280 Cr',
+      description: 'A luxury hotel where architecture and interior design create a distinct sense of place. Guest experience drove every decision, from the arrival sequence to room layouts and amenity spaces. The result is a hospitality environment that feels both timeless and contemporary.',
       images: [
         'https://images.unsplash.com/photo-1566073771259-6a8506099945?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
         'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
@@ -59,6 +61,7 @@ export function ProjectsClients() {
       year: '2024',
       area: '120,000 sq ft',
       value: '₹350 Cr',
+      description: 'A high-rise residential tower that balances density with liveability. Facade design, shared amenities, and unit planning were developed to maximise light, views, and community. The building stands as a reference for quality residential development in the city.',
       images: [
         'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
         'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
@@ -71,6 +74,7 @@ export function ProjectsClients() {
       year: '2023',
       area: '200,000 sq ft',
       value: '₹500 Cr',
+      description: 'A tech campus planned for flexibility, wellness, and collaboration. Campus masterplan, building architecture, and interior fit-outs were designed as one system. The outcome is a future-ready environment that supports talent and reflects the client’s brand and culture.',
       images: [
         'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
         'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
@@ -83,6 +87,7 @@ export function ProjectsClients() {
       year: '2024',
       area: '8,500 sq ft',
       value: '₹45 Cr',
+      description: 'A fine dining restaurant where interior design shapes the entire experience. Material palette, lighting, and spatial flow were developed to support both service efficiency and guest comfort. The space conveys a clear identity and a memorable sense of occasion.',
       images: [
         'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
         'https://images.unsplash.com/photo-1559339352-11d035aa65de?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
@@ -95,6 +100,7 @@ export function ProjectsClients() {
       year: '2023',
       area: '150,000 sq ft',
       value: '₹420 Cr',
+      description: 'A mixed-use development combining retail, workspace, and public realm. Masterplanning and architecture were coordinated to create a cohesive precinct with strong pedestrian connections and a clear identity. The project sets a benchmark for mixed-use in the region.',
       images: [
         'https://images.unsplash.com/photo-1460574283810-2aab119d8511?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
         'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
@@ -164,7 +170,7 @@ export function ProjectsClients() {
         }} />
       </div>
 
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12 w-full">
+      <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-14 w-full">
         {/* PROJECTS SECTION */}
         <div className="text-center mb-12">
           <h2 className="text-3xl lg:text-5xl tracking-tight text-white mb-6 font-semibold">
@@ -459,6 +465,15 @@ export function ProjectsClients() {
                     </div>
                     <div className="text-white text-lg font-light">
                       {projects[selectedProject].value}
+                    </div>
+                  </div>
+
+                  <div className="border-l-2 border-red-600/30 pl-6">
+                    <div className="text-white/40 text-xs uppercase tracking-wider mb-1 font-medium">
+                      Description
+                    </div>
+                    <div className="text-white text-base font-light leading-relaxed min-h-[7.5rem]">
+                      {projects[selectedProject].description || '\u00A0'}
                     </div>
                   </div>
                 </div>

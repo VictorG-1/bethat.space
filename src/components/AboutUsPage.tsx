@@ -95,8 +95,8 @@ function StatCounter({ end, label, suffix, hoverWords }: { end: number, label: s
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="text-5xl lg:text-6xl text-red-600 font-bold mb-3 min-h-[4rem] lg:min-h-[5rem] flex items-center justify-center">
-        <span className={displayValue() === '∞' ? 'text-[1.5em] leading-[1]' : 'leading-none'}>{displayValue()}</span>
+      <div className="text-5xl lg:text-6xl text-red-600 font-bold mb-3 min-h-[4rem] lg:min-h-[5rem] flex items-center justify-center leading-none">
+        <span className={displayValue() === '∞' ? 'text-[30em]' : ''}>{displayValue()}</span>
       </div>
       <p className="text-white/60 text-sm uppercase tracking-wider">{label}</p>
       {hoverWords && (
@@ -136,7 +136,7 @@ export function AboutUsPage() {
           {/* Dark overlay */}
           <div className="absolute inset-0 bg-black/70" />
           
-          <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12 w-full py-32">
+          <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-14 w-full py-32">
             {/* Main Content */}
             <div className="max-w-5xl mx-auto text-center">
               <h1 className="text-6xl lg:text-8xl tracking-tight font-semibold text-white mb-8">
@@ -177,7 +177,7 @@ export function AboutUsPage() {
             }} />
           </div>
 
-          <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12">
+          <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-14">
             <div className="text-center mb-12">
               <h2 className="text-4xl lg:text-6xl tracking-tight font-semibold text-white mb-6">
                 Our Story
@@ -228,7 +228,7 @@ export function AboutUsPage() {
             }} />
           </div>
 
-          <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12">
+          <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-14">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-4xl lg:text-6xl tracking-tight font-semibold text-white mb-16 text-center">
                 Our Values
@@ -297,7 +297,7 @@ export function AboutUsPage() {
 
         {/* Stats Section */}
         <section className="bg-neutral-950 py-20 lg:py-32">
-          <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
+          <div className="max-w-[1440px] mx-auto px-8 lg:px-14">
             <div className="text-center mb-16">
               <h2 className="text-4xl lg:text-5xl tracking-tight font-semibold text-white mb-6">
                 Our Impact
@@ -315,7 +315,7 @@ export function AboutUsPage() {
 
         {/* Call to Action */}
         <section className="relative bg-neutral-900 py-20 lg:py-32">
-          <div className="max-w-[1440px] mx-auto px-6 lg:px-12 text-center">
+          <div className="max-w-[1440px] mx-auto px-8 lg:px-14 text-center">
             <h2 className="text-4xl lg:text-5xl tracking-tight font-semibold text-white mb-8">
               Let's Create Something Extraordinary
             </h2>
@@ -331,9 +331,11 @@ export function AboutUsPage() {
                     document.getElementById('offices')?.scrollIntoView({ behavior: 'smooth' });
                   }, 100);
                 }}
-                className="group relative px-12 py-4 bg-red-600 text-white hover:bg-white hover:text-black transition-all duration-500 uppercase tracking-[0.2em] text-sm font-semibold overflow-hidden w-full sm:w-auto"
+                className="px-10 py-5 bg-transparent group min-w-[240px]"
               >
-                <span className="relative z-10">Get in Touch</span>
+                <span className="tracking-[0.2em] text-sm font-medium text-white group-hover:text-red-600 transition-colors inline-block">
+                  Get in Touch
+                </span>
               </button>
               
               <button
@@ -341,9 +343,11 @@ export function AboutUsPage() {
                   window.history.pushState({}, '', '/careers');
                   window.dispatchEvent(new PopStateEvent('popstate'));
                 }}
-                className="group relative px-12 py-4 border-2 border-white/20 text-white hover:border-red-600 hover:bg-red-600 transition-all duration-500 uppercase tracking-[0.2em] text-sm font-semibold w-full sm:w-auto"
+                className="px-10 py-5 bg-transparent group min-w-[240px]"
               >
-                <span className="relative z-10">Join Us</span>
+                <span className="tracking-[0.2em] text-sm font-medium text-white group-hover:text-red-600 transition-colors inline-block">
+                  Join Us
+                </span>
               </button>
             </div>
           </div>
