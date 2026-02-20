@@ -1,5 +1,3 @@
-import { ChevronDown } from 'lucide-react';
-
 export function Punchline() {
   return (
     <section 
@@ -13,9 +11,6 @@ export function Punchline() {
           </p>
         </div>
 
-        <a href="#about" className="inline-block mt-20">
-          <ChevronDown className="w-8 h-8 text-white/30" />
-        </a>
       </div>
     </section>
   );

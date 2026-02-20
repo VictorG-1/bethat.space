@@ -1,4 +1,3 @@
-import { ChevronDown } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import heroGif from 'figma:asset/5d66df7b49003cc2819d921f853ed04086d65c25.png';
 

@@ -1,4 +1,4 @@
-import { ChevronDown, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import tathastuImage from 'figma:asset/a26bdc211f505ea4ce3e1426ab6f413f1f679ec9.png';
 
 export function About() {
@@ -47,9 +47,6 @@ export function About() {
           </button>
         </div>
 
-        <a href="#leadership" className="flex justify-center mt-20">
-          <ChevronDown className="w-8 h-8 text-white/30" />
-        </a>
       </div>
     </section>
   );

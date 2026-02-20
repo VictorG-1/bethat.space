@@ -1,4 +1,4 @@
-import { ChevronDown, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
 const MEDIA_ITEMS = [
@@ -79,9 +79,6 @@ export function Media() {
           ))}
         </div>
 
-        <a href="#footer" className="flex justify-center">
-          <ChevronDown className="w-8 h-8 text-white/30" />
-        </a>
       </div>
     </section>
   );

@@ -24,8 +24,8 @@ export function MainSite() {
             backgroundAttachment: 'scroll'
           }}
         >
-          {/* Dark overlay for improved text readability */}
-          <div className="absolute inset-0 bg-black/70" />
+          {/* Overlay (40%) — brighter background */}
+          <div className="absolute inset-0 bg-black/40" />
           
           <Punchline />
           <About />

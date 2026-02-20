@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, ChevronDown, Plus, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Plus, X } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import capovitezLogo from 'figma:asset/ee8f8545dad18dc5b362fcc32f41e729a657b33b.png';
 import chettinadLogo from 'figma:asset/648addd6cd905a16a70f0841ab88595408492712.png';
@@ -360,9 +360,6 @@ export function ProjectsClients() {
           </div>
         </div>
 
-        <a href="#footer" className="flex justify-center">
-          <ChevronDown className="w-8 h-8 text-white/30" />
-        </a>
       </div>
 
       {/* Project Modal */}

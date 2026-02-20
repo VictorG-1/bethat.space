@@ -1,4 +1,4 @@
-import { ChevronDown, Plus, Minus } from 'lucide-react';
+import { Plus, Minus } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { useState, useRef, useEffect } from 'react';
 
@@ -120,7 +120,7 @@ export function Services() {
   };
 
   return (
-    <section id="services" className="relative min-h-screen bg-black py-20 lg:py-32 flex items-center">
+    <section id="services" className="relative min-h-screen bg-black py-20 lg:py-32 flex items-center overflow-visible">
       {/* Subtle pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0" style={{
@@ -145,7 +145,7 @@ export function Services() {
         </p>
 
         {/* Services - Horizontal Row with Individual Expanders */}
-        <div className="space-y-0">
+        <div className="space-y-0 overflow-visible">
           {/* Service Cards Row */}
           <div ref={cardsGridRef} className="grid grid-cols-1 md:grid-cols-3 gap-6" data-service-cards>
             {services.map((service, index) => {
@@ -156,7 +156,7 @@ export function Services() {
                   key={index}
                   className={`group relative overflow-hidden bg-neutral-900 transition-all duration-500 ${
                     isExpanded
-                      ? 'border-2 border-red-600 m-3'
+                      ? 'border border-white/10 m-3'
                       : 'border border-white/10 hover:border-red-600/50'
                   } ${showRightBorder ? 'md:border-r-2 md:border-r-black' : ''}`}
                 >
@@ -211,7 +211,7 @@ export function Services() {
 
                         {/* Expanded: bottom 2/3 - red-bordered start (connector to white stack below) */}
                         <div
-                          className="absolute left-0 right-0 bottom-0 border-t-2 border-l-2 border-r-2 border-red-600 bg-white"
+                          className="absolute left-0 right-0 bottom-0 bg-white"
                           style={{ height: '66.666%' }}
                           onClick={(e) => e.stopPropagation()}
                         />
@@ -239,11 +239,11 @@ export function Services() {
                 ];
 
                 const panel = (
-                  <div className="bg-white border-2 border-red-600 border-t-4 border-t-black animate-in fade-in duration-300 w-full">
+                  <div className="bg-white animate-in fade-in duration-300 w-full">
                     <div className="px-6 lg:px-12 py-8 lg:py-12">
                       <div className="flex items-center gap-4 mb-8">
-                        <div className="w-16 h-16 border-2 border-red-600/30 flex items-center justify-center shrink-0">
-                          <span className="text-red-600 font-bold text-2xl">{service.watermark}</span>
+                        <div className="w-20 h-20 lg:w-24 lg:h-24 border-2 border-red-600/30 flex items-center justify-center shrink-0">
+                          <span className="text-red-600 font-bold text-3xl lg:text-4xl">{service.watermark}</span>
                         </div>
                         <h3 className="text-3xl lg:text-4xl text-black font-semibold tracking-tight">
                           {service.title}
@@ -278,15 +278,19 @@ export function Services() {
                   <>
                     {/* Mobile: full width, overlap for connection */}
                     <div
-                      className="relative z-20 md:hidden"
+                      className="relative z-30 isolate md:hidden overflow-visible"
                       style={{ marginTop: panelOffset > 0 ? -panelOffset : 0 }}
                     >
                       {panel}
                     </div>
 
-                    {/* Desktop: 1.5rem (gap-6) vertical gap below cards row, then full-width container aligned with cards */}
-                    <div className="relative z-20 hidden md:block mt-6">
-                      {panel}
+                    {/* Desktop: 1/3 + 2/3 — modal under active card only; 1.5rem horizontal gap to other two cards */}
+                    <div className="relative z-30 isolate hidden md:block -mt-6 overflow-visible">
+                      <div className="grid grid-cols-3 gap-6">
+                        <div className={`overflow-visible ${expandedService === 0 ? 'min-w-0' : ''}`}>{expandedService === 0 ? panel : <div aria-hidden />}</div>
+                        <div className={`overflow-visible ${expandedService === 1 ? 'min-w-0' : ''}`}>{expandedService === 1 ? panel : <div aria-hidden />}</div>
+                        <div className={`overflow-visible ${expandedService === 2 ? 'min-w-0' : ''}`}>{expandedService === 2 ? panel : <div aria-hidden />}</div>
+                      </div>
                     </div>
                   </>
                 );
@@ -295,9 +299,6 @@ export function Services() {
           )}
         </div>
 
-        <a href="#projects" className="flex justify-center mt-20 lg:mt-24">
-          <ChevronDown className="w-8 h-8 text-white/30 hover:text-red-600 transition-colors duration-300" />
-        </a>
       </div>
     </section>
   );

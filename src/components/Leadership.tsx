@@ -1,4 +1,4 @@
-import { ChevronDown, Plus, Minus, Linkedin, Instagram, Target, Users, Lightbulb, Heart, Globe, Award } from 'lucide-react';
+import { Plus, Minus, Linkedin, Instagram, Target, Users, Lightbulb, Heart, Globe, Award } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
@@ -159,9 +159,6 @@ export function Leadership() {
               ))}
             </div>
 
-        <a href="#services" className="flex justify-center mt-12 lg:mt-16">
-          <ChevronDown className="w-8 h-8 text-white/30" />
-        </a>
         </div>
       </section>
     </>

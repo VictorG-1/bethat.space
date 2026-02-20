@@ -1,4 +1,4 @@
-import { ArrowLeft, ChevronDown, X } from 'lucide-react';
+import { ArrowLeft, X } from 'lucide-react';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import bgImage from 'figma:asset/c621f8e2b94cd37ccbe0edbb8d8595d829d1df5c.png';
@@ -6,84 +6,86 @@ import { useState, useEffect, useRef } from 'react';
 
 function StatCounter({ end, label, suffix, hoverWords }: { end: number, label: string, suffix: string, hoverWords?: string }) {
   const [count, setCount] = useState(0);
-  const [hasAnimated, setHasAnimated] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const counterRef = useRef<HTMLDivElement>(null);
+
+  const runAnimation = () => {
+    setCount(0);
+    const duration = 2000; // 2 seconds to reach end
+
+    // Short milestones for 2 sec: multiples of 100, spaced for speed
+    const getMilestones = () => {
+      if (end === Infinity || suffix === 'M+') {
+        return [100, 50000, 100000, 250000, 500000, 750000, 1000000];
+      }
+      if (suffix === '+' && end > 100) {
+        const m: number[] = [];
+        for (let i = 100; i < end; i += 200) m.push(i);
+        m.push(end);
+        return m;
+      }
+      return [0, end];
+    };
+
+    const milestones = getMilestones();
+    const stepMs = duration / milestones.length;
+    let index = 0;
+
+    const interval = setInterval(() => {
+      if (index < milestones.length - 1) {
+        setCount(milestones[index]);
+        index++;
+      } else {
+        if (end === Infinity) {
+          setCount(1000000);
+          setTimeout(() => setCount(Infinity), 150);
+        } else {
+          setCount(milestones[milestones.length - 1]);
+        }
+        clearInterval(interval);
+      }
+    }, stepMs);
+
+    return () => clearInterval(interval);
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && !hasAnimated) {
-          setHasAnimated(true);
-          
-          // Handle Infinity case
-          if (end === Infinity) {
-            let current = 1;
-            const interval = setInterval(() => {
-              if (current < 100) {
-                setCount(current);
-                current++;
-              } else {
-                clearInterval(interval);
-                setCount(Infinity);
-              }
-            }, 20);
-            return () => clearInterval(interval);
-          }
-          
-          // Handle Million case (1M+)
-          if (suffix === 'M+') {
-            const milestones = [0, 100, 500, 1000, 5000, 10000, 50000, 100000, 250000, 500000, 750000, 1000000];
-            let index = 0;
-            const interval = setInterval(() => {
-              if (index < milestones.length - 1) {
-                setCount(milestones[index]);
-                index++;
-              } else {
-                setCount(1000000); // 1M
-                clearInterval(interval);
-              }
-            }, 150);
-            return () => clearInterval(interval);
-          }
-          
-          // Handle normal counting
-          const duration = 2000;
-          const steps = 60;
-          const increment = end / steps;
-          let current = 0;
-          
-          const timer = setInterval(() => {
-            current += increment;
-            if (current >= end) {
-              setCount(end);
-              clearInterval(timer);
-            } else {
-              setCount(Math.floor(current));
-            }
-          }, duration / steps);
-          
-          return () => clearInterval(timer);
+        if (entries[0].isIntersecting) {
+          setIsVisible(true);
+        } else {
+          setIsVisible(false);
         }
       },
-      { threshold: 0.5 }
+      { threshold: 0.3 }
     );
 
     if (counterRef.current) {
       observer.observe(counterRef.current);
     }
-
     return () => observer.disconnect();
-  }, [end, hasAnimated]);
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    runAnimation();
+    const loop = setInterval(runAnimation, 5000); // Repeat every 5 sec
+    return () => clearInterval(loop);
+  }, [isVisible, end, suffix]);
 
   const displayValue = () => {
     if (count === Infinity) return '∞';
     if (suffix === 'M+') {
       if (count >= 1000000) return '1M+';
-      if (count >= 1000) return `${Math.floor(count / 1000)}K`;
-      return count;
+      if (count >= 1000) return `${Math.floor(count / 1000)}K+`;
+      return count + '+';
     }
-    return count + (suffix !== '∞' ? suffix : '');
+    if (suffix === '∞' && count >= 1000000) return '1M';
+    if (suffix === '∞') return count.toString();
+    return count + suffix;
   };
 
   return (
@@ -93,8 +95,8 @@ function StatCounter({ end, label, suffix, hoverWords }: { end: number, label: s
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="text-5xl lg:text-6xl text-red-600 font-bold mb-3">
-        {displayValue()}
+      <div className="text-5xl lg:text-6xl text-red-600 font-bold mb-3 min-h-[4rem] lg:min-h-[5rem] flex items-center justify-center">
+        <span className={displayValue() === '∞' ? 'text-[1.5em] leading-[1]' : 'leading-none'}>{displayValue()}</span>
       </div>
       <p className="text-white/60 text-sm uppercase tracking-wider">{label}</p>
       {hoverWords && (
@@ -148,9 +150,6 @@ export function AboutUsPage() {
               </p>
             </div>
 
-            <a href="#story" className="flex justify-center mt-20">
-              <ChevronDown className="w-8 h-8 text-white/30 animate-bounce" />
-            </a>
           </div>
         </div>
 
@@ -160,7 +159,7 @@ export function AboutUsPage() {
           <div 
             className="absolute inset-0"
             style={{
-              backgroundImage: 'url(https://images.unsplash.com/photo-1681216868987-b7268753b81c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb250ZW1wb3JhcnklMjBhcmNoaXRlY3R1cmUlMjBidWlsZGluZyUyMGRlc2lnbnxlbnwxfHx8fDE3NzAxOTc4NDd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral)',
+              backgroundImage: 'url(https://images.unsplash.com/photo-1600585154340-be6161a56a0c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080)',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundAttachment: 'fixed'
@@ -186,24 +185,35 @@ export function AboutUsPage() {
               <div className="h-px w-32 bg-gradient-to-r from-transparent via-red-600/50 to-transparent mx-auto" />
             </div>
 
-            {/* Story Paragraphs - Centered and Highlighted */}
-            <div className="max-w-4xl mx-auto space-y-8">
-              <div className="bg-white/5 border-l-4 border-red-600 p-6 backdrop-blur-sm">
-                <p className="text-white text-base lg:text-lg leading-relaxed font-light text-justify">
-                  Founded with a vision to transform architectural spaces, BeThatSpace™ creates environments that inspire. Our multidisciplinary approach combines innovation with sustainability.
-                </p>
-              </div>
-              
-              <div className="bg-white/5 border-l-4 border-red-600 p-6 backdrop-blur-sm">
-                <p className="text-white text-base lg:text-lg leading-relaxed font-light text-justify">
-                  With studios across Thane, Pune, and Chennai, we bring international design excellence with local insights to every project we undertake.
-                </p>
-              </div>
+            {/* Story Paragraphs - M Moser inspired: 3 flowing paragraphs, clean typography */}
+            <div className="max-w-4xl mx-auto">
+              <div className="space-y-12 lg:space-y-16">
+                <div>
+                  <h3 className="text-xl lg:text-2xl font-semibold text-white mb-6 tracking-tight">
+                    Who we are
+                  </h3>
+                  <p className="text-white/90 text-lg lg:text-xl leading-relaxed font-light">
+                    Founded with a vision to transform architectural spaces, BeThatSpace™ creates environments that inspire. Our multidisciplinary approach combines innovation with sustainability. With studios across Thane, Pune, and Chennai, we bring international design excellence with local insights to every project we undertake.
+                  </p>
+                </div>
+                
+                <div>
+                  <h3 className="text-xl lg:text-2xl font-semibold text-white mb-6 tracking-tight">
+                    Our view
+                  </h3>
+                  <p className="text-white/90 text-lg lg:text-xl leading-relaxed font-light">
+                    We believe in collaboration and human-centered design, ensuring each space reflects our commitment to quality, creativity, and community. Space is experiential—we design to deepen connections between people and their environments, creating purposeful places that enable growth and meaningful work.
+                  </p>
+                </div>
 
-              <div className="bg-white/5 border-l-4 border-red-600 p-6 backdrop-blur-sm">
-                <p className="text-white text-base lg:text-lg leading-relaxed font-light text-justify">
-                  We believe in collaboration and human-centered design, ensuring each space reflects our commitment to quality, creativity, and community.
-                </p>
+                <div>
+                  <h3 className="text-xl lg:text-2xl font-semibold text-white mb-6 tracking-tight">
+                    How we do it
+                  </h3>
+                  <p className="text-white/90 text-lg lg:text-xl leading-relaxed font-light">
+                    Our strategic approach uncovers potential and reframes what your space should be. From concept to execution, we simplify the process—integrating design, engineering, and build—to bring projects to life at the right price and on time. Collaboration starts with listening, and every detail is crafted with intention.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
