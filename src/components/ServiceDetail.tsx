@@ -94,7 +94,7 @@ export function ServiceDetail({ slug }: ServiceDetailProps) {
       title: 'Urban Planning',
       subtitle: 'Designing Cities for Tomorrow',
       heroImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
-      overview: 'Our urban planning services address the complex challenges of creating vibrant, sustainable, and equitable communities. We work at multiple scales—from neighborhood revitalization to regional master planning—always prioritizing human-centered design and environmental stewardship.',
+      overview: 'Our urban planning services address the complex challenges of creating vibrant, sustainable, and equitable communities. We work at multiple scales, from neighborhood revitalization to regional master planning, always prioritizing human-centered design and environmental stewardship.',
       approach: [
         'We employ participatory planning methods that engage community stakeholders, ensuring diverse voices shape the future of their neighborhoods.',
         'Our planning strategies integrate land use, transportation, infrastructure, public space, and economic development into cohesive visions.',

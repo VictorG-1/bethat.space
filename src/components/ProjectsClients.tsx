@@ -22,6 +22,154 @@ import unileverFragranceLogo from 'figma:asset/4c94c12ca8875a52c885834941eaeabb7
 import ubsLogo from 'figma:asset/6d16ec7e15db1d1b25cec11cf14c9691e5d19621.png';
 import unileverLogo from 'figma:asset/a3236b9a3f4a8da160da0d8f548c96489369359c.png';
 
+import timesReception from '../assets/projects/times-group/TOIG_Reception-01-7352116a-3b59-4203-b433-13bdc89b0fa8.jpg';
+import timesExec01 from '../assets/projects/times-group/TOIG_Executive_Area-01-49b68ec2-4810-42c3-9376-c31fc13841fa.jpg';
+import timesExec02 from '../assets/projects/times-group/TOIG_Executive_Area-02-df426e16-4df0-401b-a98f-ea877f6fb2b0.jpg';
+import timesExec03 from '../assets/projects/times-group/TOIG_Executive_Area-03-96ffac74-7fd3-4f3e-baf6-ead0b105bd8b.jpg';
+import timesExec04 from '../assets/projects/times-group/TOIG_Executive_Area-04-1d9a0041-9488-4466-b8a3-8ee4649d32c8.jpg';
+import timesDayCare from '../assets/projects/times-group/TOIG_Day_Care-01-5725c305-7ba5-480a-b74c-683355f04a1b.jpg';
+import timesCafe from '../assets/projects/times-group/TOIG_Cafe-01-ab0f93ae-d107-4d1a-a03e-4c573faef851.jpg';
+import timesGym from '../assets/projects/times-group/TOIG_Gym-01-5d2f1f36-7ede-458a-84d4-7841d672beb3.jpg';
+import timesTraining from '../assets/projects/times-group/TOIG_Training-01-75567fbb-9fc9-46aa-9e9c-e1f04e6170c8.jpg';
+import timesTerrace01 from '../assets/projects/times-group/TOIG_Terrace-01-326a04c9-cc7a-49bd-a413-dbc009d346a1.jpg';
+import timesTerrace02 from '../assets/projects/times-group/TOIG_Terrace-02-da9d8930-089d-4237-b593-c3493818522f.jpg';
+import timesTerrace03 from '../assets/projects/times-group/TOIG_Terrace-03-59e9e3e1-7aaa-4cc0-b0f9-cb6ccbb2b624.jpg';
+
+import nirmalMeeting01 from '../assets/projects/nirmal/Nirmal_Meeting-01-ccee919f-8840-4c87-87a6-73ef6f2f9312.jpg';
+import nirmalMeeting02 from '../assets/projects/nirmal/Nirmal_Meeting-02-ce7cb4c5-fdd2-4fdc-86af-c2ab213420d6.jpg';
+import nirmalMeeting03 from '../assets/projects/nirmal/Nirmal_Meeting-03-ae2f8d67-6a4c-4678-b46c-87850f69e0ee.jpg';
+import nirmalOffice01 from '../assets/projects/nirmal/Nirmal_Office-01-67726dc8-89e9-496f-b2c4-52495dd11409.jpg';
+import nirmalOffice02 from '../assets/projects/nirmal/Nirmal_Office-02-3b29040b-6d96-4f8f-a045-d91827a5403e.jpg';
+import nirmalCafe from '../assets/projects/nirmal/Nirmal_Cafe-01-cb662323-a48c-4342-b68a-df1d28bd57db.jpg';
+
+import mirchiReception from '../assets/projects/mirchi/Mirchi_Reception-01-a32c7540-b97c-414c-82a1-eafee972bb8e.jpg';
+import mirchiRadioStudio from '../assets/projects/mirchi/Mirchi_Radio_Studio-01-77131778-2117-411b-aedb-1d712c2b5a51.jpg';
+import mirchiGaanaStudio from '../assets/projects/mirchi/Mirchi_Gaana_Studio-01-87142291-d256-4234-bc05-59c22fd52cd2.jpg';
+import mirchiDressing from '../assets/projects/mirchi/Mirchi_Dressing_Room-01-80455b3a-39b0-4806-8855-4a7380647ac5.jpg';
+import mirchiOffice from '../assets/projects/mirchi/Mirchi_Office-01-25a79d89-95fc-4c64-92d0-a4a1aa66c690.jpg';
+import mirchiCollab from '../assets/projects/mirchi/Mirchi_Collab-01-22078e60-8f00-44cb-8e22-736a65dc88fa.jpg';
+
+import tsReception from '../assets/projects/tablespace/TS_Reception-01-eb5d3187-143a-45f3-b60d-847ec56f2b5a.jpg';
+import tsOffice from '../assets/projects/tablespace/TS_Office-01-7a8b7451-5be4-441e-9fd9-536b33d6fc77.jpg';
+import tsLiftLobby from '../assets/projects/tablespace/TS_Lift_Lobby-01-41562ce3-1d3c-4a09-9ae3-b2813427a219.jpg';
+import tsPassage from '../assets/projects/tablespace/TS_Passage-01-56b2c1de-403a-4d90-921f-f55e900ccc19.jpg';
+import tsMeeting from '../assets/projects/tablespace/TS_Meeting-01-69736bd5-1311-4cf9-8591-64c9fca4df64.jpg';
+import tsToilet from '../assets/projects/tablespace/TS_Toilet-01-560c52bd-103a-4156-aaec-a3e4c089f16d.jpg';
+
+import suttattiReception from '../assets/projects/suttatti/Suttatti_Reception-01-78f9f7fc-db39-4838-b77e-4cf6741eb084.jpg';
+import suttattiOffice from '../assets/projects/suttatti/Suttatti_Office-01-49c2093f-383b-485d-8672-576acb642176.jpg';
+import suttattiCabin from '../assets/projects/suttatti/Suttatti_Cabin-01-abccd0a7-b433-4b1c-a121-080c2406f857.jpg';
+
+import timesNetworkCabin from '../assets/projects/times-network/Times_Network_Cabin-01-7e1f0c24-1b7d-4580-a55e-da7f313d5b16.jpg';
+import timesNetworkMeeting from '../assets/projects/times-network/Times_Network_Meeting-01-6bca78b4-8dce-45d2-9acb-ab667328f724.jpg';
+import timesNetworkOffice from '../assets/projects/times-network/Times_Network_Office-01-ce120d40-2f04-4491-a0bd-abf3ff77d3f7.jpg';
+
+import parksydeReception01 from '../assets/projects/parksyde/Parksyde_Reception-01-d5e1a53b-0601-407b-8aef-7fd82ac2bbc2.jpg';
+import parksydeReception02 from '../assets/projects/parksyde/Parksyde_Reception-02-2b374bce-2dd5-4a33-8727-f47cb2611831.jpg';
+import parksydeOffice from '../assets/projects/parksyde/Parksyde_Office-01-8f23c5b4-4689-4883-878f-05612d7b4844.jpg';
+
+import wwmCabin from '../assets/projects/worldwide-media/World_Wide_Media_Cabin-01-c98e05be-33e1-4355-b027-4396e84b9321.jpg';
+import wwmCollab from '../assets/projects/worldwide-media/World_Wide_Media_Collab-01-96f6c045-0d13-45d7-9aad-13375e77d6eb.jpg';
+import wwmMeeting from '../assets/projects/worldwide-media/World_Wide_Media_Meeting-01-7d7d3460-4185-4504-9cc4-2aca6882ebee.jpg';
+
+import abfrlReception from '../assets/projects/abfrl/ABFRL_Reception-01-95815942-dc0d-41a2-8eb0-20649ffa4ffc.jpg';
+import abfrlCeoCabin from '../assets/projects/abfrl/ABFRL_CEO_Cabin-01-119f2137-39b9-4b52-949e-bd23fae4eaae.jpg';
+import abfrlCabinCluster from '../assets/projects/abfrl/ABFRL_Cabin_Cluster-01-9c235add-1f07-422f-bb3d-af6cb41cbf77.jpg';
+import abfrlOffice01 from '../assets/projects/abfrl/ABFRL_Office-01-737b7c72-3fd0-49de-aad2-953df8412937.jpg';
+import abfrlOffice02 from '../assets/projects/abfrl/ABFRL_Office-02-9a8ab241-73c4-4639-ae36-6013d90710e3.jpg';
+import abfrlCollab01 from '../assets/projects/abfrl/ABFRL_Collab-01-ad4f704b-9e49-456d-907f-db07552ae652.jpg';
+import abfrlCollab02 from '../assets/projects/abfrl/ABFRL_Collab-02-fe3e6690-9078-4dbf-ade7-e242579efb75.jpg';
+import abfrlConference from '../assets/projects/abfrl/ABFRL_Conference-01-6265c836-b5b8-47c2-b8a2-67e24f3b523e.jpg';
+import abfrlPhonebooth from '../assets/projects/abfrl/ABFRL_Phonebooth-01-28ca1171-2adf-4346-be2b-255179ece565.jpg';
+
+import mioPreFunction01 from '../assets/projects/miss-india/MIO_Pre-Function-01-f8b62cb2-f5ac-438d-8dbf-1fec4386b52d.jpg';
+import mioPreFunction02 from '../assets/projects/miss-india/MIO_Pre-Function-02-ecb8b198-b172-45af-9569-4804129e084a.jpg';
+import mioAuditorium from '../assets/projects/miss-india/MIO_Auditorium-01-81bccf0c-f52d-45e7-ad69-8d40df3a5418.jpg';
+
+import ctoMainReception from '../assets/projects/chettinad-cto/CTO_Main_Reception-01-0183d5f9-6d5d-4bda-a457-f698986c3d03.jpg';
+import ctoReception01 from '../assets/projects/chettinad-cto/CTO_Reception-01-b1d3f588-7d54-43d7-94a7-7d15f296a856.jpg';
+import ctoReception02 from '../assets/projects/chettinad-cto/CTO_Reception-02-7fd474fe-ab2d-4d09-a016-4e32f2bcc822.jpg';
+import ctoOffice from '../assets/projects/chettinad-cto/CTO_Office-01-2f16d180-2d55-48e9-aa25-cfe8879fa95c.jpg';
+import ctoCafe from '../assets/projects/chettinad-cto/CTO_Cafe-01-eaa3d059-bbbc-408c-84da-f3070d780f2e.jpg';
+import ctoExterior from '../assets/projects/chettinad-cto/CTO_Exterior-01-4a754752-609c-4693-b54e-0dc82b0fcfb1.jpg';
+
+import ccoReceptionLobby01 from '../assets/projects/chettinad-common/CCO_Common_Areas_Reception_Lobby-01-f11bc467-a601-4a94-bd01-f5e3f40e79e6.jpg';
+import ccoReceptionLobby02 from '../assets/projects/chettinad-common/CCO_Common_Areas_Reception_Lobby-02-93f2344e-1574-4c2e-b342-132463537727.jpg';
+import ccoLiftLobby from '../assets/projects/chettinad-common/CCO_Common_Areas_Lift_Lobby-01-784914d3-78e5-45e7-bad8-0fc30af4a9cf.jpg';
+
+import cco11Reception from '../assets/projects/chettinad-cco-11-12/CCO_11th_Floor_Reception-01-1732bcf9-a81b-49f1-8b50-0e356b8e6fe7.jpg';
+import cco11Collab01 from '../assets/projects/chettinad-cco-11-12/CCO_11th_Floor_Collab-01-81231c34-adc3-4d3c-bc0b-08de0d168b80.jpg';
+import cco11Collab02 from '../assets/projects/chettinad-cco-11-12/CCO_11th_Floor_Collab-02-ecf130e5-f750-4c8a-8aab-3378f4810bfb.jpg';
+import cco11Collab03 from '../assets/projects/chettinad-cco-11-12/CCO_11th_Floor_Collab-03-ac59d67e-f9d3-4423-ba3c-f37f7348fe45.jpg';
+import cco11Meeting from '../assets/projects/chettinad-cco-11-12/CCO_11th_Floor_Meeting-01-0729c2ab-37cc-42c4-a19e-b8eb060aacda.jpg';
+import cco11Cafe from '../assets/projects/chettinad-cco-11-12/CCO_11th_Floor_Cafe-01-d6f0e5e1-df6d-46f4-8f87-9c3bb74ae39a.jpg';
+
+import cco13Reception01 from '../assets/projects/chettinad-cco-13/01-Reception-01A-65585074-8de5-4a37-9bd6-826f28a09f28.jpg';
+import cco13Reception02 from '../assets/projects/chettinad-cco-13/02-Reception-02A-beffb166-e5f4-41f1-9b30-445065e785dd.jpg';
+import cco13BoardRoom from '../assets/projects/chettinad-cco-13/03-Board_Room-03-ef2ca75c-9e3f-42fd-a051-1a018a740cba.jpg';
+import cco13MdCabin from '../assets/projects/chettinad-cco-13/04-MD_Cabin-04A-f7107f69-8bcc-4b77-80d6-520c64b12c64.jpg';
+import cco13CoffeeBar from '../assets/projects/chettinad-cco-13/06-Coffee_Bar-01-0185693f-bb87-43c7-94b4-0d2e6e3dea28.jpg';
+import cco13LivingRoom from '../assets/projects/chettinad-cco-13/06-Living_Room-01-4abac1d6-6faa-44ba-8917-d7f7e0619f30.jpg';
+
+import howdenReception from '../assets/projects/howden/Howden_Reception-01-44b20409-c431-42ec-9acb-dac2a617480f.jpg';
+import howdenCollab01 from '../assets/projects/howden/Howden_Collab-01-288b754a-7e41-4bf4-977a-e1a3f95e10fe.jpg';
+import howdenCollab02 from '../assets/projects/howden/Howden_Collab-02-5a05babc-8efe-47fb-b1d6-4354ea37d5f0.jpg';
+import howdenCollab03 from '../assets/projects/howden/Howden_Collab-03-00b6b157-af3e-458b-8a33-13ef3fa9780d.jpg';
+import howdenBoardRoom from '../assets/projects/howden/Howden_Board_Room-01-abb7b1d0-b7bb-457b-89cc-c7469028ea5e.jpg';
+import howdenMeeting from '../assets/projects/howden/Howden_Meeting-01-aef6eca3-71eb-42cb-b03e-31dc8d00cf55.jpg';
+
+import ufhReception from '../assets/projects/unilever-fragrance/UFH_Reception-01-182fd132-b1d1-4692-bac7-abb0a5167329.jpg';
+import ufhHairWash from '../assets/projects/unilever-fragrance/UFH_Hair_Wash-01-0d2fd18a-3c30-4fda-92de-cea535c412c9.jpg';
+import ufhOffice from '../assets/projects/unilever-fragrance/UFH_Office-01-f9e6a5ce-8e8b-46a2-a338-b21cceed6b57.jpg';
+import ufhCompoundLab from '../assets/projects/unilever-fragrance/UFH_Compound_Lab-01-af8e18b6-f856-4251-b962-a8a5cedb9d97.jpg';
+import ufhPassage from '../assets/projects/unilever-fragrance/UFH_Passage-01-909bfc46-6d9c-44db-9b8d-0f526f18f8c4.jpg';
+import ufhEvaluation from '../assets/projects/unilever-fragrance/UFH_Evaluation_Chambers-01-2223e8e7-7aae-40be-bfd3-c89b43966e32.jpg';
+
+import rahejaReception01 from '../assets/projects/raheja/Raheja_Universal_Reception-01-174011fb-68d8-443b-963f-da611d9b47ca.jpg';
+import rahejaReception02 from '../assets/projects/raheja/Raheja_Universal_Reception-02-22e7261e-8770-4117-97c6-827073bc70c5.jpg';
+import rahejaSkyLounge from '../assets/projects/raheja/Raheja_Universal_Sky_Lounge-01-fe23edb6-3bc0-4c66-bbc3-63c2005987b2.jpg';
+import rahejaCafe from '../assets/projects/raheja/Raheja_Universal_Cafe-01-a7dd4260-3f6e-4a4d-b9ec-b63b3eb97f99.jpg';
+import rahejaMumpty from '../assets/projects/raheja/Raheja_Universal_Mumpty-01-983bf4c2-f6cc-4efe-a405-36b5f3fc9c91.jpg';
+import rahejaCompoundWall from '../assets/projects/raheja/Raheja_Universal_Compound_Wall-01-e031d63b-2622-46d4-8489-f8fa07c88c78.jpg';
+
+import hulReception from '../assets/projects/hul/HUL_Reception-01-e7a5b2a6-abf0-4dda-b508-41d78721a3a6.jpg';
+import hulOffice from '../assets/projects/hul/HUL_Office-01-e4381703-c553-4b82-98f7-8d164319270e.jpg';
+import hulCollab from '../assets/projects/hul/HUL_Collab-01-48d6e969-6f1e-4ea6-ad84-7e8c544cce4b.jpg';
+import hulCafe from '../assets/projects/hul/HUL_Cafe-01-a1447c2f-bb21-4e93-b7ec-b69ac8d04d77.jpg';
+import hulWorkCafe from '../assets/projects/hul/HUL_Work_Cafe-01-b7c14442-f770-4350-97ef-8c0cf6e8d091.jpg';
+import hulLiftLobby from '../assets/projects/hul/HUL_Lift_Lobby-01-03d2291d-269c-4f47-9f8d-88ac94101718.jpg';
+
+import timesMusicMeeting from '../assets/projects/times-music/Times_Music_Meeting-01-4db0a9f1-d671-4e2b-8313-ab3ec66198af.jpg';
+import timesMusicCabin from '../assets/projects/times-music/Times_Music_Cabin-01-c7ade669-7d1f-4a9e-95fe-5ab9d6b5b866.jpg';
+import timesMusicOffice from '../assets/projects/times-music/Times_Music_Office-01-79ba8f88-f5e4-4264-9cc6-d5ff119436ee.jpg';
+
+import ubsNocRoom from '../assets/projects/ubs/UBS_NOC_Room-01-da612531-f6ca-434c-a539-34616f337ea9.jpg';
+import ubsBusinessCafe from '../assets/projects/ubs/UBS_Business_Cafe-01-10d3adab-3530-4b4b-9931-860b06e3c691.jpg';
+import ubsBusinessGarden from '../assets/projects/ubs/UBS_Business_Garden-01-d5989ad8-4359-4128-b518-293dae39fcff.jpg';
+
+import bethatArrivals01 from '../assets/projects/bethat-space/BethatSpace_Arrivals-01-a6009140-e2d6-4ca4-801b-d28d9174b8f1.jpg';
+import bethatArrivals02 from '../assets/projects/bethat-space/BethatSpace_Arrivals-02-528f6423-dd66-432b-9681-b5df532684ad.jpg';
+import bethatBoardRoom from '../assets/projects/bethat-space/BethatSpace_Board_Room-01-7519096a-d9a8-4fdb-8f60-dcb0c8fe646f.jpg';
+import bethatOffice01 from '../assets/projects/bethat-space/BethatSpace_Office-01-fcffe002-53ee-4216-a0b2-f41c4d2f09b0.jpg';
+import bethatOffice02 from '../assets/projects/bethat-space/BethatSpace_Office-02-4069ee64-78d9-402b-813e-7193025b449f.jpg';
+import bethatCollab from '../assets/projects/bethat-space/BethatSpace_Collab-01-77a93f20-95b1-4dc1-bddf-596e041fcf8c.jpg';
+
+import uniExterior from '../assets/projects/uni-deritrend/Neterwal-Exterior-01-df250d5a-4d4e-4ae3-aa1e-db07da0c646c.jpg';
+import uniExperience from '../assets/projects/uni-deritrend/Neterwal-Experience_Center-01-2a40020d-e529-4cce-bbf1-ff90a072719c.jpg';
+import uniOffice01 from '../assets/projects/uni-deritrend/Neterwal-Office-01-eafb0438-58d1-47b3-9ddf-63b180e44936.jpg';
+import uniOffice02 from '../assets/projects/uni-deritrend/Neterwal-Office-02-7a7552c7-b2f0-4de4-9e17-51a481271ac8.jpg';
+import uniOffice03 from '../assets/projects/uni-deritrend/Neterwal-Office-03-546135bf-35e9-4d1f-8bc5-498f36a9de4c.jpg';
+import uniTraining from '../assets/projects/uni-deritrend/Neterwal-Training-01-ccb85526-7c64-4ba4-bf30-35a9b245d38a.jpg';
+
+import vertivReception from '../assets/projects/vertiv/Vertiv_Reception-01-5cefce7a-a3b8-4a3a-a989-ee909197408d.jpg';
+import vertivExperience from '../assets/projects/vertiv/Vertiv_Experience_Center-01-6caac3c7-4b3d-46d5-b4ad-ebf9bac9fcf9.jpg';
+import vertivCafe from '../assets/projects/vertiv/Vertiv_Cafe-01-89ba0b42-5861-49b6-9a1c-62a27ab1e58f.jpg';
+import vertivCollab from '../assets/projects/vertiv/Vertiv_Collab-01-4796a669-1de8-4a73-aae3-7898a1e849cf.jpg';
+import vertivLounge from '../assets/projects/vertiv/Vertiv_Lounge_area_-6ac2d1e6-c887-4a3c-a4b7-e4f922de9974.jpg';
+import vertivOffice from '../assets/projects/vertiv/Vertiv_Office-02-7372b217-12d2-4035-b5a6-d7b762a68644.jpg';
+
+import orientalExterior from '../assets/projects/oriental/Oriental_Option-01-56d1a65a-e840-4b5f-836e-3aa5d363c0e3.jpg';
+
 export function ProjectsClients() {
   const [currentProject, setCurrentProject] = useState(0);
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
@@ -30,82 +178,318 @@ export function ProjectsClients() {
 
   const projects = [
     {
-      title: 'Corporate Headquarters',
+      title: 'The Times Group',
+      type: 'Corporate Office',
       location: 'Mumbai, India',
-      year: '2024',
-      area: '50,000 sq ft',
-      value: '₹150 Cr',
-      description: 'A landmark corporate headquarters redefining workplace design. The project integrates sustainable systems, collaborative zones, and premium finishes to create an environment that supports innovation and wellbeing. Client aspirations were realised through a rigorous design process from concept to handover.',
+      description: 'A landmark corporate workplace for The Times Group in Mumbai. Reception, executive areas, training, daycare, cafe, gym, and terraces were designed as one cohesive environment that reflects brand, culture, and everyday media operations.',
       images: [
-        'https://images.unsplash.com/photo-1497366216548-37526070297c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
-        'https://images.unsplash.com/photo-1497366754035-f200968a6e72?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
-        'https://images.unsplash.com/photo-1497366811353-6870744d04b2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
-      ]
+        timesReception,
+        timesExec01,
+        timesExec02,
+        timesExec03,
+        timesExec04,
+        timesDayCare,
+        timesCafe,
+        timesGym,
+        timesTraining,
+        timesTerrace01,
+        timesTerrace02,
+        timesTerrace03,
+      ],
     },
     {
-      title: 'Luxury Hotel',
-      location: 'Bangalore, India',
-      year: '2023',
-      area: '85,000 sq ft',
-      value: '₹280 Cr',
-      description: 'A luxury hotel where architecture and interior design create a distinct sense of place. Guest experience drove every decision, from the arrival sequence to room layouts and amenity spaces. The result is a hospitality environment that feels both timeless and contemporary.',
+      title: 'Nirmal Industrial Controls',
+      type: 'Corporate Office',
+      location: 'Thane, India',
+      description: 'Corporate office interiors for Nirmal Industrial Controls in Thane. Meeting rooms, open workstations, and cafe spaces balance industrial character with a colourful, collaborative workplace.',
       images: [
-        'https://images.unsplash.com/photo-1566073771259-6a8506099945?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
-        'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
-        'https://images.unsplash.com/photo-1571896349842-33c89424de2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
-      ]
+        nirmalOffice01,
+        nirmalOffice02,
+        nirmalMeeting01,
+        nirmalMeeting02,
+        nirmalMeeting03,
+        nirmalCafe,
+      ],
     },
     {
-      title: 'Residential Tower',
+      title: 'ENIL',
+      type: 'Corporate Office & Studios',
+      location: 'Mumbai, India',
+      description: 'Corporate office and broadcast studios for ENIL in Mumbai. Reception, radio and Gaana studios, dressing room, collaboration zones, and open office. Brand-led spaces built for media and sound.',
+      images: [
+        mirchiReception,
+        mirchiRadioStudio,
+        mirchiGaanaStudio,
+        mirchiDressing,
+        mirchiOffice,
+        mirchiCollab,
+      ],
+    },
+    {
+      title: 'Tablespace Suites',
+      type: 'Premium Managed Office',
+      location: 'Mumbai, India',
+      description: 'Premium managed office environments for Tablespace Suites in Mumbai. Reception, workstations, meeting rooms, lift lobby, passages, and amenities. A polished client-facing workplace.',
+      images: [
+        tsReception,
+        tsOffice,
+        tsMeeting,
+        tsLiftLobby,
+        tsPassage,
+        tsToilet,
+      ],
+    },
+    {
+      title: 'Suttatti Enterprises',
+      type: 'Corporate Office',
       location: 'Pune, India',
-      year: '2024',
-      area: '120,000 sq ft',
-      value: '₹350 Cr',
-      description: 'A high-rise residential tower that balances density with liveability. Facade design, shared amenities, and unit planning were developed to maximise light, views, and community. The building stands as a reference for quality residential development in the city.',
+      description: 'Corporate office design for Suttatti Enterprises in Pune. Reception, open office, and executive cabin. A clear contemporary workplace for leadership, teams, and visitors.',
       images: [
-        'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
-        'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
-        'https://images.unsplash.com/photo-1518780664697-55e3ad937233?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
-      ]
+        suttattiReception,
+        suttattiOffice,
+        suttattiCabin,
+      ],
     },
     {
-      title: 'Tech Campus',
-      location: 'Hyderabad, India',
-      year: '2023',
-      area: '200,000 sq ft',
-      value: '₹500 Cr',
-      description: 'A tech campus planned for flexibility, wellness, and collaboration. Campus masterplan, building architecture, and interior fit-outs were designed as one system. The outcome is a future-ready environment that supports talent and reflects the client’s brand and culture.',
+      title: 'Times Network',
+      type: 'Corporate Office',
+      location: 'Mumbai, India',
+      description: 'Corporate office interiors for Times Network in Mumbai. Cabin, meeting rooms, and open office. Spaces that support newsroom pace, collaboration, and brand presence.',
       images: [
-        'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
-        'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
-        'https://images.unsplash.com/photo-1497366811353-6870744d04b2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
-      ]
+        timesNetworkOffice,
+        timesNetworkMeeting,
+        timesNetworkCabin,
+      ],
     },
     {
-      title: 'Fine Dining Restaurant',
-      location: 'Delhi, India',
-      year: '2024',
-      area: '8,500 sq ft',
-      value: '₹45 Cr',
-      description: 'A fine dining restaurant where interior design shapes the entire experience. Material palette, lighting, and spatial flow were developed to support both service efficiency and guest comfort. The space conveys a clear identity and a memorable sense of occasion.',
+      title: 'Jaikumar Constructions',
+      type: 'Corporate Office',
+      location: 'Nasik, India',
+      description: 'Corporate office for Jaikumar Constructions in Nasik. Reception lobby and workplace interiors express the developer’s identity while supporting day-to-day operations.',
       images: [
-        'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
-        'https://images.unsplash.com/photo-1559339352-11d035aa65de?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
-        'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
-      ]
+        parksydeReception01,
+        parksydeReception02,
+        parksydeOffice,
+      ],
     },
     {
-      title: 'Mixed-Use Development',
+      title: 'Worldwide Media',
+      type: 'Corporate Office',
+      location: 'Mumbai, India',
+      description: 'Corporate office for Worldwide Media in Mumbai. Cabins, collaboration zones, and meeting rooms. A workplace designed for focus, teamwork, and brand storytelling.',
+      images: [
+        wwmCollab,
+        wwmMeeting,
+        wwmCabin,
+      ],
+    },
+    {
+      title: 'Galeries Lafayette',
+      type: 'Corporate Office',
+      location: 'Mumbai, India',
+      description: 'Corporate office for Galeries Lafayette under Aditya Birla Fashion & Retail in Mumbai. Reception, cabins, open office, collaboration zones, conference, and phone booths. Retail heritage in a refined workplace.',
+      images: [
+        abfrlReception,
+        abfrlCeoCabin,
+        abfrlCabinCluster,
+        abfrlOffice01,
+        abfrlOffice02,
+        abfrlCollab01,
+        abfrlCollab02,
+        abfrlConference,
+        abfrlPhonebooth,
+      ],
+    },
+    {
+      title: 'Miss India Organization',
+      type: 'Corporate Office',
+      location: 'Mumbai, India',
+      description: 'Corporate office for the Miss India Organization in Mumbai. Pre-function galleries and auditorium. Brand-led interiors for events, operations, and culture.',
+      images: [
+        mioPreFunction02,
+        mioAuditorium,
+        mioPreFunction01,
+      ],
+    },
+    {
+      title: 'Chettinad Products & Services',
+      type: 'Corporate Office',
       location: 'Chennai, India',
-      year: '2023',
-      area: '150,000 sq ft',
-      value: '₹420 Cr',
-      description: 'A mixed-use development combining retail, workspace, and public realm. Masterplanning and architecture were coordinated to create a cohesive precinct with strong pedestrian connections and a clear identity. The project sets a benchmark for mixed-use in the region.',
+      description: 'Corporate office for Chettinad Products & Services in Chennai. Reception, workspace, cafe, and exterior. Functional planning and material quality for a professional technical workplace.',
       images: [
-        'https://images.unsplash.com/photo-1460574283810-2aab119d8511?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
-        'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
-        'https://images.unsplash.com/photo-1582407947304-fd86f028f716?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
-      ]
+        ctoMainReception,
+        ctoReception01,
+        ctoReception02,
+        ctoOffice,
+        ctoCafe,
+        ctoExterior,
+      ],
+    },
+    {
+      title: 'Chettinad Group',
+      type: 'Common Areas',
+      location: 'Chennai, India',
+      description: 'Common areas for the Chettinad Group in Chennai. Reception lobby and lift lobby. Shared spaces that elevate arrival, circulation, and informal meeting for a multi-entity corporate campus.',
+      images: [
+        ccoReceptionLobby01,
+        ccoReceptionLobby02,
+        ccoLiftLobby,
+      ],
+    },
+    {
+      title: 'Chettinad Group',
+      type: 'Corporate Office',
+      location: 'Chennai, India',
+      description: 'Corporate office floors CCO-11 / 12 for the Chettinad Group in Chennai. Reception, collaboration, meeting, and cafe. Consistent design language across floors for brand cohesion and everyday work.',
+      images: [
+        cco11Reception,
+        cco11Collab01,
+        cco11Collab02,
+        cco11Collab03,
+        cco11Meeting,
+        cco11Cafe,
+      ],
+    },
+    {
+      title: 'Chettinad Group',
+      type: 'Family Office',
+      location: 'Chennai, India',
+      description: 'Family office interiors for Chettinad Group in Chennai. Reception, board room, MD cabin, coffee bar, and living room. Private, composed spaces for leadership and family business.',
+      images: [
+        cco13Reception01,
+        cco13Reception02,
+        cco13BoardRoom,
+        cco13MdCabin,
+        cco13CoffeeBar,
+        cco13LivingRoom,
+      ],
+    },
+    {
+      title: 'Howden Insurance',
+      type: 'Corporate Office',
+      location: 'Mumbai, India',
+      description: 'Corporate office for Howden Insurance in Mumbai. Reception, collaboration, board room, and meeting. Client-facing and team spaces that balance professionalism and operational efficiency.',
+      images: [
+        howdenReception,
+        howdenCollab01,
+        howdenCollab02,
+        howdenCollab03,
+        howdenBoardRoom,
+        howdenMeeting,
+      ],
+    },
+    {
+      title: 'Unilever Fragrance House',
+      type: 'Innovation Lab',
+      location: 'Mumbai, India',
+      description: 'Innovation lab for Unilever Fragrance House in Mumbai. Reception, compound lab, evaluation chambers, hair wash, and office. Sensory-driven environments for product development and creative collaboration.',
+      images: [
+        ufhReception,
+        ufhOffice,
+        ufhCompoundLab,
+        ufhEvaluation,
+        ufhHairWash,
+        ufhPassage,
+      ],
+    },
+    {
+      title: 'Raheja Universal',
+      type: 'Corporate Office',
+      location: 'Mumbai, India',
+      description: 'Corporate office for Raheja Universal in Mumbai. Reception, sky lounge, cafe, mumpty, and compound. Developer headquarters with clear zoning for leadership, sales, and project teams.',
+      images: [
+        rahejaReception01,
+        rahejaReception02,
+        rahejaSkyLounge,
+        rahejaCafe,
+        rahejaMumpty,
+        rahejaCompoundWall,
+      ],
+    },
+    {
+      title: 'Hindustan Unilever',
+      type: 'Regional Office',
+      location: 'Navi Mumbai, India',
+      description: 'Regional office for Hindustan Unilever in Navi Mumbai. Reception, office, collaboration, cafe, and lift lobby. Scalable workplace planning for brand standards and regional operations.',
+      images: [
+        hulReception,
+        hulOffice,
+        hulCollab,
+        hulCafe,
+        hulWorkCafe,
+        hulLiftLobby,
+      ],
+    },
+    {
+      title: 'Times Music',
+      type: 'Corporate Office & Studios',
+      location: 'Mumbai, India',
+      description: 'Corporate office and studios for Times Music in Mumbai. Meeting, cabin, and open office. Acoustic-sensitive design meets brand expression for a music-first workplace.',
+      images: [
+        timesMusicMeeting,
+        timesMusicCabin,
+        timesMusicOffice,
+      ],
+    },
+    {
+      title: 'UBS',
+      type: 'Command Centre',
+      location: 'Pune, India',
+      description: 'Command centre for UBS in Pune. NOC room, business cafe, and garden. High-performance interiors for monitoring, decision-making, and continuous operations.',
+      images: [
+        ubsNocRoom,
+        ubsBusinessCafe,
+        ubsBusinessGarden,
+      ],
+    },
+    {
+      title: 'BeThat Space',
+      type: 'Corporate Office & Design Studio',
+      location: 'Thane, India',
+      description: 'Our own corporate office and design studio in Thane. Arrivals, board room, office, and collaboration. A living lab for how we design, collaborate, and deliver spatial experiences.',
+      images: [
+        bethatArrivals01,
+        bethatArrivals02,
+        bethatBoardRoom,
+        bethatOffice01,
+        bethatOffice02,
+        bethatCollab,
+      ],
+    },
+    {
+      title: 'Confidential',
+      type: 'Plant Office',
+      location: 'Nasik, India',
+      description: 'Plant office for a confidential client in Nasik. Exterior, experience center, office, and training. Industrial adjacency with office comfort for plant leadership and operations.',
+      images: [
+        uniExterior,
+        uniExperience,
+        uniOffice01,
+        uniOffice02,
+        uniOffice03,
+        uniTraining,
+      ],
+    },
+    {
+      title: 'Confidential',
+      type: 'Corporate Office',
+      location: 'Mumbai, India',
+      description: 'Corporate office for a confidential client in Mumbai. Reception, experience center, cafe, collaboration, lounge, and office. Technical brand identity as a clear, efficient workplace.',
+      images: [
+        vertivReception,
+        vertivExperience,
+        vertivCafe,
+        vertivCollab,
+        vertivLounge,
+        vertivOffice,
+      ],
+    },
+    {
+      title: 'Confidential',
+      type: 'Mixed Use',
+      location: 'Navi Mumbai, India',
+      description: 'Mixed-use interiors for a confidential client in Navi Mumbai. Multiple programmes coordinated under one spatial identity.',
+      images: [orientalExterior],
     },
   ];
 
@@ -172,20 +556,27 @@ export function ProjectsClients() {
 
       <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-14 w-full">
         {/* PROJECTS SECTION */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl lg:text-5xl tracking-tight text-white mb-6 font-semibold">
+        <div className="text-center mb-12 max-w-3xl mx-auto">
+          <h2 className="bts-title mb-6">
             Projects
           </h2>
-          <div className="flex justify-center">
+          <div className="flex justify-center mb-8">
             <div className="h-px w-32 bg-gradient-to-r from-transparent via-red-600/50 to-transparent" />
+          </div>
+          <p className="text-white text-xl lg:text-2xl font-semibold mb-6">
+            Ideas Made Real.
+          </p>
+          <div className="bts-body text-white/70 text-base lg:text-lg space-y-4">
+            <p>
+              Every project begins with a different set of aspirations, challenges and possibilities. Our work brings these together through considered design, technical integration and disciplined execution.
+            </p>
+            <p className="text-white/80">
+              Explore the spaces we have helped shape, and the thinking behind them.
+            </p>
           </div>
         </div>
 
-        <p className="text-white/70 text-center text-base lg:text-lg font-light max-w-2xl mx-auto mb-12">
-          Spaces we've designed and built for leading brands and institutions.
-        </p>
-
-        {/* Desktop: Grid of 6 Projects */}
+        {/* Desktop: Project grid */}
         <div className="hidden lg:grid lg:grid-cols-3 gap-8 mb-20">
           {projects.map((project, index) => (
             <div 
@@ -202,22 +593,11 @@ export function ProjectsClients() {
               
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent pointer-events-none" />
               
-              <div className="absolute bottom-0 left-0 right-0 p-6">
+              <div className="absolute bottom-0 left-0 right-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                 <h3 className="text-white text-xl mb-1 font-semibold">{project.title}</h3>
-                <p className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4">
-                  {project.location}, {project.year}
+                <p className="text-white/70 text-sm uppercase tracking-wider font-medium">
+                  {project.location}
                 </p>
-                
-                {/* Read More Button */}
-                <button 
-                  onClick={() => openModal(index)}
-                  className="flex items-center gap-2 text-white/80 hover:text-red-600 transition-colors duration-300 group/btn"
-                >
-                  <div className="w-5 h-5 rounded-full border border-white/80 group-hover/btn:border-red-600 flex items-center justify-center transition-colors duration-300">
-                    <Plus className="w-3 h-3" />
-                  </div>
-                  <span className="text-xs font-medium uppercase tracking-wider">Read More</span>
-                </button>
               </div>
               <div className="absolute bottom-0 left-0 right-0 h-1 w-0 bg-red-600 group-hover:w-full transition-all duration-700 ease-out" />
             </div>
@@ -259,7 +639,7 @@ export function ProjectsClients() {
                 <div className="absolute bottom-0 left-0 right-0 p-6">
                   <h3 className="text-white text-xl mb-1 font-semibold">{projects[currentProject].title}</h3>
                   <p className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4">
-                    {projects[currentProject].location}, {projects[currentProject].year}
+                    {projects[currentProject].type} | {projects[currentProject].location}
                   </p>
                   
                   {/* View More Button */}
@@ -325,7 +705,7 @@ export function ProjectsClients() {
         {/* CLIENTS SECTION - Mobile Only */}
         <div className="mb-16 lg:hidden -mx-6">
           <div className="text-center mb-12 px-6">
-            <h2 className="text-3xl tracking-tight text-white mb-6 font-semibold">
+            <h2 className="bts-title mb-6">
               Clients
             </h2>
             <div className="flex justify-center">
@@ -381,9 +761,9 @@ export function ProjectsClients() {
             </button>
 
             <div className="grid lg:grid-cols-2 gap-0">
-              {/* Left: Carousel */}
+              {/* Left: Carousel. 3:4 frame, auto-play pauses on hover */}
               <div 
-                className="relative aspect-[4/3] bg-black overflow-hidden"
+                className="relative aspect-[3/4] max-h-[80vh] bg-black overflow-hidden mx-auto w-full"
                 onMouseEnter={() => setIsCarouselHovered(true)}
                 onMouseLeave={() => setIsCarouselHovered(false)}
               >
@@ -393,7 +773,6 @@ export function ProjectsClients() {
                   className="w-full h-full object-cover"
                 />
 
-                {/* Carousel Navigation */}
                 {projects[selectedProject].images.length > 1 && (
                   <>
                     <button 
@@ -409,7 +788,6 @@ export function ProjectsClients() {
                       <ChevronRight className="w-5 h-5 text-white/80 group-hover:text-white transition-colors" />
                     </button>
 
-                    {/* Image Dots */}
                     <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
                       {projects[selectedProject].images.map((_, i) => (
                         <button
@@ -425,13 +803,16 @@ export function ProjectsClients() {
                 )}
               </div>
 
-              {/* Right: Fact File */}
+              {/* Right: Fact File (static) */}
               <div className="p-8 lg:p-12 flex flex-col justify-center">
+                <p className="text-white/50 text-sm uppercase tracking-wider mb-2 font-medium">
+                  Client
+                </p>
                 <h3 className="text-3xl lg:text-4xl text-white font-semibold mb-2 tracking-tight">
                   {projects[selectedProject].title}
                 </h3>
-                <p className="text-white/50 text-sm uppercase tracking-wider mb-8 font-medium">
-                  {projects[selectedProject].year}
+                <p className="text-white/60 text-base mb-8 font-light">
+                  {projects[selectedProject].type}
                 </p>
 
                 <div className="h-px w-16 bg-red-600 mb-8" />
@@ -452,27 +833,18 @@ export function ProjectsClients() {
 
                   <div className="border-l-2 border-red-600/30 pl-6">
                     <div className="text-white/40 text-xs uppercase tracking-wider mb-1 font-medium">
-                      Area
+                      Project Type
                     </div>
                     <div className="text-white text-lg font-light">
-                      {projects[selectedProject].area}
+                      {projects[selectedProject].type}
                     </div>
                   </div>
 
                   <div className="border-l-2 border-red-600/30 pl-6">
                     <div className="text-white/40 text-xs uppercase tracking-wider mb-1 font-medium">
-                      Value
+                      Project Brief
                     </div>
-                    <div className="text-white text-lg font-light">
-                      {projects[selectedProject].value}
-                    </div>
-                  </div>
-
-                  <div className="border-l-2 border-red-600/30 pl-6">
-                    <div className="text-white/40 text-xs uppercase tracking-wider mb-1 font-medium">
-                      Description
-                    </div>
-                    <div className="text-white text-base font-light leading-relaxed min-h-[7.5rem]">
+                    <div className="bts-body bts-justify text-white text-base">
                       {projects[selectedProject].description || '\u00A0'}
                     </div>
                   </div>

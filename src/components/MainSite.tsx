@@ -14,7 +14,7 @@ export function MainSite() {
       <Header />
       
       <main className="pt-20">
-        {/* Parallax Background Container for Philosophy + About */}
+        {/* Parallax Background Container for Home + About */}
         <div 
           className="relative"
           style={{
@@ -24,10 +24,12 @@ export function MainSite() {
             backgroundAttachment: 'scroll'
           }}
         >
-          {/* Overlay (40%) — brighter background */}
-          <div className="absolute inset-0 bg-black/40" />
+          {/* Darker overlay so About text stays readable over the bg image */}
+          <div className="absolute inset-0 bg-black/70" />
           
-          <Punchline />
+          <div id="philosophy">
+            <Punchline />
+          </div>
           <About />
         </div>
         

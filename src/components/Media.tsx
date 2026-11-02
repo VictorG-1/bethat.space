@@ -3,24 +3,24 @@ import { ImageWithFallback } from './figma/ImageWithFallback';
 
 const MEDIA_ITEMS = [
   {
-    category: 'Project Update',
-    date: '2 months ago',
-    title: 'Times Group HQ — Completion',
-    image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=500&fit=crop',
-    href: '#',
-  },
-  {
-    category: 'Insight',
-    date: '3 months ago',
-    title: 'Designing for Wellbeing',
+    category: 'Publications',
+    title: 'Publications',
+    description: 'Our latest thinking, features and written perspectives on design and the built environment.',
     image: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=800&h=500&fit=crop',
     href: '#',
   },
   {
-    category: 'Press',
-    date: '4 months ago',
-    title: 'BeThat Space in Design India',
-    image: 'https://images.unsplash.com/photo-1586717799252-22c2b2c7c0e6?w=800&h=500&fit=crop',
+    category: 'Accolades',
+    title: 'Accolades',
+    description: 'Recognition for the spaces we shape and the outcomes they enable.',
+    image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=500&fit=crop',
+    href: '#',
+  },
+  {
+    category: 'Conversations',
+    title: 'Conversations',
+    description: 'Dialogues, interviews and shared knowledge that explore how environments respond to changing needs.',
+    image: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800&h=500&fit=crop',
     href: '#',
   },
 ];
@@ -36,20 +36,27 @@ export function Media() {
       </div>
 
       <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-14 w-full">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl lg:text-5xl tracking-tight text-white mb-6 font-semibold">
+        <div className="text-center mb-12 max-w-3xl mx-auto">
+          <h2 className="bts-title mb-6">
             Media
           </h2>
-          <div className="flex justify-center">
+          <div className="flex justify-center mb-8">
             <div className="h-px w-32 bg-gradient-to-r from-transparent via-red-600/50 to-transparent" />
+          </div>
+          <p className="text-white text-xl lg:text-2xl font-semibold mb-6">
+            Ideas Beyond the Space.
+          </p>
+          <div className="bts-body text-white/70 text-base lg:text-lg space-y-4">
+            <p>
+              Design is a conversation between people, places and possibilities. Through our work, perspectives and shared knowledge, we explore how the environments we create can respond to changing needs and shape better outcomes.
+            </p>
+            <p className="text-white/80">
+              Explore our latest thinking, publications, features and conversations.
+            </p>
           </div>
         </div>
 
-        <p className="text-white/70 text-center text-base lg:text-lg font-light max-w-2xl mx-auto mb-12">
-          News, insights, and updates from our studio and projects.
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           {MEDIA_ITEMS.map((item, index) => (
             <a
               key={index}
@@ -63,15 +70,15 @@ export function Media() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent pointer-events-none" />
               <div className="absolute bottom-0 left-0 right-0 p-6">
-                <h3 className="text-white text-xl mb-1 font-semibold">{item.title}</h3>
-                <p className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4">
-                  {item.category} · {item.date}
+                <h3 className="text-white text-xl mb-2 font-semibold">{item.title}</h3>
+                <p className="bts-body bts-justify text-white/60 text-sm mb-4">
+                  {item.description}
                 </p>
                 <span className="flex items-center gap-2 text-white/80 group-hover:text-red-600 transition-colors duration-300">
                   <span className="w-5 h-5 rounded-full border border-white/80 group-hover:border-red-600 flex items-center justify-center transition-colors duration-300">
                     <Plus className="w-3 h-3" />
                   </span>
-                  <span className="text-xs font-medium uppercase tracking-wider">Read More</span>
+                  <span className="text-xs font-medium uppercase tracking-wider">Explore</span>
                 </span>
               </div>
               <div className="absolute bottom-0 left-0 right-0 h-1 w-0 bg-red-600 group-hover:w-full transition-all duration-700 ease-out" />
@@ -79,6 +86,9 @@ export function Media() {
           ))}
         </div>
 
+        <p className="text-center text-white/40 text-xs uppercase tracking-[0.2em]">
+          Publications <span className="mx-2">|</span> Accolades <span className="mx-2">|</span> Conversations
+        </p>
       </div>
     </section>
   );

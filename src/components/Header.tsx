@@ -24,16 +24,12 @@ export function Header() {
       const currentScrollY = window.scrollY;
       const scrollingDown = currentScrollY > lastScrollY.current;
 
-      // At top of page: always show
       if (currentScrollY <= 80) {
         setIsVisible(true);
-      }
-      // Scrolling down: force hide (any downward scroll)
-      else if (scrollingDown) {
+      } else if (scrollingDown) {
         setIsVisible(false);
-      }
-      // Scrolling up: show
-      else {
+        setMenuOpen(false);
+      } else {
         setIsVisible(true);
       }
 
@@ -41,7 +37,6 @@ export function Header() {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -52,11 +47,11 @@ export function Header() {
       window.history.pushState({}, '', '/explore');
       window.dispatchEvent(new PopStateEvent('popstate'));
       setTimeout(() => {
-        const el = document.getElementById('philosophy');
+        const el = document.getElementById('home');
         if (el) el.scrollIntoView({ behavior: 'smooth' });
       }, 100);
     } else {
-      const el = document.getElementById('philosophy');
+      const el = document.getElementById('home');
       if (el) el.scrollIntoView({ behavior: 'smooth' });
     }
   };
@@ -66,7 +61,6 @@ export function Header() {
     window.history.pushState({}, '', '/explore');
     window.dispatchEvent(new PopStateEvent('popstate'));
     
-    // Scroll to last section after a brief delay to ensure page loads
     if (lastSection) {
       setTimeout(() => {
         const element = document.getElementById(lastSection);
@@ -79,13 +73,11 @@ export function Header() {
   };
 
   const handleNavClick = (href: string) => {
-    // Store current section if navigating to a subpage
     if (href.startsWith('/') && !href.startsWith('/#')) {
-      // Get current section from scroll position
-      const sections = ['hero', 'philosophy', 'about', 'leadership', 'services', 'projects', 'footer'];
+      const sections = ['home', 'about', 'leadership', 'services', 'projects', 'media', 'footer'];
       const scrollPosition = window.scrollY + window.innerHeight / 2;
       
-      let currentSection = 'hero';
+      let currentSection = 'home';
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element && element.offsetTop <= scrollPosition) {
@@ -95,16 +87,25 @@ export function Header() {
       sessionStorage.setItem('lastSection', currentSection);
     }
     setMenuOpen(false);
+
+    if (href.startsWith('#')) {
+      const id = href.slice(1);
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    } else if (href === '/') {
+      const el = document.getElementById('home');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const navItems = [
-    { name: 'Home', href: '/' },
-    { name: 'Philosophy', href: '#philosophy' },
+    { name: 'Home', href: '#home' },
     { name: 'About Us', href: '#about' },
     { name: 'Culture & People', href: '#leadership' },
-    { name: 'Services', href: '/services' },
+    { name: 'Services', href: '#services' },
     { name: 'Projects', href: '#projects' },
-    { name: 'Careers', href: '/careers' },
+    { name: 'Media', href: '#media' },
+    { name: 'Contact Us', href: '#footer' },
   ];
 
   return (
@@ -115,7 +116,6 @@ export function Header() {
             <img src={logo} alt="BeThatSpace™" className="h-12 lg:h-16 w-auto" />
           </button>
           
-          {/* Burger Menu Button OR Back/Explore Button */}
           {isSubPage ? (
             currentPath === '/why-we-changed' ? (
               <button
@@ -123,7 +123,7 @@ export function Header() {
                 className="px-6 py-3 bg-transparent group"
               >
                 <span className="tracking-[0.2em] text-sm font-medium text-white group-hover:text-red-600 transition-colors inline-block">
-                  Explore BeThatSpace™
+                  Enter
                 </span>
               </button>
             ) : (
@@ -139,6 +139,7 @@ export function Header() {
             <button 
               onClick={() => setMenuOpen(!menuOpen)}
               className="p-2 transition-colors rounded font-medium group"
+              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
             >
               {menuOpen ? (
                 <X className="w-7 h-7 text-white group-hover:text-red-600 transition-colors" />
@@ -152,23 +153,29 @@ export function Header() {
             </button>
           )}
         </div>
+
       </header>
 
-      {/* Menu Overlay - Only show on main page */}
-      {menuOpen && !isSubPage && (
-        <div className="fixed inset-0 bg-black/95 backdrop-blur-lg z-40">
-          <div className="flex flex-col items-center justify-center h-full gap-8">
-            {navItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                onClick={() => handleNavClick(item.href)}
-                className="text-white text-2xl lg:text-3xl tracking-wider font-semibold hover:text-red-600 transition-colors duration-300 capitalize"
-              >
-                {item.name}
-              </a>
-            ))}
-          </div>
+      {/* Slide-down menu — only when open, so no residual blur box */}
+      {!isSubPage && menuOpen && (
+        <div className="fixed top-[4.5rem] lg:top-[5.5rem] left-0 right-0 z-40 animate-in fade-in slide-in-from-top-2 duration-300">
+          <nav className="bg-black/80 backdrop-blur-md border-b border-white/10 px-8 lg:px-14 py-8 lg:py-10">
+            <div className="max-w-[1440px] mx-auto flex flex-col items-center gap-5 lg:gap-6">
+              {navItems.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavClick(item.href);
+                  }}
+                  className="text-white text-lg lg:text-xl tracking-wider font-medium hover:text-red-600 transition-colors duration-300"
+                >
+                  {item.name}
+                </a>
+              ))}
+            </div>
+          </nav>
         </div>
       )}
     </>

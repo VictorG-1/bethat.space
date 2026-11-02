@@ -28,89 +28,74 @@ export function Services() {
       title: 'Design Consultancy',
       watermark: 'DC',
       intro: 'Creative & sustainable design interventions that bridge tangible needs with intangible aspirations.',
-      description: 'We translate vision into space — with empathy, logic, and aesthetic clarity. From strategy to detailing, our design approach is rooted in purpose and shaped for performance.',
+      description: 'We translate aspirations into environments through creative, context-responsive and technically informed design. Balancing human needs, business objectives and environmental considerations, we create spaces where form, function and experience work together.',
       image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
       subServices: [
         {
           name: 'Workplace Strategy',
-          description: 'We help organizations align their people, culture, and physical space. It\'s about understanding how teams actually work, then designing environments that support meaningful engagement and collaboration.'
+          description: 'Aligning people, culture and space with organisational objectives and evolving ways of working.'
         },
         {
           name: 'Architecture',
-          description: 'Our architectural approach responds to context, climate, and community. We design buildings that belong—structures that feel right for their place and purpose.'
+          description: 'Shaping built environments in response to context, climate, function and community.'
         },
         {
           name: 'Interior Design',
-          description: 'We craft interior experiences that express identity and enhance daily life. Every material, every detail, every choice serves both function and feeling.'
+          description: 'Creating considered spatial experiences that express identity and enhance everyday use.'
         },
         {
           name: 'MEPF Design',
-          description: 'We integrate mechanical, electrical, plumbing, and fire systems thoughtfully. These invisible systems sustain comfort, efficiency, and wellness—the foundation of great spaces.'
+          description: 'Integrating mechanical, electrical, plumbing and fire-protection systems for comfort, safety and operational efficiency.'
         }
       ],
-      outcome: 'Spaces that breathe, adapt, and empower people to thrive. We\'ve seen it happen—environments that truly support their occupants become catalysts for growth and success.',
+      outcome: 'Environments that respond intelligently, perform effectively and support the people who use them.',
       paragraphs: [
-        'Creative & sustainable design interventions that bridge tangible needs with intangible aspirations. We translate vision into space with empathy, logic, and aesthetic clarity.',
-        'From strategy to detailing, our design approach is rooted in purpose and shaped for performance. Every material, every detail, every choice serves both function and feeling.',
-        'Spaces that breathe, adapt, and empower people to thrive. Environments that truly support their occupants become catalysts for growth and success.'
+        'Creative & sustainable design interventions that bridge tangible needs with intangible aspirations.',
+        'We translate aspirations into environments through creative, context-responsive and technically informed design. Balancing human needs, business objectives and environmental considerations, we create spaces where form, function and experience work together.',
+        'Our Expertise: Workplace Strategy, Architecture, Interior Design, MEPF Design. The Outcome: Environments that respond intelligently, perform effectively and support the people who use them.'
       ]
     },
     {
-      title: 'Design & Build',
+      title: 'Design + Build',
       watermark: 'DB',
       intro: 'Efficient & seamless design+build solutions that merge creative precision with accountable execution.',
-      description: 'We believe building is an act of design — where intent meets integrity. Our integrated delivery ensures seamless coordination, transparent processes, and consistent quality.',
+      description: 'We bring design and execution together through an integrated approach that connects creative intent with practical delivery. With coordinated teams, transparent processes and disciplined project management, we work to maintain design integrity while managing cost, quality and time.',
       image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
       subServices: [
         {
-          name: 'Construction Management',
-          description: 'We manage construction with transparency and collaboration. Our Cost Plus model means you see everything—no surprises, just honest execution that respects both budget and vision.'
+          name: 'Construction Management (Cost Plus)',
+          description: 'Collaborative project delivery with transparent cost management, coordinated procurement and accountable execution.'
         },
         {
-          name: 'Design + Build',
-          description: 'When design and construction work as one, magic happens. Our unified delivery model ensures what we design gets built exactly as intended—with efficiency, speed, and unwavering fidelity to the vision.'
+          name: 'Integrated Design + Build',
+          description: 'A unified delivery model that aligns design, engineering, procurement and construction under coordinated project leadership.'
         }
       ],
-      outcome: 'Projects realized with confidence, care, and craftsmanship. When design intent meets construction excellence, the result speaks for itself.',
+      outcome: 'A more connected journey from concept to completion, with clarity of responsibility and confidence in delivery.',
       paragraphs: [
-        'Efficient & seamless design+build solutions that merge creative precision with accountable execution. We believe building is an act of design—where intent meets integrity.',
-        'Our integrated delivery ensures seamless coordination, transparent processes, and consistent quality. When design and construction work as one, what we design gets built exactly as intended.',
-        'Projects realized with confidence, care, and craftsmanship. When design intent meets construction excellence, the result speaks for itself.'
+        'Efficient & seamless design+build solutions that merge creative precision with accountable execution.',
+        'We bring design and execution together through an integrated approach that connects creative intent with practical delivery. With coordinated teams, transparent processes and disciplined project management, we work to maintain design integrity while managing cost, quality and time.',
+        'Our Expertise: Construction Management (Cost Plus), Integrated Design + Build. The Outcome: A more connected journey from concept to completion, with clarity of responsibility and confidence in delivery.'
       ]
     },
     {
-      title: 'Collaboration',
-      watermark: 'CB',
+      title: 'Specialist Collaboration',
+      watermark: 'SC',
       intro: 'Specialist partnerships that amplify design depth and project performance.',
-      description: 'We collaborate with experts who share our belief that the best spaces are created together. Each partner adds a layer of intelligence, precision, and soul to the project.',
+      description: 'Complex projects benefit from expertise that extends beyond any single discipline. We collaborate with specialist consultants and partners to bring complementary knowledge into the design and delivery process. By integrating their expertise with our own, we develop solutions that are coordinated, technically robust and responsive to the experience the space is intended to create.',
       image: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
       subServices: [
-        {
-          name: 'Structural Design',
-          description: 'Our structural partners ensure buildings stand strong and safe, while supporting our design vision.'
-        },
-        {
-          name: 'Façade Design',
-          description: 'Specialist façade designers help us create building skins that perform beautifully—protecting, expressing, and inspiring.'
-        },
-        {
-          name: 'Sustainability & Wellness Consulting',
-          description: 'We work with consultants who help us create spaces that are good for people and the planet—healthy, efficient, and future-ready.'
-        },
-        {
-          name: 'AV & Acoustics Design',
-          description: 'Audio-visual and acoustic experts ensure spaces sound as good as they look—supporting communication, focus, and connection.'
-        },
-        {
-          name: 'Environmental Graphic Design (EGD)',
-          description: 'EGD partners help us tell stories through space—wayfinding, branding, and identity woven into the built environment.'
-        }
+        { name: 'Structural Design', description: '' },
+        { name: 'Façade Design', description: '' },
+        { name: 'Sustainability & Wellness Consulting', description: '' },
+        { name: 'AV & Acoustics Design', description: '' },
+        { name: 'Environmental Graphic Design (EGD)', description: '' }
       ],
-      outcome: 'Integrated, future-ready environments that are technically sound, experientially rich, and deeply human. These are spaces that work beautifully on every level—from the systems that power them to the experiences they enable.',
+      outcome: 'Cohesive, technically integrated environments in which every discipline contributes to the performance of the whole.',
       paragraphs: [
-        'Specialist partnerships that amplify design depth and project performance. We collaborate with experts who share our belief that the best spaces are created together.',
-        'Each partner adds a layer of intelligence, precision, and soul to the project. From structural and façade design to sustainability and acoustics—we integrate expertise that elevates every outcome.',
-        'Integrated, future-ready environments that are technically sound, experientially rich, and deeply human. Spaces that work beautifully on every level.'
+        'Specialist partnerships that amplify design depth and project performance.',
+        'Complex projects benefit from expertise that extends beyond any single discipline. We collaborate with specialist consultants and partners to bring complementary knowledge into the design and delivery process.',
+        'Our Collaborative Disciplines: Structural Design, Façade Design, Sustainability & Wellness Consulting, AV & Acoustics Design, Environmental Graphic Design (EGD). The Outcome: Cohesive, technically integrated environments in which every discipline contributes to the performance of the whole.'
       ]
     }
   ];
@@ -132,17 +117,19 @@ export function Services() {
       <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-14 w-full">
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl lg:text-5xl tracking-tight text-white mb-6 font-semibold">
+          <h2 className="bts-title mb-6">
             Services
           </h2>
-          <div className="flex justify-center">
+          <div className="flex justify-center mb-8">
             <div className="h-px w-32 bg-gradient-to-r from-transparent via-red-600/50 to-transparent" />
           </div>
+          <p className="text-white text-xl lg:text-2xl font-semibold mb-6">
+            From Intent to Impact.
+          </p>
+          <p className="bts-body text-white/70 text-base lg:text-lg max-w-3xl mx-auto">
+            A space should do more than serve a function. It should respond to human needs, express a clear purpose and enable better outcomes. At BeThatSpace™, we bring together design intelligence, technical expertise and accountable execution to translate tangible requirements and intangible aspirations into purposeful built environments. From the first strategic question to the final detail on site, we connect the thinking, making and collaboration required to bring an idea to life.
+          </p>
         </div>
-
-        <p className="text-white/70 text-center text-base lg:text-lg font-light max-w-2xl mx-auto mb-12">
-          End-to-end solutions that bring your vision to life.
-        </p>
 
         {/* Services - Horizontal Row with Individual Expanders */}
         <div className="space-y-0 overflow-visible">
@@ -185,11 +172,14 @@ export function Services() {
                     </div>
 
                     {!isExpanded ? (
-                      /* Collapsed: title + Read more at bottom */
+                      /* Collapsed: title + intro on main tile + Read more */
                       <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-8">
-                        <h3 className="text-2xl lg:text-3xl text-white font-semibold mb-4 tracking-tight">
+                        <h3 className="text-xl lg:text-2xl text-white font-semibold mb-2 tracking-tight">
                           {service.title}
                         </h3>
+                        <p className="bts-body bts-justify text-white/70 text-xs lg:text-sm mb-4 line-clamp-3">
+                          {service.intro}
+                        </p>
                         <button
                           onClick={(e) => { e.stopPropagation(); toggleExpand(index); }}
                           className="flex items-center gap-2 text-white/80 hover:text-red-600 transition-colors duration-300 group/btn"
@@ -253,7 +243,7 @@ export function Services() {
                       {/* 3 paragraphs aligned below the 3 service cards */}
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                         {paragraphs.slice(0, 3).map((para, i) => (
-                          <p key={i} className="text-black/70 text-sm lg:text-base leading-relaxed font-light text-justify">
+                          <p key={i} className="bts-body bts-justify text-black/70 text-sm lg:text-base">
                             {para}
                           </p>
                         ))}
@@ -297,6 +287,19 @@ export function Services() {
               })()}
             </>
           )}
+        </div>
+
+        {/* Our Approach */}
+        <div className="mt-20 lg:mt-28 max-w-3xl mx-auto">
+          <p className="text-white/50 text-xs uppercase tracking-[0.25em] mb-3 text-center">Our Approach</p>
+          <div className="bts-body text-white/70 text-base lg:text-lg space-y-4">
+            <p className="text-white text-lg lg:text-xl">
+              Design brings intent into focus. Build gives it form. Collaboration strengthens the result.
+            </p>
+            <p>
+              Together, they enable us to create conducive environments where people and businesses thrive.
+            </p>
+          </div>
         </div>
 
       </div>

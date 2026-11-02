@@ -3038,6 +3038,30 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Site body copy: centre-aligned, consistent rhythm */
+.bts-body {
+  text-align: center;
+  font-weight: 300;
+  line-height: 1.8;
+  letter-spacing: 0.01em;
+}
+
+/* Card / expand / hover descriptions (overrides .bts-body centre) */
+.bts-body.bts-justify,
+.bts-justify {
+  text-align: justify !important;
+}
+
+/* Shared section titles — same size & weight everywhere */
+.bts-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: #fff;
+  text-align: center;
+}
+
 section {
   scroll-snap-align: start;
 }

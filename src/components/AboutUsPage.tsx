@@ -1,4 +1,3 @@
-import { ArrowLeft, X } from 'lucide-react';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import bgImage from 'figma:asset/c621f8e2b94cd37ccbe0edbb8d8595d829d1df5c.png';
@@ -12,9 +11,8 @@ function StatCounter({ end, label, suffix, hoverWords }: { end: number, label: s
 
   const runAnimation = () => {
     setCount(0);
-    const duration = 2000; // 2 seconds to reach end
+    const duration = 2000;
 
-    // Short milestones for 2 sec: multiples of 100, spaced for speed
     const getMilestones = () => {
       if (end === Infinity || suffix === 'M+') {
         return [100, 50000, 100000, 250000, 500000, 750000, 1000000];
@@ -70,9 +68,8 @@ function StatCounter({ end, label, suffix, hoverWords }: { end: number, label: s
 
   useEffect(() => {
     if (!isVisible) return;
-
     runAnimation();
-    const loop = setInterval(runAnimation, 5000); // Repeat every 5 sec
+    const loop = setInterval(runAnimation, 5000);
     return () => clearInterval(loop);
   }, [isVisible, end, suffix]);
 
@@ -101,7 +98,7 @@ function StatCounter({ end, label, suffix, hoverWords }: { end: number, label: s
       <p className="text-white/60 text-sm uppercase tracking-wider">{label}</p>
       {hoverWords && (
         <p
-          className={`mt-3 min-h-[2.5rem] text-white/80 text-sm font-light leading-snug transition-opacity duration-300 ${
+          className={`bts-justify mt-3 min-h-[2.5rem] text-white/80 text-sm font-light leading-snug transition-opacity duration-300 ${
             isHovered ? 'opacity-100' : 'opacity-0'
           }`}
         >
@@ -112,20 +109,41 @@ function StatCounter({ end, label, suffix, hoverWords }: { end: number, label: s
   );
 }
 
-export function AboutUsPage() {
-  const handleBack = () => {
-    window.history.pushState({}, '', '/explore');
-    window.dispatchEvent(new PopStateEvent('popstate'));
-  };
+const VALUES = [
+  {
+    title: 'Purpose',
+    description: 'Every project begins with a reason to exist. We align design decisions with human needs, client aspirations and business objectives to create meaningful outcomes.',
+  },
+  {
+    title: 'Empathy',
+    description: 'We design with people in mind. By understanding their needs, behaviours and experiences, we create environments that respond to the people who inhabit them.',
+  },
+  {
+    title: 'Innovation',
+    description: 'We challenge convention and explore new possibilities. Through curiosity and multidisciplinary thinking, we develop solutions that are relevant, considered and ready for what lies ahead.',
+  },
+  {
+    title: 'Excellence',
+    description: 'We pursue quality through thoughtful design, technical rigour and precision in execution. Every decision and detail contributes to the integrity of the whole.',
+  },
+  {
+    title: 'Collaboration',
+    description: 'Better outcomes emerge when perspectives come together. We share knowledge, respect expertise and work across disciplines to create solutions stronger than any one contribution.',
+  },
+  {
+    title: 'Impact',
+    description: 'We look beyond what we deliver to what it enables. Success lies in creating lasting value for people, clients, businesses and the environments we shape.',
+  },
+];
 
+export function AboutUsPage() {
   return (
     <div className="min-h-screen bg-black scroll-smooth font-sans">
       <Header />
       
       <main className="pt-20">
-        {/* Hero Section with Background */}
         <div 
-          className="relative min-h-screen flex items-center justify-center"
+          className="relative min-h-[70vh] flex items-center justify-center"
           style={{
             backgroundImage: `url(${bgImage})`,
             backgroundSize: 'cover',
@@ -133,43 +151,47 @@ export function AboutUsPage() {
             backgroundAttachment: 'fixed'
           }}
         >
-          {/* Dark overlay */}
-          <div className="absolute inset-0 bg-black/70" />
+          <div className="absolute inset-0 bg-black/80" />
           
-          <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-14 w-full py-32">
-            {/* Main Content */}
-            <div className="max-w-5xl mx-auto text-center">
-              <h1 className="text-6xl lg:text-8xl tracking-tight font-semibold text-white mb-8">
+          <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-14 w-full py-24 lg:py-32">
+            <div className="max-w-4xl mx-auto space-y-6">
+              <h1 className="bts-title mb-4">
                 About Us
               </h1>
+              <div className="h-px w-32 bg-gradient-to-r from-transparent via-red-600/50 to-transparent mx-auto mb-8" />
               
-              <div className="h-px w-32 bg-gradient-to-r from-transparent via-red-600/50 to-transparent mx-auto mb-12" />
-              
-              <p className="text-white/80 text-xl lg:text-2xl leading-relaxed font-light mb-8">
-                BeThatSpace™ is a multidisciplinary architecture and spatial design studio dedicated to creating environments that foster growth, creativity, and human connection.
-              </p>
+              <div className="bts-body space-y-6 text-white/80 text-base lg:text-lg">
+                <p>
+                  We are an award-winning, multidisciplinary architecture, interior design and design+build practice with a strong presence across the Indian subcontinent.
+                </p>
+                <p>
+                  We bring together strategy, creativity and technical expertise to shape workplaces, hospitality environments and institutional spaces that elevate human experience and enable performance.
+                </p>
+                <p>
+                  By connecting perspectives across disciplines and working closely with our clients, we turn complex aspirations into clear, considered solutions, from the first idea to the finished environment.
+                </p>
+                <p>
+                  Our work spans architecture, interior design, workplace strategy, sustainability, engineering and build management. What unites it is a shared commitment to purposeful thinking, design integrity and lasting impact.
+                </p>
+                <p className="text-white/90 font-normal">
+                  We don't just create spaces. We create the conditions for what happens within them.
+                </p>
+              </div>
+              <div className="bts-body pt-8 space-y-3 text-white/70 text-base lg:text-lg">
+                <p className="text-white text-xl lg:text-2xl font-semibold text-center">We are BeThatSpace™</p>
+                <p>
+                  A proclamation of intent.
+                  A blessing for every space we touch.
+                  A dialogue with the inanimate.
+                </p>
+                <p>Where the abstract gets manifested,</p>
+              </div>
             </div>
-
           </div>
         </div>
 
-        {/* Our Story Section */}
+        {/* Our Story */}
         <section id="story" className="relative bg-black py-20 lg:py-32 overflow-hidden">
-          {/* Background Image */}
-          <div 
-            className="absolute inset-0"
-            style={{
-              backgroundImage: 'url(https://images.unsplash.com/photo-1600585154340-be6161a56a0c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundAttachment: 'fixed'
-            }}
-          >
-            {/* Dark overlay */}
-            <div className="absolute inset-0 bg-black/80" />
-          </div>
-
-          {/* Grid pattern overlay */}
           <div className="absolute inset-0 opacity-5">
             <div className="absolute inset-0" style={{
               backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
@@ -179,47 +201,46 @@ export function AboutUsPage() {
 
           <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-14">
             <div className="text-center mb-12">
-              <h2 className="text-4xl lg:text-6xl tracking-tight font-semibold text-white mb-6">
-                Our Story
+              <p className="text-white/50 text-xs uppercase tracking-[0.25em] mb-3">Our Story</p>
+              <h2 className="bts-title mb-6">
+                Every Space Begins With an Intent.
               </h2>
               <div className="h-px w-32 bg-gradient-to-r from-transparent via-red-600/50 to-transparent mx-auto" />
             </div>
 
-            {/* Story Paragraphs - M Moser inspired: 3 flowing paragraphs, clean typography */}
-            <div className="max-w-4xl mx-auto">
-              <div className="space-y-12 lg:space-y-16">
-                <div>
-                  <h3 className="text-xl lg:text-2xl font-semibold text-white mb-6 tracking-tight">
-                    Who we are
-                  </h3>
-                  <p className="text-white/90 text-lg lg:text-xl leading-relaxed font-light">
-                    Founded with a vision to transform architectural spaces, BeThatSpace™ creates environments that inspire. Our multidisciplinary approach combines innovation with sustainability. With studios across Thane, Pune, and Chennai, we bring international design excellence with local insights to every project we undertake.
-                  </p>
-                </div>
-                
-                <div>
-                  <h3 className="text-xl lg:text-2xl font-semibold text-white mb-6 tracking-tight">
-                    Our view
-                  </h3>
-                  <p className="text-white/90 text-lg lg:text-xl leading-relaxed font-light">
-                    We believe in collaboration and human-centered design, ensuring each space reflects our commitment to quality, creativity, and community. Space is experiential—we design to deepen connections between people and their environments, creating purposeful places that enable growth and meaningful work.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="text-xl lg:text-2xl font-semibold text-white mb-6 tracking-tight">
-                    How we do it
-                  </h3>
-                  <p className="text-white/90 text-lg lg:text-xl leading-relaxed font-light">
-                    Our strategic approach uncovers potential and reframes what your space should be. From concept to execution, we simplify the process—integrating design, engineering, and build—to bring projects to life at the right price and on time. Collaboration starts with listening, and every detail is crafted with intention.
-                  </p>
-                </div>
+            <div className="bts-body max-w-3xl mx-auto space-y-8 text-white/80 text-base lg:text-lg">
+              <p>
+                We are the architects of your space - for it to Be That Space.
+              </p>
+              <p>
+                BeThatSpace is both our name and our philosophy: a belief that every environment holds the potential to become something more than its physical form.
+              </p>
+              <p>
+                It begins with understanding what is unseen - the aspirations, needs and possibilities that give a space its purpose. Through reflection and clarity, these take shape as ideas, and through design and build, those ideas become tangible.
+              </p>
+              <p>
+                We see this journey as four ways of becoming -
+              </p>
+              <ul className="space-y-4 text-white/90 text-left">
+                <li><span className="font-semibold text-white">To Be Aware</span>: Recognise what could be.</li>
+                <li><span className="font-semibold text-white">To Be Still</span>: Make room for understanding.</li>
+                <li><span className="font-semibold text-white">To Be Clear</span>: Give intention a direction.</li>
+                <li><span className="font-semibold text-white">To Be Manifested</span>: Give form to possibility.</li>
+              </ul>
+              <p>
+                This is our process of becoming: from the abstract to the tangible, from intent to manifestation, from space as it is to space as it could be.
+              </p>
+              <div className="pt-4 space-y-2 text-white/90">
+                <p>To design is to declare.</p>
+                <p>To build is to believe.</p>
+                <p>To Be That Space is to give intent its form.</p>
               </div>
+              <p className="text-white text-xl font-semibold pt-4 text-center">Abstract Manifested.</p>
             </div>
           </div>
         </section>
 
-        {/* Our Values Section */}
+        {/* Our Values — 2 cols × 3 rows */}
         <section className="relative bg-black py-20 lg:py-32">
           <div className="absolute inset-0 opacity-5">
             <div className="absolute inset-0" style={{
@@ -229,98 +250,77 @@ export function AboutUsPage() {
           </div>
 
           <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-14">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-4xl lg:text-6xl tracking-tight font-semibold text-white mb-16 text-center">
-                Our Values
+            <div className="text-center mb-6">
+              <p className="text-white/50 text-xs uppercase tracking-[0.25em] mb-3">Our Values</p>
+              <h2 className="bts-title mb-6">
+                What We Stand For
               </h2>
-
-              <div className="space-y-12">
-                <div className="group">
-                  <div className="flex items-start gap-6">
-                    <div className="flex-shrink-0 w-16 h-16 rounded-full border-2 border-red-600 flex items-center justify-center group-hover:bg-red-600 transition-colors duration-300">
-                      <span className="text-2xl text-white font-semibold">01</span>
-                    </div>
-                    <div>
-                      <h3 className="text-2xl lg:text-3xl text-white mb-3 font-semibold group-hover:text-red-600 transition-colors duration-300">Excellence</h3>
-                      <p className="text-white/70 leading-relaxed text-base lg:text-lg font-light text-justify">
-                        We are committed to excellence in every aspect of our work, from initial concept to final execution. Quality is never compromised, and every detail matters.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="group">
-                  <div className="flex items-start gap-6">
-                    <div className="flex-shrink-0 w-16 h-16 rounded-full border-2 border-red-600 flex items-center justify-center group-hover:bg-red-600 transition-colors duration-300">
-                      <span className="text-2xl text-white font-semibold">02</span>
-                    </div>
-                    <div>
-                      <h3 className="text-2xl lg:text-3xl text-white mb-3 font-semibold group-hover:text-red-600 transition-colors duration-300">Innovation</h3>
-                      <p className="text-white/70 leading-relaxed text-base lg:text-lg font-light text-justify">
-                        We constantly push boundaries and explore new possibilities, embracing cutting-edge technologies and sustainable practices to create forward-thinking designs.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="group">
-                  <div className="flex items-start gap-6">
-                    <div className="flex-shrink-0 w-16 h-16 rounded-full border-2 border-red-600 flex items-center justify-center group-hover:bg-red-600 transition-colors duration-300">
-                      <span className="text-2xl text-white font-semibold">03</span>
-                    </div>
-                    <div>
-                      <h3 className="text-2xl lg:text-3xl text-white mb-3 font-semibold group-hover:text-red-600 transition-colors duration-300">Sustainability</h3>
-                      <p className="text-white/70 leading-relaxed text-base lg:text-lg font-light text-justify">
-                        Environmental responsibility is woven into the fabric of our practice. We design with the future in mind, creating spaces that are sustainable and responsible.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="group">
-                  <div className="flex items-start gap-6">
-                    <div className="flex-shrink-0 w-16 h-16 rounded-full border-2 border-red-600 flex items-center justify-center group-hover:bg-red-600 transition-colors duration-300">
-                      <span className="text-2xl text-white font-semibold">04</span>
-                    </div>
-                    <div>
-                      <h3 className="text-2xl lg:text-3xl text-white mb-3 font-semibold group-hover:text-red-600 transition-colors duration-300">Human-Centered Design</h3>
-                      <p className="text-white/70 leading-relaxed text-base lg:text-lg font-light text-justify">
-                        At the heart of every project is the human experience. We design spaces that enhance wellbeing, inspire creativity, and foster meaningful connections.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <p className="bts-body text-white/70 text-base lg:text-lg max-w-3xl mx-auto mb-12">
+                Our values shape how we think, how we work together and how we deliver. They guide our decisions, define our relationships and hold us accountable to the outcomes we create.
+              </p>
             </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-12">
+              {VALUES.map((value) => (
+                <div
+                  key={value.title}
+                  className="group border border-white/10 hover:border-red-600/50 p-8 lg:p-10 transition-all duration-500 min-h-[220px] flex flex-col"
+                >
+                  <h3 className="text-xl lg:text-2xl text-white font-semibold mb-4 group-hover:text-red-600 transition-colors">
+                    {value.title}
+                  </h3>
+                  <p className="bts-body bts-justify text-white/70 text-sm lg:text-base flex-1">
+                    {value.description}
+                  </p>
+                  <div className="mt-6 h-px w-0 bg-red-600 group-hover:w-full transition-all duration-700" />
+                </div>
+              ))}
+            </div>
+
+            <p className="bts-body text-white/60 text-sm lg:text-base max-w-3xl mx-auto">
+              Integrity, ownership and sustainability are the principles that underpin every value, and every decision we make.
+            </p>
           </div>
         </section>
 
-        {/* Stats Section */}
+        {/* Our Impact */}
         <section className="bg-neutral-950 py-20 lg:py-32">
           <div className="max-w-[1440px] mx-auto px-8 lg:px-14">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl lg:text-5xl tracking-tight font-semibold text-white mb-6">
-                Our Impact
+            <div className="text-center mb-8">
+              <p className="text-white/50 text-xs uppercase tracking-[0.25em] mb-3">Our Impact</p>
+              <h2 className="bts-title mb-6">
+                Beyond What We Build.
               </h2>
-              <div className="h-px w-32 bg-gradient-to-r from-transparent via-red-600/50 to-transparent mx-auto" />
+              <div className="h-px w-32 bg-gradient-to-r from-transparent via-red-600/50 to-transparent mx-auto mb-10" />
+            </div>
+
+            <div className="bts-body max-w-3xl mx-auto space-y-6 text-white/80 text-base lg:text-lg mb-16">
+              <p>
+                The value of a space is measured not only by what it contains, but by what it makes possible. A well-considered environment can help people connect, enable ideas to develop, support better ways of working and help businesses move forward.
+              </p>
+              <p>
+                Our aim is to translate design intent into tangible outcomes, creating places that serve their purpose today while remaining relevant to the possibilities of tomorrow.
+              </p>
+              <p className="text-white/90 font-normal">
+                We measure our work by what it enables.
+              </p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8 text-center">
-              <StatCounter end={Infinity} label="Ideas" suffix="∞" hoverWords="We pursue endless creativity and design possibilities." />
-              <StatCounter end={1} label="People" suffix="M+" hoverWords="Lives touched by spaces we created." />
-              <StatCounter end={2000} label="Businesses" suffix="+" hoverWords="Companies and brands we have partnered with." />
+              <StatCounter end={Infinity} label="Ideas" suffix="∞" hoverWords="Endless creativity and design possibilities." />
+              <StatCounter end={1} label="People" suffix="M+" hoverWords="Lives touched by spaces we create." />
+              <StatCounter end={2000} label="Businesses" suffix="+" hoverWords="Organisations we help move forward." />
             </div>
           </div>
         </section>
 
-        {/* Call to Action */}
         <section className="relative bg-neutral-900 py-20 lg:py-32">
           <div className="max-w-[1440px] mx-auto px-8 lg:px-14 text-center">
-            <h2 className="text-4xl lg:text-5xl tracking-tight font-semibold text-white mb-8">
-              Let's Create Something Extraordinary
+            <h2 className="bts-title mb-8">
+              Let's Make Space for Possibility.
             </h2>
-            <p className="text-white/70 text-lg lg:text-xl mb-12 max-w-3xl mx-auto font-light">
-              Whether you're planning a new project or looking to transform an existing space, we're here to help bring your vision to life.
+            <p className="bts-body text-white/70 text-base lg:text-lg mb-12 max-w-3xl mx-auto">
+              Have a project in mind, an opportunity to collaborate, or an idea worth exploring? We would like to understand what you are working towards and how we might help bring it to life.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
               <button
@@ -328,13 +328,13 @@ export function AboutUsPage() {
                   window.history.pushState({}, '', '/explore');
                   window.dispatchEvent(new PopStateEvent('popstate'));
                   setTimeout(() => {
-                    document.getElementById('offices')?.scrollIntoView({ behavior: 'smooth' });
+                    document.getElementById('footer')?.scrollIntoView({ behavior: 'smooth' });
                   }, 100);
                 }}
                 className="px-10 py-5 bg-transparent group min-w-[240px]"
               >
                 <span className="tracking-[0.2em] text-sm font-medium text-white group-hover:text-red-600 transition-colors inline-block">
-                  Get in Touch
+                  Start a Conversation
                 </span>
               </button>
               
@@ -346,7 +346,7 @@ export function AboutUsPage() {
                 className="px-10 py-5 bg-transparent group min-w-[240px]"
               >
                 <span className="tracking-[0.2em] text-sm font-medium text-white group-hover:text-red-600 transition-colors inline-block">
-                  Join Us
+                  Join Our Team
                 </span>
               </button>
             </div>
