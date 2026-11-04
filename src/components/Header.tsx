@@ -20,24 +20,40 @@ export function Header() {
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const scrollingDown = currentScrollY > lastScrollY.current;
+    const getScrollTop = () => {
+      const main = document.querySelector('main');
+      if (main && main.scrollHeight > main.clientHeight + 1) {
+        return main.scrollTop;
+      }
+      return window.scrollY || document.documentElement.scrollTop || 0;
+    };
 
-      if (currentScrollY <= 80) {
+    const handleScroll = () => {
+      const currentScrollY = getScrollTop();
+      const scrollingDown = currentScrollY > lastScrollY.current + 4;
+      const scrollingUp = currentScrollY < lastScrollY.current - 4;
+
+      if (currentScrollY <= 60) {
         setIsVisible(true);
       } else if (scrollingDown) {
         setIsVisible(false);
         setMenuOpen(false);
-      } else {
+      } else if (scrollingUp) {
         setIsVisible(true);
       }
 
       lastScrollY.current = currentScrollY;
     };
 
+    const main = document.querySelector('main');
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    main?.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      main?.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   const isSubPage = currentPath !== '/explore' && currentPath !== '/';
@@ -110,7 +126,7 @@ export function Header() {
 
   return (
     <>
-      <header className={`fixed top-0 left-0 right-0 bg-black/50 backdrop-blur-md border-b border-white/10 z-50 transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
+      <header className={`fixed top-0 left-0 right-0 bg-black/50 backdrop-blur-md border-b border-white/10 z-50 transition-transform duration-300 ease-out will-change-transform ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
         <div className="max-w-[1440px] mx-auto px-8 lg:px-14 py-4 flex items-center justify-between w-full">
           <button type="button" onClick={handleLogoClick} className="focus:outline-none focus:ring-0">
             <img src={logo} alt="BeThatSpace™" className="h-12 lg:h-16 w-auto" />
@@ -156,11 +172,27 @@ export function Header() {
 
       </header>
 
-      {/* Slide-down menu — only when open, so no residual blur box */}
+      {/* Hamburger panel — 1/3 width from the right */}
       {!isSubPage && menuOpen && (
-        <div className="fixed top-[4.5rem] lg:top-[5.5rem] left-0 right-0 z-40 animate-in fade-in slide-in-from-top-2 duration-300">
-          <nav className="bg-black/80 backdrop-blur-md border-b border-white/10 px-8 lg:px-14 py-8 lg:py-10">
-            <div className="max-w-[1440px] mx-auto flex flex-col items-center gap-5 lg:gap-6">
+        <>
+          <button
+            type="button"
+            aria-label="Close menu overlay"
+            className="fixed inset-0 z-40 bg-black/40 backdrop-blur-[2px] animate-in fade-in duration-300"
+            onClick={() => setMenuOpen(false)}
+          />
+          <nav className="fixed top-0 right-0 z-50 h-full w-full sm:w-1/2 lg:w-1/3 max-w-md bg-black/90 backdrop-blur-md border-l border-white/10 px-8 lg:px-10 py-8 lg:py-10 flex flex-col animate-in slide-in-from-right duration-300">
+            <div className="flex justify-end mb-10 lg:mb-14">
+              <button
+                type="button"
+                onClick={() => setMenuOpen(false)}
+                className="p-2 transition-colors rounded font-medium group"
+                aria-label="Close menu"
+              >
+                <X className="w-7 h-7 text-white group-hover:text-red-600 transition-colors" />
+              </button>
+            </div>
+            <div className="flex flex-col items-start gap-5 lg:gap-6">
               {navItems.map((item) => (
                 <a
                   key={item.name}
@@ -170,13 +202,14 @@ export function Header() {
                     handleNavClick(item.href);
                   }}
                   className="text-white text-lg lg:text-xl tracking-wider font-medium hover:text-red-600 transition-colors duration-300"
+                  style={{ textAlign: 'left', textAlignLast: 'left' }}
                 >
                   {item.name}
                 </a>
               ))}
             </div>
           </nav>
-        </div>
+        </>
       )}
     </>
   );

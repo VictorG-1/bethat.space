@@ -210,7 +210,7 @@ export function ServiceDetail({ slug }: ServiceDetailProps) {
 
             {/* Content Column */}
             <div className="lg:col-span-2">
-              <p className="text-white/70 text-lg lg:text-xl leading-relaxed font-light text-justify mb-16">
+              <p className="text-white/70 text-lg lg:text-xl leading-relaxed font-light bts-body mb-16">
                 {service.overview}
               </p>
 
@@ -224,7 +224,7 @@ export function ServiceDetail({ slug }: ServiceDetailProps) {
                         </span>
                       </div>
                     </div>
-                    <p className="text-white/60 text-base leading-relaxed font-light text-justify flex-1 pt-2">
+                    <p className="text-white/60 text-base leading-relaxed font-light bts-body flex-1 pt-2">
                       {item}
                     </p>
                   </div>
@@ -283,7 +283,7 @@ export function ServiceDetail({ slug }: ServiceDetailProps) {
                   <h3 className="text-xl lg:text-2xl text-white font-semibold mb-4">
                     {item.title}
                   </h3>
-                  <p className="text-white/60 text-sm lg:text-base leading-relaxed font-light text-justify">
+                  <p className="text-white/60 text-sm lg:text-base leading-relaxed font-light bts-body">
                     {item.description}
                   </p>
                   <div className="absolute bottom-0 left-0 right-0 h-1 w-0 bg-red-600 group-hover:w-full transition-all duration-700 ease-out" />

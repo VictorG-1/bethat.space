@@ -1,26 +1,31 @@
 import { Plus, Minus } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import specialistCollaborationImg from '../assets/services/specialist-collaboration.png';
+import designBuildImg from '../assets/services/design-build.jpg';
 
 export function Services() {
   const [expandedService, setExpandedService] = useState<number | null>(null);
   const cardsGridRef = useRef<HTMLDivElement>(null);
-  const [panelOffset, setPanelOffset] = useState(0);
+  const [panelTop, setPanelTop] = useState(0);
 
   useEffect(() => {
     if (expandedService === null || !cardsGridRef.current) {
-      setPanelOffset(0);
+      setPanelTop(0);
       return;
     }
-    const updateOffset = () => {
-      if (cardsGridRef.current) {
-        const gridHeight = cardsGridRef.current.offsetHeight;
-        setPanelOffset((gridHeight * 2) / 3);
+
+    const updatePanelTop = () => {
+      const card = cardsGridRef.current?.querySelector('[data-service-card]') as HTMLElement | null;
+      if (card) {
+        // Start white box exactly after the top 1/3 of the service image
+        setPanelTop(card.offsetHeight / 3);
       }
     };
-    updateOffset();
-    window.addEventListener('resize', updateOffset);
-    return () => window.removeEventListener('resize', updateOffset);
+
+    updatePanelTop();
+    window.addEventListener('resize', updatePanelTop);
+    return () => window.removeEventListener('resize', updatePanelTop);
   }, [expandedService]);
 
   const services = [
@@ -60,7 +65,7 @@ export function Services() {
       watermark: 'DB',
       intro: 'Efficient & seamless design+build solutions that merge creative precision with accountable execution.',
       description: 'We bring design and execution together through an integrated approach that connects creative intent with practical delivery. With coordinated teams, transparent processes and disciplined project management, we work to maintain design integrity while managing cost, quality and time.',
-      image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
+      image: designBuildImg,
       subServices: [
         {
           name: 'Construction Management (Cost Plus)',
@@ -83,7 +88,7 @@ export function Services() {
       watermark: 'SC',
       intro: 'Specialist partnerships that amplify design depth and project performance.',
       description: 'Complex projects benefit from expertise that extends beyond any single discipline. We collaborate with specialist consultants and partners to bring complementary knowledge into the design and delivery process. By integrating their expertise with our own, we develop solutions that are coordinated, technically robust and responsive to the experience the space is intended to create.',
-      image: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
+      image: specialistCollaborationImg,
       subServices: [
         { name: 'Structural Design', description: '' },
         { name: 'Façade Design', description: '' },
@@ -123,93 +128,111 @@ export function Services() {
           <div className="flex justify-center mb-8">
             <div className="h-px w-32 bg-gradient-to-r from-transparent via-red-600/50 to-transparent" />
           </div>
-          <p className="text-white text-xl lg:text-2xl font-semibold mb-6">
-            From Intent to Impact.
-          </p>
-          <p className="bts-body text-white/70 text-base lg:text-lg max-w-3xl mx-auto">
-            A space should do more than serve a function. It should respond to human needs, express a clear purpose and enable better outcomes. At BeThatSpace™, we bring together design intelligence, technical expertise and accountable execution to translate tangible requirements and intangible aspirations into purposeful built environments. From the first strategic question to the final detail on site, we connect the thinking, making and collaboration required to bring an idea to life.
-          </p>
+          <div className="max-w-3xl mx-auto">
+            <p
+              className="text-white text-xl lg:text-2xl font-semibold mb-6"
+              style={{ textAlign: 'left', textAlignLast: 'left' }}
+            >
+              From Intent to Impact.
+            </p>
+            <p
+              className="about-copy text-white/70 text-base lg:text-lg font-light leading-[1.85]"
+              style={{ textAlign: 'justify', textAlignLast: 'left' }}
+            >
+              A space should do more than serve a function. It should respond to human needs, express a clear purpose and enable better outcomes. At BeThatSpace™, we bring together design intelligence, technical expertise and accountable execution to translate tangible requirements and intangible aspirations into purposeful built environments. From the first strategic question to the final detail on site, we connect the thinking, making and collaboration required to bring an idea to life.
+            </p>
+          </div>
         </div>
 
-        {/* Services - Horizontal Row with Individual Expanders */}
-        <div className="space-y-0 overflow-visible">
-          {/* Service Cards Row */}
-          <div ref={cardsGridRef} className="grid grid-cols-1 md:grid-cols-3 gap-6" data-service-cards>
+        {/* Services: top 1/3 images stay visible; white text covers all 3 cards in lower 2/3 */}
+        <div className="relative" data-service-cards>
+          <div ref={cardsGridRef} className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {services.map((service, index) => {
               const isExpanded = expandedService === index;
-              const showRightBorder = index < services.length - 1;
               return (
                 <div
                   key={index}
-                  className={`group relative overflow-hidden bg-neutral-900 transition-all duration-500 ${
+                  data-service-card
+                  className={`group relative bg-neutral-900 transition-all duration-500 overflow-hidden aspect-square ${
                     isExpanded
-                      ? 'border border-white/10 m-3'
-                      : 'border border-white/10 hover:border-red-600/50'
-                  } ${showRightBorder ? 'md:border-r-2 md:border-r-black' : ''}`}
+                      ? 'border-2 border-red-600 z-10'
+                      : expandedService !== null
+                        ? 'border border-white/10'
+                        : 'border border-white/10 hover:border-red-600/50'
+                  }`}
                 >
-                  {/* Card: aspect-square, top 1/3 image, bottom 2/3 info when expanded */}
-                  <div className="relative aspect-square overflow-hidden cursor-pointer" onClick={() => toggleExpand(index)}>
+                  <div
+                    className="relative h-full overflow-hidden cursor-pointer"
+                    onClick={() => toggleExpand(index)}
+                  >
                     <ImageWithFallback
                       src={service.image}
                       alt={service.title}
-                      className={`w-full h-full object-cover transition-transform duration-700 grayscale ${
-                        !isExpanded && 'group-hover:scale-105'
+                      className={`w-full h-full object-cover transition-all duration-700 grayscale ${
+                        !isExpanded && expandedService === null ? 'group-hover:scale-105' : ''
+                      } ${
+                        expandedService !== null && !isExpanded ? 'brightness-50' : ''
                       }`}
                     />
 
-                    {/* Dark gradient - when expanded, only over top 1/3 so bottom 2/3 is for info box */}
-                    <div
-                      className="absolute left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent pointer-events-none"
-                      style={{ top: 0, height: isExpanded ? '33.333%' : '100%' }}
-                    />
-
-                    {expandedService !== null && expandedService !== index && (
-                      <div className="absolute inset-0 bg-black/60 transition-opacity duration-500" />
-                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent pointer-events-none" />
 
                     <div className="absolute top-6 right-6 text-white/30 text-[80px] lg:text-[100px] font-bold leading-none pointer-events-none">
                       {service.watermark}
                     </div>
 
                     {!isExpanded ? (
-                      /* Collapsed: title + intro on main tile + Read more */
-                      <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-8">
-                        <h3 className="text-xl lg:text-2xl text-white font-semibold mb-2 tracking-tight">
+                      <div
+                        className={`absolute bottom-0 left-0 right-0 p-6 lg:p-8 transition-opacity duration-500 ${
+                          expandedService !== null ? 'opacity-30' : 'opacity-100'
+                        }`}
+                      >
+                        <h3
+                          className="text-xl lg:text-2xl text-white font-semibold mb-2 tracking-tight"
+                          style={{ textAlign: 'left', textAlignLast: 'left' }}
+                        >
                           {service.title}
                         </h3>
-                        <p className="bts-body bts-justify text-white/70 text-xs lg:text-sm mb-4 line-clamp-3">
+                        <p
+                          className="text-white/70 text-xs lg:text-sm mb-4 line-clamp-3 font-light leading-relaxed"
+                          style={{ textAlign: 'justify', textAlignLast: 'left' }}
+                        >
                           {service.intro}
                         </p>
                         <button
-                          onClick={(e) => { e.stopPropagation(); toggleExpand(index); }}
-                          className="flex items-center gap-2 text-white/80 hover:text-red-600 transition-colors duration-300 group/btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleExpand(index);
+                          }}
+                          className="inline-flex items-center text-white/80 hover:text-red-600 transition-colors duration-300 group/btn leading-none"
+                          style={{ gap: 12 }}
                         >
-                          <div className="w-5 h-5 rounded-full border border-white/80 group-hover/btn:border-red-600 flex items-center justify-center transition-colors duration-300">
+                          <span className="w-5 h-5 shrink-0 rounded-full border border-white/80 group-hover/btn:border-red-600 inline-flex items-center justify-center transition-colors duration-300">
                             <Plus className="w-3 h-3" />
-                          </div>
+                          </span>
                           <span className="text-xs font-medium uppercase tracking-wider">Read More</span>
                         </button>
                       </div>
                     ) : (
-                      <>
-                        {/* Expanded: top 1/3 - title in visible image area */}
-                        <div className="absolute left-0 right-0 p-4 lg:p-6" style={{ top: 0, height: '33.333%' }}>
-                          <h3 className="text-xl lg:text-2xl text-white font-semibold tracking-tight absolute bottom-4 left-4 right-4 lg:bottom-6 lg:left-6 lg:right-6">
-                            {service.title}
-                          </h3>
-                        </div>
+                      <div
+                        className="absolute left-0 right-0 p-4 lg:p-6 z-10"
+                        style={{ top: 0, height: '33.333%' }}
+                      >
+                        <h3
+                          className="text-xl lg:text-2xl text-white font-semibold tracking-tight absolute bottom-4 left-4 right-4 lg:bottom-6 lg:left-6 lg:right-6"
+                          style={{ textAlign: 'left', textAlignLast: 'left' }}
+                        >
+                          {service.title}
+                        </h3>
+                      </div>
+                    )}
 
-                        {/* Expanded: bottom 2/3 - red-bordered start (connector to white stack below) */}
-                        <div
-                          className="absolute left-0 right-0 bottom-0 bg-white"
-                          style={{ height: '66.666%' }}
-                          onClick={(e) => e.stopPropagation()}
-                        />
-                      </>
+                    {expandedService !== null && !isExpanded && (
+                      <div className="absolute inset-0 z-20 bg-black/70 pointer-events-none transition-opacity duration-500" />
                     )}
                   </div>
 
-                  {!isExpanded && (
+                  {!isExpanded && expandedService === null && (
                     <div className="absolute bottom-0 left-0 right-0 h-1 w-0 bg-red-600 group-hover:w-full transition-all duration-700 ease-out" />
                   )}
                 </div>
@@ -217,86 +240,84 @@ export function Services() {
             })}
           </div>
 
-          {/* 1.5rem vertical gap (same as horizontal gap between cards) below all cards, then full-width read-more container */}
-          {expandedService !== null && (
-            <>
-              {(() => {
-                const service = services[expandedService];
-                const paragraphs = service.paragraphs ?? [
-                  service.intro,
-                  service.description,
-                  service.outcome
-                ];
-
-                const panel = (
-                  <div className="bg-white animate-in fade-in duration-300 w-full">
-                    <div className="px-6 lg:px-12 py-8 lg:py-12">
-                      <div className="flex items-center gap-4 mb-8">
-                        <div className="w-20 h-20 lg:w-24 lg:h-24 border-2 border-red-600/30 flex items-center justify-center shrink-0">
-                          <span className="text-red-600 font-bold text-3xl lg:text-4xl">{service.watermark}</span>
-                        </div>
-                        <h3 className="text-3xl lg:text-4xl text-black font-semibold tracking-tight">
-                          {service.title}
-                        </h3>
-                      </div>
-
-                      {/* 3 paragraphs aligned below the 3 service cards */}
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                        {paragraphs.slice(0, 3).map((para, i) => (
-                          <p key={i} className="bts-body bts-justify text-black/70 text-sm lg:text-base">
-                            {para}
-                          </p>
-                        ))}
-                      </div>
-
-                      <div className="flex justify-center">
-                        <button
-                          onClick={() => setExpandedService(null)}
-                          className="flex items-center gap-2 text-black/80 hover:text-red-600 transition-colors duration-300 group/btn"
+          {/* Full-width white box over all 3 services in the lower 2/3 */}
+          {expandedService !== null && (() => {
+            const service = services[expandedService];
+            const paragraphs = service.paragraphs ?? [
+              service.intro,
+              service.description,
+              service.outcome,
+            ];
+            return (
+              <>
+                <div
+                  className="hidden md:flex absolute z-30 left-0 right-0 bottom-0 bg-white border-2 border-red-600 animate-in fade-in duration-300 overflow-y-auto"
+                  style={{ top: panelTop || '33.333%' }}
+                >
+                  <div className="w-full px-6 lg:px-12 py-8 lg:py-10 flex flex-col">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-8 flex-1">
+                      {paragraphs.slice(0, 3).map((para, pi) => (
+                        <p
+                          key={pi}
+                          className="text-black/75 text-sm lg:text-base font-light leading-[1.85]"
+                          style={{ textAlign: 'justify', textAlignLast: 'left' }}
                         >
-                          <div className="w-5 h-5 rounded-full border border-black/80 group-hover/btn:border-red-600 flex items-center justify-center transition-colors duration-300">
-                            <Minus className="w-3 h-3" />
-                          </div>
-                          <span className="text-xs font-medium uppercase tracking-wider">Show Less</span>
-                        </button>
-                      </div>
+                          {para}
+                        </p>
+                      ))}
                     </div>
-                  </div>
-                );
 
-                return (
-                  <>
-                    {/* Mobile: full width, overlap for connection */}
-                    <div
-                      className="relative z-30 isolate md:hidden overflow-visible"
-                      style={{ marginTop: panelOffset > 0 ? -panelOffset : 0 }}
+                    <button
+                      onClick={() => setExpandedService(null)}
+                      className="inline-flex items-center self-start text-black/80 hover:text-red-600 transition-colors duration-300 group/btn leading-none"
+                      style={{ gap: 12 }}
                     >
-                      {panel}
-                    </div>
+                      <span className="w-5 h-5 shrink-0 rounded-full border border-black/80 group-hover/btn:border-red-600 inline-flex items-center justify-center transition-colors duration-300">
+                        <Minus className="w-3 h-3" />
+                      </span>
+                      <span className="text-xs font-medium uppercase tracking-wider">Show Less</span>
+                    </button>
+                  </div>
+                </div>
 
-                    {/* Desktop: 1/3 + 2/3 — modal under active card only; 1.5rem horizontal gap to other two cards */}
-                    <div className="relative z-30 isolate hidden md:block -mt-6 overflow-visible">
-                      <div className="grid grid-cols-3 gap-6">
-                        <div className={`overflow-visible ${expandedService === 0 ? 'min-w-0' : ''}`}>{expandedService === 0 ? panel : <div aria-hidden />}</div>
-                        <div className={`overflow-visible ${expandedService === 1 ? 'min-w-0' : ''}`}>{expandedService === 1 ? panel : <div aria-hidden />}</div>
-                        <div className={`overflow-visible ${expandedService === 2 ? 'min-w-0' : ''}`}>{expandedService === 2 ? panel : <div aria-hidden />}</div>
-                      </div>
+                <div className="md:hidden bg-white border-2 border-red-600 animate-in fade-in duration-300">
+                  <div className="px-6 py-8">
+                    <div className="space-y-4 mb-6">
+                      {paragraphs.slice(0, 3).map((para, pi) => (
+                        <p
+                          key={pi}
+                          className="text-black/75 text-sm font-light leading-[1.85]"
+                          style={{ textAlign: 'justify', textAlignLast: 'left' }}
+                        >
+                          {para}
+                        </p>
+                      ))}
                     </div>
-                  </>
-                );
-              })()}
-            </>
-          )}
+                    <button
+                      onClick={() => setExpandedService(null)}
+                      className="inline-flex items-center text-black/80 hover:text-red-600 transition-colors duration-300 group/btn leading-none"
+                      style={{ gap: 12 }}
+                    >
+                      <span className="w-5 h-5 shrink-0 rounded-full border border-black/80 group-hover/btn:border-red-600 inline-flex items-center justify-center transition-colors duration-300">
+                        <Minus className="w-3 h-3" />
+                      </span>
+                      <span className="text-xs font-medium uppercase tracking-wider">Show Less</span>
+                    </button>
+                  </div>
+                </div>
+              </>
+            );
+          })()}
         </div>
 
         {/* Our Approach */}
-        <div className="mt-20 lg:mt-28 max-w-3xl mx-auto">
+        <div className="mt-20 lg:mt-28 max-w-3xl mx-auto text-center">
           <p className="text-white/50 text-xs uppercase tracking-[0.25em] mb-3 text-center">Our Approach</p>
-          <div className="bts-body text-white/70 text-base lg:text-lg space-y-4">
-            <p className="text-white text-lg lg:text-xl">
+          <div className="text-white/70 text-base lg:text-lg font-light leading-[1.85] space-y-4">
+            <p className="text-white text-lg lg:text-xl" style={{ textAlign: 'center', textAlignLast: 'center' }}>
               Design brings intent into focus. Build gives it form. Collaboration strengthens the result.
             </p>
-            <p>
+            <p style={{ textAlign: 'center', textAlignLast: 'center' }}>
               Together, they enable us to create conducive environments where people and businesses thrive.
             </p>
           </div>

@@ -3038,28 +3038,170 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Site body copy: centre-aligned, consistent rhythm */
-.bts-body {
-  text-align: center;
-  font-weight: 300;
-  line-height: 1.8;
-  letter-spacing: 0.01em;
-}
-
-/* Card / expand / hover descriptions (overrides .bts-body centre) */
+/* Site body copy: centre-justified (not applied to footer UI) */
+main > section p,
+main > section li,
+.bts-body,
 .bts-body.bts-justify,
 .bts-justify {
-  text-align: justify !important;
+  text-align: justify;
+  text-align-last: center;
+  text-justify: inter-word;
+  hyphens: none;
 }
 
-/* Shared section titles — same size & weight everywhere */
+.bts-body {
+  font-weight: 300;
+  line-height: 1.85;
+  letter-spacing: 0.015em;
+}
+
+/* About Us body — justified like the content doc */
+.about-copy,
+.about-copy p {
+  text-align: justify !important;
+  text-align-last: left !important;
+  text-justify: inter-word;
+  hyphens: none;
+}
+
+/* Our Story body — justified by default; .story-center overrides */
+.story-copy,
+.story-copy p,
+.story-copy li {
+  text-align: justify !important;
+  text-align-last: left !important;
+  text-justify: inter-word;
+  hyphens: none;
+}
+
+.story-copy .story-center,
+.story-copy p.story-center,
+.story-copy li.story-center {
+  text-align: center !important;
+  text-align-last: center !important;
+}
+
+/* Values card body — starts left, fully justified */
+.values-card-copy {
+  text-align: justify !important;
+  text-align-last: left !important;
+  text-justify: inter-word;
+  hyphens: none;
+}
+
+/* Project popup copy — left aligned, justified */
+.project-modal-copy,
+.project-modal-copy p,
+.project-modal-copy h3,
+.project-modal-copy h4,
+.project-modal-copy div {
+  text-align: left !important;
+  text-align-last: left !important;
+}
+
+.project-modal-copy p {
+  text-align: justify !important;
+  text-align-last: left !important;
+  text-justify: inter-word;
+}
+
+@keyframes stat-glow {
+  0%, 100% {
+    text-shadow: 0 0 0 transparent;
+  }
+  50% {
+    text-shadow: 0 0 18px rgba(220, 38, 38, 0.45), 0 0 36px rgba(220, 38, 38, 0.2);
+  }
+}
+
+@keyframes stat-infinity {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    text-shadow: 0 0 12px rgba(220, 38, 38, 0.35), 0 0 28px rgba(220, 38, 38, 0.15);
+    filter: brightness(1);
+  }
+  25% {
+    transform: scale(1.06) rotate(-4deg);
+    text-shadow: 0 0 22px rgba(220, 38, 38, 0.55), 0 0 48px rgba(220, 38, 38, 0.25);
+    filter: brightness(1.15);
+  }
+  50% {
+    transform: scale(1.02) rotate(0deg);
+    text-shadow: 0 0 16px rgba(220, 38, 38, 0.4), 0 0 36px rgba(220, 38, 38, 0.2);
+    filter: brightness(1.05);
+  }
+  75% {
+    transform: scale(1.08) rotate(4deg);
+    text-shadow: 0 0 26px rgba(220, 38, 38, 0.6), 0 0 52px rgba(220, 38, 38, 0.28);
+    filter: brightness(1.2);
+  }
+}
+
+@keyframes explore-flow {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
+}
+
+.explore-flow {
+  color: transparent;
+  background-image: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #ffffff 35%,
+    #ef4444 50%,
+    #ffffff 65%,
+    #ffffff 100%
+  );
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: explore-flow 2.4s linear infinite;
+}
+
+.group:hover .explore-flow {
+  animation: none;
+  background-image: none;
+  color: #dc2626;
+  -webkit-text-fill-color: #dc2626;
+}
+
+/* Shared section titles */
 .bts-title {
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
   line-height: 1.15;
   font-weight: 700;
   letter-spacing: -0.025em;
   color: #fff;
   text-align: center;
+  text-align-last: center;
+}
+
+/* Footer: restore original left/right layout, ignore global justify */
+#footer,
+#footer * {
+  text-align-last: auto;
+}
+#footer h4,
+#footer p {
+  text-align: left;
+}
+#footer .text-right,
+#footer .text-right p {
+  text-align: right;
+}
+#footer nav {
+  text-align: center;
+}
+@media (min-width: 768px) {
+  #footer nav {
+    text-align: right;
+  }
 }
 
 section {
@@ -3073,35 +3215,52 @@ main {
 }
 
 @keyframes marquee-left {
-  0% {
-    transform: translateX(0);
+  from {
+    transform: translate3d(0, 0, 0);
   }
-
-  100% {
-    transform: translateX(-50%);
+  to {
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
 @keyframes marquee-right {
-  0% {
-    transform: translateX(-50%);
+  from {
+    transform: translate3d(-50%, 0, 0);
   }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
 
-  100% {
-    transform: translateX(0);
-  }
+.animate-marquee-left,
+.animate-marquee-right {
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .animate-marquee-left {
-  animation: 5s linear infinite marquee-left;
+  animation: marquee-left 35s linear infinite;
 }
 
 .animate-marquee-right {
-  animation: 5s linear infinite marquee-right;
+  animation: marquee-right 35s linear infinite;
 }
 
-.animate-marquee-left:hover, .animate-marquee-right:hover {
-  animation-play-state: paused;
+@media (hover: hover) and (pointer: fine) {
+  .animate-marquee-left:hover,
+  .animate-marquee-right:hover {
+    animation-play-state: paused;
+  }
+}
+
+@media (max-width: 1023px) {
+  .animate-marquee-left {
+    animation-duration: 28s;
+  }
+
+  .animate-marquee-right {
+    animation-duration: 32s;
+  }
 }
 
 @keyframes fade-in {

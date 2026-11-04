@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Plus, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Plus, Minus, X } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import capovitezLogo from 'figma:asset/ee8f8545dad18dc5b362fcc32f41e729a657b33b.png';
 import chettinadLogo from 'figma:asset/648addd6cd905a16a70f0841ab88595408492712.png';
@@ -170,15 +170,25 @@ import vertivOffice from '../assets/projects/vertiv/Vertiv_Office-02-7372b217-12
 
 import orientalExterior from '../assets/projects/oriental/Oriental_Option-01-56d1a65a-e840-4b5f-836e-3aa5d363c0e3.jpg';
 
+const FEATURED_PROJECT_TITLES = [
+  'Times of India',
+  'Hindustan Unilever',
+  'UBS',
+  'Chettinad CCO',
+  'Galeries Lafayette',
+  'Radio Mirchi',
+] as const;
+
 export function ProjectsClients() {
   const [currentProject, setCurrentProject] = useState(0);
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isCarouselHovered, setIsCarouselHovered] = useState(false);
+  const [showAllProjects, setShowAllProjects] = useState(false);
 
-  const projects = [
+  const projectsList = [
     {
-      title: 'The Times Group',
+      title: 'Times of India',
       type: 'Corporate Office',
       location: 'Mumbai, India',
       description: 'A landmark corporate workplace for The Times Group in Mumbai. Reception, executive areas, training, daycare, cafe, gym, and terraces were designed as one cohesive environment that reflects brand, culture, and everyday media operations.',
@@ -212,10 +222,10 @@ export function ProjectsClients() {
       ],
     },
     {
-      title: 'ENIL',
+      title: 'Radio Mirchi',
       type: 'Corporate Office & Studios',
       location: 'Mumbai, India',
-      description: 'Corporate office and broadcast studios for ENIL in Mumbai. Reception, radio and Gaana studios, dressing room, collaboration zones, and open office. Brand-led spaces built for media and sound.',
+      description: 'Corporate office and broadcast studios for Radio Mirchi (ENIL) in Mumbai. Reception, radio and Gaana studios, dressing room, collaboration zones, and open office. Brand-led spaces built for media and sound.',
       images: [
         mirchiReception,
         mirchiRadioStudio,
@@ -337,7 +347,7 @@ export function ProjectsClients() {
       ],
     },
     {
-      title: 'Chettinad Group',
+      title: 'Chettinad CCO',
       type: 'Corporate Office',
       location: 'Chennai, India',
       description: 'Corporate office floors CCO-11 / 12 for the Chettinad Group in Chennai. Reception, collaboration, meeting, and cafe. Consistent design language across floors for brand cohesion and everyday work.',
@@ -493,6 +503,20 @@ export function ProjectsClients() {
     },
   ];
 
+  const projects = [
+    ...FEATURED_PROJECT_TITLES.map(
+      (title) => projectsList.find((project) => project.title === title)!
+    ),
+    ...projectsList.filter(
+      (project) =>
+        !(FEATURED_PROJECT_TITLES as readonly string[]).includes(project.title)
+    ),
+  ];
+
+  const visibleProjects = showAllProjects
+    ? projects
+    : projects.slice(0, FEATURED_PROJECT_TITLES.length);
+
   const clientsRow1 = [
     'Amazon', 'American Express', 'Accor', 'Veolia', 'Chanel', 'Blackstone',
     'Brookfield', 'Reliance'
@@ -504,11 +528,11 @@ export function ProjectsClients() {
   ];
 
   const nextProject = () => {
-    setCurrentProject((prev) => (prev + 1) % projects.length);
+    setCurrentProject((prev) => (prev + 1) % visibleProjects.length);
   };
 
   const prevProject = () => {
-    setCurrentProject((prev) => (prev - 1 + projects.length) % projects.length);
+    setCurrentProject((prev) => (prev - 1 + visibleProjects.length) % visibleProjects.length);
   };
 
   const openModal = (projectIndex: number) => {
@@ -576,111 +600,137 @@ export function ProjectsClients() {
           </div>
         </div>
 
-        {/* Desktop: Project grid */}
-        <div className="hidden lg:grid lg:grid-cols-3 gap-8 mb-20">
-          {projects.map((project, index) => (
-            <div 
-              key={index}
-              className="group relative bg-neutral-900 border border-white/10 hover:border-red-600/50 transition-all duration-500 overflow-hidden aspect-[4/3] cursor-pointer"
-              onClick={() => openModal(index)}
-            >
-              {/* Project Image */}
-              <ImageWithFallback
-                src={project.images[0]}
-                alt={project.title}
-                className="w-full h-full object-cover transition-transform duration-700 grayscale group-hover:grayscale-0 group-hover:scale-105"
-              />
-              
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent pointer-events-none" />
-              
-              <div className="absolute bottom-0 left-0 right-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                <h3 className="text-white text-xl mb-1 font-semibold">{project.title}</h3>
-                <p className="text-white/70 text-sm uppercase tracking-wider font-medium">
-                  {project.location}
-                </p>
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 h-1 w-0 bg-red-600 group-hover:w-full transition-all duration-700 ease-out" />
+        {/* Desktop: Project grid — top 6, rest on Read More */}
+        <div className="hidden lg:block mb-20">
+          <div className="grid lg:grid-cols-3 gap-8">
+            {visibleProjects.map((project) => {
+              const index = projects.findIndex((p) => p.title === project.title && p.images[0] === project.images[0]);
+              return (
+                <div
+                  key={`${project.title}-${index}`}
+                  className="group relative bg-neutral-900 border border-white/10 hover:border-red-600/50 transition-all duration-500 overflow-hidden aspect-[4/3] cursor-pointer"
+                  onClick={() => openModal(index)}
+                >
+                  <ImageWithFallback
+                    src={project.images[0]}
+                    alt={project.title}
+                    className="w-full h-full object-cover transition-all duration-700 grayscale group-hover:grayscale-0 group-hover:scale-105"
+                  />
+
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-transparent pointer-events-none" />
+
+                  <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-7">
+                    <h3
+                      className="text-white text-xl lg:text-2xl mb-2 font-semibold tracking-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]"
+                      style={{ textAlign: 'left', textAlignLast: 'left' }}
+                    >
+                      {project.title}
+                    </h3>
+                    <p
+                      className="text-white text-sm uppercase tracking-[0.18em] font-medium drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
+                      style={{ textAlign: 'left', textAlignLast: 'left' }}
+                    >
+                      {project.location}
+                    </p>
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 h-1 w-0 bg-red-600 group-hover:w-full transition-all duration-700 ease-out" />
+                </div>
+              );
+            })}
+          </div>
+
+          {projects.length > FEATURED_PROJECT_TITLES.length && (
+            <div className="flex justify-center mt-16 lg:mt-20">
+              <button
+                onClick={() => {
+                  setShowAllProjects((prev) => !prev);
+                  setCurrentProject(0);
+                }}
+                className="inline-flex items-center text-white/80 hover:text-red-600 transition-colors duration-300 group/btn leading-none"
+                style={{ gap: 12 }}
+              >
+                <span className="w-5 h-5 shrink-0 rounded-full border border-white/80 group-hover/btn:border-red-600 inline-flex items-center justify-center transition-colors duration-300">
+                  {showAllProjects ? <Minus className="w-3 h-3" /> : <Plus className="w-3 h-3" />}
+                </span>
+                <span className="text-xs font-medium uppercase tracking-wider">
+                  {showAllProjects ? 'Show Less' : 'Read More'}
+                </span>
+              </button>
             </div>
-          ))}
+          )}
         </div>
 
         {/* Mobile: Carousel */}
         <div className="lg:hidden mb-16">
           <div className="relative px-0 overflow-visible">
             <div className="relative flex items-center justify-center overflow-visible">
-              {/* Side preview - left (behind, translucent) */}
               <div className="group absolute left-0 w-[30%] aspect-[4/3.5] bg-neutral-900/30 backdrop-blur-sm border border-white/20 scale-95 z-0 overflow-hidden opacity-80">
-                {currentProject > 0 ? (
-                  <ImageWithFallback
-                    src={projects[currentProject - 1].images[0]}
-                    alt=""
-                    className="w-full h-full object-cover opacity-70 transition-transform duration-700 group-hover:scale-105"
-                  />
-                ) : (
-                  <ImageWithFallback
-                    src={projects[projects.length - 1].images[0]}
-                    alt=""
-                    className="w-full h-full object-cover opacity-70 transition-transform duration-700 group-hover:scale-105"
-                  />
-                )}
+                <ImageWithFallback
+                  src={
+                    visibleProjects[
+                      currentProject > 0 ? currentProject - 1 : visibleProjects.length - 1
+                    ].images[0]
+                  }
+                  alt=""
+                  className="w-full h-full object-cover opacity-70 grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105"
+                />
               </div>
-              
-              {/* Main project (center, on top) */}
-              <div className="group relative w-[75%] aspect-[4/3.5] bg-neutral-900 border-2 border-white/40 z-10 overflow-hidden shadow-2xl mx-auto">
+
+              <div
+                className="group relative w-[75%] aspect-[4/3.5] bg-neutral-900 border-2 border-white/40 z-10 overflow-hidden shadow-2xl mx-auto cursor-pointer"
+                onClick={() => {
+                  const project = visibleProjects[currentProject];
+                  const index = projects.findIndex(
+                    (p) => p.title === project.title && p.images[0] === project.images[0]
+                  );
+                  openModal(index);
+                }}
+              >
                 <div className="absolute bottom-0 left-0 right-0 h-1 w-0 bg-red-600 group-hover:w-full transition-all duration-700 ease-out z-10" />
                 <ImageWithFallback
-                  src={projects[currentProject].images[0]}
-                  alt={projects[currentProject].title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  src={visibleProjects[currentProject].images[0]}
+                  alt={visibleProjects[currentProject].title}
+                  className="w-full h-full object-cover transition-all duration-700 grayscale group-hover:grayscale-0 group-hover:scale-105"
                 />
-                
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent" />
-                
+
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+
                 <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <h3 className="text-white text-xl mb-1 font-semibold">{projects[currentProject].title}</h3>
-                  <p className="text-white/60 text-sm uppercase tracking-wider font-medium mb-4">
-                    {projects[currentProject].type} | {projects[currentProject].location}
-                  </p>
-                  
-                  {/* View More Button */}
-                  <button 
-                    onClick={() => openModal(currentProject)}
-                    className="flex items-center gap-2 text-white/80 hover:text-red-600 transition-colors duration-300 group/btn"
+                  <h3
+                    className="text-white text-xl mb-2 font-semibold tracking-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]"
+                    style={{ textAlign: 'left', textAlignLast: 'left' }}
                   >
-                    <div className="w-5 h-5 rounded-full border border-white/80 group-hover/btn:border-red-600 flex items-center justify-center transition-colors duration-300">
-                      <Plus className="w-3 h-3" />
-                    </div>
-                    <span className="text-xs font-medium uppercase tracking-wider">Read More</span>
-                  </button>
+                    {visibleProjects[currentProject].title}
+                  </h3>
+                  <p
+                    className="text-white text-sm uppercase tracking-[0.18em] font-medium drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
+                    style={{ textAlign: 'left', textAlignLast: 'left' }}
+                  >
+                    {visibleProjects[currentProject].location}
+                  </p>
                 </div>
               </div>
-              
-              {/* Side preview - right (behind, translucent) */}
+
               <div className="group absolute right-0 w-[30%] aspect-[4/3.5] bg-neutral-900/30 backdrop-blur-sm border border-white/20 scale-95 z-0 overflow-hidden opacity-80">
-                {currentProject < projects.length - 1 ? (
-                  <ImageWithFallback
-                    src={projects[currentProject + 1].images[0]}
-                    alt=""
-                    className="w-full h-full object-cover opacity-70 transition-transform duration-700 group-hover:scale-105"
-                  />
-                ) : (
-                  <ImageWithFallback
-                    src={projects[0].images[0]}
-                    alt=""
-                    className="w-full h-full object-cover opacity-70 transition-transform duration-700 group-hover:scale-105"
-                  />
-                )}
+                <ImageWithFallback
+                  src={
+                    visibleProjects[
+                      currentProject < visibleProjects.length - 1 ? currentProject + 1 : 0
+                    ].images[0]
+                  }
+                  alt=""
+                  className="w-full h-full object-cover opacity-70 grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105"
+                />
               </div>
             </div>
 
-            {/* Navigation arrows */}
-            <button 
+            <button
               onClick={prevProject}
               className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm flex items-center justify-center hover:bg-red-600 hover:border-red-600 transition-all duration-300 group z-20"
             >
               <ChevronLeft className="w-5 h-5 text-white/60 group-hover:text-white transition-colors" />
             </button>
-            <button 
+            <button
               onClick={nextProject}
               className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm flex items-center justify-center hover:bg-red-600 hover:border-red-600 transition-all duration-300 group z-20"
             >
@@ -688,9 +738,8 @@ export function ProjectsClients() {
             </button>
           </div>
 
-          {/* Dots indicator */}
           <div className="flex justify-center gap-3 mt-8">
-            {projects.map((_, i) => (
+            {visibleProjects.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setCurrentProject(i)}
@@ -700,6 +749,26 @@ export function ProjectsClients() {
               />
             ))}
           </div>
+
+          {projects.length > FEATURED_PROJECT_TITLES.length && (
+            <div className="flex justify-center mt-14">
+              <button
+                onClick={() => {
+                  setShowAllProjects((prev) => !prev);
+                  setCurrentProject(0);
+                }}
+                className="inline-flex items-center text-white/80 hover:text-red-600 transition-colors duration-300 group/btn leading-none"
+                style={{ gap: 12 }}
+              >
+                <span className="w-5 h-5 shrink-0 rounded-full border border-white/80 group-hover/btn:border-red-600 inline-flex items-center justify-center transition-colors duration-300">
+                  {showAllProjects ? <Minus className="w-3 h-3" /> : <Plus className="w-3 h-3" />}
+                </span>
+                <span className="text-xs font-medium uppercase tracking-wider">
+                  {showAllProjects ? 'Show Less' : 'Read More'}
+                </span>
+              </button>
+            </div>
+          )}
         </div>
 
         {/* CLIENTS SECTION - Mobile Only */}
@@ -714,35 +783,44 @@ export function ProjectsClients() {
           </div>
 
           <div className="relative">
-            {/* Row 1 - Left to Right */}
+            {/* Row 1 — scrolls left */}
             <div className="relative mb-6 overflow-hidden">
-              <div className="flex animate-marquee-left whitespace-nowrap">
-                {[capovitezLogo, chettinadLogo, enilLogo, galeriesLogo, howdenLogo, mirchiLogo, missIndiaLogo, nirmalLogo, parksydeLogo, adityaBirlaLogo, capovitezLogo, chettinadLogo, enilLogo, galeriesLogo, howdenLogo, mirchiLogo, missIndiaLogo, nirmalLogo, parksydeLogo, adityaBirlaLogo].map((logo, index) => (
-                  <div 
-                    key={index} 
-                    className="inline-flex items-center justify-center px-8 py-6 border-r border-white/10 min-w-[180px]">
-                    <img src={logo} alt="Client logo" className="h-12 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity" />
+              <div className="flex w-max animate-marquee-left">
+                {[0, 1].map((copy) => (
+                  <div key={`row1-${copy}`} className="flex shrink-0" aria-hidden={copy === 1}>
+                    {[capovitezLogo, chettinadLogo, enilLogo, galeriesLogo, howdenLogo, mirchiLogo, missIndiaLogo, nirmalLogo, parksydeLogo, adityaBirlaLogo].map((logo, index) => (
+                      <div
+                        key={`${copy}-${index}`}
+                        className="flex shrink-0 items-center justify-center px-6 py-5 border-r border-white/10 w-[160px]"
+                      >
+                        <img src={logo} alt="" className="h-10 w-auto max-w-[120px] object-contain opacity-70" />
+                      </div>
+                    ))}
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Row 2 - Right to Left */}
+            {/* Row 2 — scrolls right */}
             <div className="relative overflow-hidden">
-              <div className="flex animate-marquee-right whitespace-nowrap">
-                {[worldBankLogo, suttattiLogo, rahejaUniversalLogo, tableSpaceLogo, timesNetworkLogo, timesMusicLogo, timesGroupLogo, unileverFragranceLogo, ubsLogo, unileverLogo, worldBankLogo, suttattiLogo, rahejaUniversalLogo, tableSpaceLogo, timesNetworkLogo, timesMusicLogo, timesGroupLogo, unileverFragranceLogo, ubsLogo, unileverLogo].map((logo, index) => (
-                  <div 
-                    key={index} 
-                    className="inline-flex items-center justify-center px-8 py-6 border-r border-white/10 min-w-[180px]">
-                    <img src={logo} alt="Client logo" className="h-12 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity" />
+              <div className="flex w-max animate-marquee-right">
+                {[0, 1].map((copy) => (
+                  <div key={`row2-${copy}`} className="flex shrink-0" aria-hidden={copy === 1}>
+                    {[worldBankLogo, suttattiLogo, rahejaUniversalLogo, tableSpaceLogo, timesNetworkLogo, timesMusicLogo, timesGroupLogo, unileverFragranceLogo, ubsLogo, unileverLogo].map((logo, index) => (
+                      <div
+                        key={`${copy}-${index}`}
+                        className="flex shrink-0 items-center justify-center px-6 py-5 border-r border-white/10 w-[160px]"
+                      >
+                        <img src={logo} alt="" className="h-10 w-auto max-w-[120px] object-contain opacity-70" />
+                      </div>
+                    ))}
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Gradient overlays */}
-            <div className="absolute top-0 left-0 bottom-0 w-32 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
-            <div className="absolute top-0 right-0 bottom-0 w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+            <div className="absolute top-0 left-0 bottom-0 w-16 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+            <div className="absolute top-0 right-0 bottom-0 w-16 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
           </div>
         </div>
 
@@ -750,61 +828,76 @@ export function ProjectsClients() {
 
       {/* Project Modal */}
       {selectedProject !== null && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md p-4 lg:p-8 animate-in fade-in duration-300">
-          <div className="relative w-full max-w-7xl bg-black border border-white/20 shadow-2xl">
-            {/* Close Button */}
-            <button 
+        <div
+          className="project-modal fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4 lg:p-8 animate-in fade-in duration-300"
+          onClick={closeModal}
+        >
+          <div
+            className="relative w-full max-w-7xl bg-black border border-white/20 shadow-2xl max-h-[92vh] overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
               onClick={closeModal}
-              className="absolute -top-12 right-0 lg:-right-12 lg:top-0 w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-red-600 hover:border-red-600 transition-all duration-300 group z-10"
+              className="absolute top-4 right-4 w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-red-600 hover:border-red-600 transition-all duration-300 group z-20 bg-black/60"
             >
               <X className="w-5 h-5 text-white/60 group-hover:text-white transition-colors" />
             </button>
 
-            <div className="grid lg:grid-cols-2 gap-0">
-              {/* Left: Carousel. 3:4 frame, auto-play pauses on hover */}
-              <div 
-                className="relative aspect-[3/4] max-h-[80vh] bg-black overflow-hidden mx-auto w-full"
+            {/* Desktop: image left | text right · Mobile: image top, text below */}
+            <div className="flex flex-col lg:flex-row lg:items-stretch max-h-[92vh]">
+              <div
+                className="relative bg-neutral-950 flex items-center justify-center p-4 lg:p-8 lg:w-[58%] lg:min-h-[70vh] shrink-0"
                 onMouseEnter={() => setIsCarouselHovered(true)}
                 onMouseLeave={() => setIsCarouselHovered(false)}
               >
-                <ImageWithFallback
+                <img
                   src={projects[selectedProject].images[currentImageIndex]}
                   alt={`${projects[selectedProject].title} - Image ${currentImageIndex + 1}`}
-                  className="w-full h-full object-cover"
+                  style={{
+                    maxWidth: '100%',
+                    maxHeight: '75vh',
+                    width: 'auto',
+                    height: 'auto',
+                    objectFit: 'contain',
+                    display: 'block',
+                  }}
                 />
 
                 {projects[selectedProject].images.length > 1 && (
                   <>
-                    <button 
+                    <button
                       onClick={prevImage}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-white/40 bg-black/40 backdrop-blur-sm flex items-center justify-center hover:bg-red-600 hover:border-red-600 transition-all duration-300 group"
+                      className="absolute left-2 lg:left-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full border border-white/40 bg-black/60 backdrop-blur-sm flex items-center justify-center hover:bg-red-600 hover:border-red-600 transition-all duration-300 group"
+                      aria-label="Previous image"
                     >
                       <ChevronLeft className="w-5 h-5 text-white/80 group-hover:text-white transition-colors" />
                     </button>
-                    <button 
+                    <button
                       onClick={nextImage}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-white/40 bg-black/40 backdrop-blur-sm flex items-center justify-center hover:bg-red-600 hover:border-red-600 transition-all duration-300 group"
+                      className="absolute right-2 lg:right-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full border border-white/40 bg-black/60 backdrop-blur-sm flex items-center justify-center hover:bg-red-600 hover:border-red-600 transition-all duration-300 group"
+                      aria-label="Next image"
                     >
                       <ChevronRight className="w-5 h-5 text-white/80 group-hover:text-white transition-colors" />
                     </button>
 
-                    <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
-                      {projects[selectedProject].images.map((_, i) => (
-                        <button
-                          key={i}
-                          onClick={() => setCurrentImageIndex(i)}
-                          className={`h-1.5 rounded-full transition-all duration-300 ${
-                            i === currentImageIndex ? 'w-8 bg-red-600' : 'w-1.5 bg-white/40 hover:bg-white/60'
-                          }`}
-                        />
-                      ))}
+                    <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10 pointer-events-none">
+                      <div className="flex gap-2 pointer-events-auto">
+                        {projects[selectedProject].images.map((_, i) => (
+                          <button
+                            key={i}
+                            onClick={() => setCurrentImageIndex(i)}
+                            className={`h-1.5 rounded-full transition-all duration-300 ${
+                              i === currentImageIndex ? 'w-8 bg-red-600' : 'w-1.5 bg-white/40 hover:bg-white/60'
+                            }`}
+                          />
+                        ))}
+                      </div>
                     </div>
                   </>
                 )}
               </div>
 
-              {/* Right: Fact File (static) */}
-              <div className="p-8 lg:p-12 flex flex-col justify-center">
+              <div className="project-modal-copy p-8 lg:p-12 flex flex-col justify-center lg:w-[42%] border-t lg:border-t-0 lg:border-l border-white/10 overflow-y-auto">
                 <p className="text-white/50 text-sm uppercase tracking-wider mb-2 font-medium">
                   Client
                 </p>
@@ -837,15 +930,6 @@ export function ProjectsClients() {
                     </div>
                     <div className="text-white text-lg font-light">
                       {projects[selectedProject].type}
-                    </div>
-                  </div>
-
-                  <div className="border-l-2 border-red-600/30 pl-6">
-                    <div className="text-white/40 text-xs uppercase tracking-wider mb-1 font-medium">
-                      Project Brief
-                    </div>
-                    <div className="bts-body bts-justify text-white text-base">
-                      {projects[selectedProject].description || '\u00A0'}
                     </div>
                   </div>
                 </div>

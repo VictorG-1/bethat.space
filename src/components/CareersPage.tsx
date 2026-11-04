@@ -91,7 +91,7 @@ export function CareersPage() {
             <div className="flex justify-center mb-6">
               <div className="h-px w-24 bg-gradient-to-r from-transparent via-red-600/50 to-transparent" />
             </div>
-            <p className="text-white/60 text-justify max-w-2xl mx-auto">
+            <p className="bts-body text-white/60 max-w-2xl mx-auto">
               Interested in joining our team? Send us your details and we'll get back to you within 48 hours.
             </p>
           </div>

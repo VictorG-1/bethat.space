@@ -1,6 +1,5 @@
 import { Plus, Minus, Linkedin, Instagram } from 'lucide-react';
 import { useState } from 'react';
-import { ImageWithFallback } from './figma/ImageWithFallback';
 import kshitijImg from '../assets/people/kshitij.jpg';
 import maithileeImg from '../assets/people/maithilee.jpg';
 import kaushikImg from '../assets/people/kaushik.jpg';
@@ -57,86 +56,14 @@ const PEOPLE = [
     linkedin: 'https://linkedin.com',
     instagram: 'https://instagram.com',
   },
-  {
-    name: 'Priya Sharma',
-    designation: 'Associate Director - Architecture',
-    bio: 'With over 12 years of experience in sustainable architecture, Priya leads innovative residential and commercial projects. Her expertise in eco-friendly design has earned multiple Green Building certifications and industry recognition.',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop',
-    linkedin: 'https://linkedin.com',
-    instagram: 'https://instagram.com',
-  },
-  {
-    name: 'Arjun Patel',
-    designation: 'Head of Interior Design',
-    bio: 'Arjun specializes in luxury interior design with a keen eye for detail and spatial harmony. His portfolio includes high-end residential projects and hospitality spaces that blend contemporary aesthetics with functional excellence.',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
-    linkedin: 'https://linkedin.com',
-    instagram: 'https://instagram.com',
-  },
-  {
-    name: 'Meera Desai',
-    designation: 'Head of Urban Planning',
-    bio: 'Meera brings expertise in creating sustainable urban environments that prioritize community well-being. Her work focuses on inclusive planning strategies that transform cities into livable, connected spaces.',
-    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop',
-    linkedin: 'https://linkedin.com',
-    instagram: 'https://instagram.com',
-  },
-  {
-    name: 'Rohan Kumar',
-    designation: 'Associate Director - Projects',
-    bio: 'Rohan excels in managing complex architectural projects from concept to completion. His technical expertise and problem-solving approach ensure seamless execution of large-scale commercial and institutional developments.',
-    image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=400&fit=crop',
-    linkedin: 'https://linkedin.com',
-    instagram: 'https://instagram.com',
-  },
-  {
-    name: 'Ananya Reddy',
-    designation: 'Head of Interior Styling',
-    bio: 'Ananya curates sophisticated material palettes and furnishing concepts that define the character of interior spaces. Her styling expertise brings cohesion and elegance to every project.',
-    image: 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=400&h=400&fit=crop',
-    linkedin: 'https://linkedin.com',
-    instagram: 'https://instagram.com',
-  },
-  {
-    name: 'Vikram Singh',
-    designation: 'Head of Structural Engineering',
-    bio: 'Vikram ensures structural integrity and innovation in every design. His engineering excellence bridges architectural vision with practical execution, delivering safe and groundbreaking structures.',
-    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop',
-    linkedin: 'https://linkedin.com',
-    instagram: 'https://instagram.com',
-  },
-  {
-    name: 'Kavya Iyer',
-    designation: 'Head of 3D Visualization',
-    bio: 'Kavya creates photorealistic renderings and immersive visualizations that bring architectural concepts to life. Her digital artistry helps clients envision their spaces before construction begins.',
-    image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop',
-    linkedin: 'https://linkedin.com',
-    instagram: 'https://instagram.com',
-  },
-  {
-    name: 'Aditya Malhotra',
-    designation: 'Associate Director - Landscape',
-    bio: 'Aditya integrates natural elements seamlessly into architectural projects. His landscape architecture expertise creates harmonious indoor-outdoor connections that enhance environmental sustainability.',
-    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop',
-    linkedin: 'https://linkedin.com',
-    instagram: 'https://instagram.com',
-  },
-  {
-    name: 'Sanya Kapoor',
-    designation: 'Head of Design Innovation',
-    bio: 'Sanya drives cutting-edge design thinking and innovation at BeThatSpace™. Her fresh perspectives and expertise in emerging technologies push the boundaries of contemporary architectural practice.',
-    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop',
-    linkedin: 'https://linkedin.com',
-    instagram: 'https://instagram.com',
-  },
 ];
 
 export function Leadership() {
   const [showMore, setShowMore] = useState(false);
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const [expandedName, setExpandedName] = useState<string | null>(null);
 
-  const toggleExpand = (index: number) => {
-    setExpandedIndex(expandedIndex === index ? null : index);
+  const toggleExpand = (name: string) => {
+    setExpandedName((prev) => (prev === name ? null : name));
   };
 
   return (
@@ -161,33 +88,36 @@ export function Leadership() {
         </div>
 
         <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-14 w-full py-20 lg:py-32">
-          <div className="text-center mb-12 lg:mb-16 max-w-3xl mx-auto">
-            <h2 className="bts-title mb-6">Culture & People</h2>
-            <div className="h-px w-32 bg-gradient-to-r from-transparent via-red-600/50 to-transparent mx-auto mb-10" />
-            <p className="text-white text-xl lg:text-2xl font-semibold mb-6">
-              Be the Space Where People Thrive.
-            </p>
-            <div className="bts-body text-white/70 text-base lg:text-lg space-y-4 mb-8">
-              <p className="text-white/80">
+          <div className="mb-12 lg:mb-16 max-w-3xl mx-auto">
+            <h2 className="bts-title mb-6 text-center">Culture & People</h2>
+            <div className="h-px w-32 bg-gradient-to-r from-transparent via-red-600/50 to-transparent mx-auto mb-6 lg:mb-8" />
+            <div className="about-copy flex flex-col text-white/70 text-base lg:text-lg font-light leading-[1.85] mb-8">
+              <p className="text-white text-xl lg:text-2xl font-semibold leading-snug mb-5" style={{ textAlign: 'left', textAlignLast: 'left' }}>
+                Be the Space Where People Thrive.
+              </p>
+              <p className="text-white/80 mb-5">
                 The spaces we create for others begin with the space we create for one another.
               </p>
-              <p>
+              <p className="mb-5">
                 At BeThatSpace™, we believe people do their best work when they are trusted to think, encouraged to question, empowered to take ownership and given room to grow.
               </p>
-              <p>
+              <div className="h-5" aria-hidden />
+              <p className="mb-5">
                 We bring different experiences, disciplines and perspectives together, creating an environment where people can contribute meaningfully, learn continuously and turn individual potential into collective progress.
               </p>
-              <p className="text-white/80">
+              <div className="h-5" aria-hidden />
+              <p className="text-white/80 mb-5">
                 Because the way we work shapes the work we create.
               </p>
-              <p className="text-white/90 font-normal">
+              <div className="h-5" aria-hidden />
+              <p className="text-white/70 font-light">
                 Together, we make space for better possibilities.
               </p>
             </div>
 
             <button
               onClick={() => setShowMore(!showMore)}
-              className="inline-flex items-center gap-2 text-white/80 hover:text-red-600 transition-colors duration-300 group/btn"
+              className="flex items-center gap-2 text-white/80 hover:text-red-600 transition-colors duration-300 group/btn mx-auto w-fit"
             >
               <div className="w-5 h-5 rounded-full border border-white/80 group-hover/btn:border-red-600 flex items-center justify-center transition-colors duration-300">
                 {showMore ? <Minus className="w-3 h-3" /> : <Plus className="w-3 h-3" />}
@@ -200,40 +130,47 @@ export function Leadership() {
 
           {showMore && (
             <div className="animate-in fade-in duration-500">
-              <div className="text-center mb-10 max-w-3xl mx-auto">
-                <p className="text-white/50 text-xs uppercase tracking-[0.25em] mb-3">Cultural Pivots</p>
-                <h3 className="bts-title mb-6">A Culture of Becoming.</h3>
-                <div className="bts-body text-white/70 text-base lg:text-lg space-y-4 mb-12">
-                  <p>
-                    Culture is not what we declare. It is what we practise, in the choices we make, the way we work and the responsibility we take for our outcomes.
+              <div className="text-center mb-10 max-w-[1440px] mx-auto">
+                <h3 className="bts-title mb-4">Cultural Pivots</h3>
+                <p className="text-white text-xl lg:text-2xl font-semibold leading-snug mb-6">
+                  A Culture of Becoming.
+                </p>
+                <div className="bts-body text-white/70 text-sm sm:text-base lg:text-lg space-y-4 mb-12 max-w-3xl mx-auto">
+                  <p style={{ textAlign: 'justify', textAlignLast: 'left' }}>
+                    Culture is not what we declare. It is what we practise, in the choices we make, the way we work
+                    <br />
+                    and the responsibility we take for our outcomes.
                   </p>
-                  <p>
+                  <p style={{ textAlign: 'center', textAlignLast: 'center' }}>
                     At BeThatSpace™, we are building a culture that moves:
                   </p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-12">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1440px] mx-auto mb-12">
                 {CULTURAL_PIVOTS.map((pivot) => (
                   <div
                     key={pivot.title}
                     className="group bg-black/50 backdrop-blur-md border border-white/10 hover:border-red-600/50 p-8 transition-all duration-500 min-h-[200px] flex flex-col"
                   >
-                    <h4 className="text-lg lg:text-xl text-white font-semibold mb-4 group-hover:text-red-600 transition-colors text-center">
+                    <h4 className="text-lg lg:text-xl text-white font-semibold mb-4 group-hover:text-red-600 transition-colors text-left">
                       {pivot.title}
                     </h4>
-                    <p className="bts-body bts-justify text-white/70 text-sm flex-1">
+                    <p
+                      className="values-card-copy text-white/70 text-sm flex-1 font-light leading-[1.85]"
+                      style={{ textAlign: 'justify', textAlignLast: 'left' }}
+                    >
                       {pivot.description}
                     </p>
                   </div>
                 ))}
               </div>
 
-              <div className="bts-body max-w-3xl mx-auto space-y-4 text-white/70 text-base">
-                <p>
+              <div className="bts-body max-w-[1440px] mx-auto space-y-4 text-white/70 text-sm sm:text-base">
+                <p className="whitespace-nowrap overflow-x-auto px-2" style={{ textAlign: 'center', textAlignLast: 'center' }}>
                   These are not destinations we claim to have reached. They are the shifts we commit to making - every day, together.
                 </p>
-                <p className="text-white/90 font-normal">
+                <p className="text-white/90 font-normal" style={{ textAlign: 'center', textAlignLast: 'center' }}>
                   The promise we make through our work begins with the culture we build within.
                 </p>
               </div>
@@ -242,7 +179,7 @@ export function Leadership() {
         </div>
       </section>
 
-      {/* People — 12 equal tiles, 3 cols */}
+      {/* People */}
       <section className="relative bg-black py-20 lg:py-32">
         <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0" style={{
@@ -269,65 +206,87 @@ export function Leadership() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
-            {PEOPLE.map((person, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            {PEOPLE.map((person) => {
+              const isOpen = expandedName === person.name;
+              return (
               <div
                 key={person.name}
-                onClick={() => toggleExpand(index)}
+                onClick={() => toggleExpand(person.name)}
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    toggleExpand(index);
+                    toggleExpand(person.name);
                   }
                 }}
-                className="group relative bg-white/5 backdrop-blur-sm border border-white/10 hover:border-red-600/50 transition-all duration-500 p-5 pb-6 cursor-pointer overflow-visible"
+                className="group relative bg-white/5 backdrop-blur-sm border border-white/10 hover:border-red-600/50 transition-all duration-500 p-5 lg:p-6 cursor-pointer overflow-hidden min-w-0"
               >
-                <div className="flex gap-4 items-start">
-                  <div className="flex-shrink-0">
-                    <div className="aspect-square w-20 lg:w-24 bg-neutral-900 border border-white/10 overflow-hidden hover:border-red-600/50 transition-all duration-500 relative">
-                      <ImageWithFallback
-                        src={person.image}
-                        alt={person.name}
-                        className="w-full h-full object-cover object-center grayscale transition-transform duration-700 group-hover:scale-105"
-                      />
-                    </div>
-                  </div>
-                  <div className="flex-1 min-w-0 overflow-visible">
-                    <h4 className="text-sm lg:text-base text-white mb-1 font-semibold break-words">
-                      {person.name}
-                    </h4>
-                    <p className="text-white/70 text-[10px] lg:text-xs uppercase tracking-wider font-medium mb-3 break-words leading-relaxed">
-                      {person.designation}
-                    </p>
-                    <div className="flex items-center gap-4 mt-1">
-                      <div className="flex gap-2.5 shrink-0" onClick={(e) => e.stopPropagation()}>
-                        <a href={person.linkedin} target="_blank" rel="noopener noreferrer" className="w-6 h-6 lg:w-7 lg:h-7 rounded-full border border-white/20 hover:border-red-600 hover:bg-red-600 flex items-center justify-center transition-all duration-300 group/social">
-                          <Linkedin className="w-3 h-3 lg:w-3.5 lg:h-3.5 text-white/60 group-hover/social:text-white transition-colors duration-300" />
-                        </a>
-                        <a href={person.instagram} target="_blank" rel="noopener noreferrer" className="w-6 h-6 lg:w-7 lg:h-7 rounded-full border border-white/20 hover:border-red-600 hover:bg-red-600 flex items-center justify-center transition-all duration-300 group/social">
-                          <Instagram className="w-3 h-3 lg:w-3.5 lg:h-3.5 text-white/60 group-hover/social:text-white transition-colors duration-300" />
-                        </a>
+                <div className="flex flex-col gap-4 w-full min-w-0">
+                  <div className="flex items-start gap-3 lg:gap-4 w-full min-w-0">
+                    <img
+                      src={person.image}
+                      alt={person.name}
+                      width={128}
+                      height={128}
+                      className="w-28 h-28 lg:w-32 lg:h-32 shrink-0 self-start object-cover object-center grayscale border border-white/10 bg-neutral-900"
+                    />
+
+                    <div className="min-w-0 flex-1 flex flex-col justify-between gap-3 self-stretch">
+                      <div>
+                        <h4
+                          className="text-sm lg:text-base text-white mb-1.5 font-semibold leading-snug break-words"
+                          style={{ textAlign: 'left', textAlignLast: 'left' }}
+                        >
+                          {person.name}
+                        </h4>
+                        <p
+                          className="text-white text-[11px] lg:text-xs font-medium leading-snug break-words"
+                          style={{ textAlign: 'left', textAlignLast: 'left' }}
+                        >
+                          {person.designation}
+                        </p>
                       </div>
-                      <span className="text-white/30 text-sm select-none mx-1" aria-hidden>|</span>
-                      <span className="text-[10px] lg:text-xs font-medium text-white/80 group-hover:text-red-600 transition-colors flex items-center gap-2 shrink-0 pl-1">
-                        <span className="w-4 h-4 lg:w-5 lg:h-5 rounded-full border border-white/80 group-hover:border-red-600 flex items-center justify-center transition-colors duration-300 inline-flex">
-                          {expandedIndex === index ? <Minus className="w-2 h-2 lg:w-2.5 lg:h-2.5" /> : <Plus className="w-2 h-2 lg:w-2.5 lg:h-2.5" />}
+
+                      <div className="flex flex-wrap items-center gap-y-2 min-w-0">
+                        <div className="flex items-center gap-2 shrink-0" onClick={(e) => e.stopPropagation()}>
+                          <a href={person.linkedin} target="_blank" rel="noopener noreferrer" className="w-7 h-7 rounded-full border border-white/20 hover:border-red-600 hover:bg-red-600 flex items-center justify-center transition-all duration-300 group/social shrink-0">
+                            <Linkedin className="w-3 h-3 text-white/70 group-hover/social:text-white transition-colors duration-300" />
+                          </a>
+                          <a href={person.instagram} target="_blank" rel="noopener noreferrer" className="w-7 h-7 rounded-full border border-white/20 hover:border-red-600 hover:bg-red-600 flex items-center justify-center transition-all duration-300 group/social shrink-0">
+                            <Instagram className="w-3 h-3 text-white/70 group-hover/social:text-white transition-colors duration-300" />
+                          </a>
+                        </div>
+                        <span
+                          className="shrink-0 select-none px-3 text-white/45 text-sm leading-none"
+                          aria-hidden
+                        >
+                          |
                         </span>
-                        {expandedIndex === index ? 'Show Less' : 'Read More'}
-                      </span>
+                        <span className="text-xs font-medium tracking-wide text-white/80 group-hover:text-red-600 transition-colors inline-flex items-center gap-2 min-w-0">
+                          <span className="w-5 h-5 shrink-0 rounded-full border border-white/80 group-hover:border-red-600 inline-flex items-center justify-center transition-colors duration-300">
+                            {isOpen ? <Minus className="w-2.5 h-2.5" /> : <Plus className="w-2.5 h-2.5" />}
+                          </span>
+                          <span className="whitespace-nowrap">{isOpen ? 'Show Less' : 'Read More'}</span>
+                        </span>
+                      </div>
                     </div>
                   </div>
+
+                  {isOpen && (
+                    <p
+                      className="text-white text-sm animate-in fade-in duration-300 font-light leading-relaxed break-words"
+                      style={{ textAlign: 'justify', textAlignLast: 'left' }}
+                    >
+                      {person.bio}
+                    </p>
+                  )}
                 </div>
-                {expandedIndex === index && (
-                  <p className="bts-body bts-justify text-white/60 text-[10px] lg:text-xs mt-4 animate-in fade-in duration-300 break-words whitespace-normal">
-                    {person.bio}
-                  </p>
-                )}
-                <div className="absolute bottom-0 left-0 right-0 h-1 w-0 bg-red-600 group-hover:w-full transition-all duration-700 ease-out overflow-hidden" />
+                <div className="absolute bottom-0 left-0 right-0 h-px bg-red-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

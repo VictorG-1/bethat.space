@@ -36,21 +36,21 @@ export function Media() {
       </div>
 
       <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-14 w-full">
-        <div className="text-center mb-12 max-w-3xl mx-auto">
-          <h2 className="bts-title mb-6">
+        <div className="mb-12 max-w-3xl mx-auto">
+          <h2 className="bts-title mb-6 text-center">
             Media
           </h2>
           <div className="flex justify-center mb-8">
             <div className="h-px w-32 bg-gradient-to-r from-transparent via-red-600/50 to-transparent" />
           </div>
-          <p className="text-white text-xl lg:text-2xl font-semibold mb-6">
+          <p className="text-white text-xl lg:text-2xl font-semibold mb-6 text-center">
             Ideas Beyond the Space.
           </p>
-          <div className="bts-body text-white/70 text-base lg:text-lg space-y-4">
-            <p>
+          <div className="about-copy text-white/70 text-base lg:text-lg font-light leading-[1.85] space-y-4">
+            <p style={{ textAlign: 'justify', textAlignLast: 'left' }}>
               Design is a conversation between people, places and possibilities. Through our work, perspectives and shared knowledge, we explore how the environments we create can respond to changing needs and shape better outcomes.
             </p>
-            <p className="text-white/80">
+            <p className="text-white/80" style={{ textAlign: 'center', textAlignLast: 'center' }}>
               Explore our latest thinking, publications, features and conversations.
             </p>
           </div>

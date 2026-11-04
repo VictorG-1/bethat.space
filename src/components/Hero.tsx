@@ -1,52 +1,124 @@
-import { ArrowRight } from 'lucide-react';
-import landingVideo from '../assets/landing-logo.mp4';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import introVideo from '../assets/bethat-intro.mp4';
+import logo from '../assets/Bethat Space White Logo Transparent Background-01-RGB.png';
 
 export function Hero() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [showLanding, setShowLanding] = useState(false);
+
+  const closeVideo = useCallback(() => {
+    const video = videoRef.current;
+    if (video) {
+      video.pause();
+      video.removeAttribute('src');
+      video.load();
+    }
+    setShowLanding(true);
+  }, []);
+
   const goToExplore = () => {
     window.history.pushState({}, '', '/explore');
     window.dispatchEvent(new PopStateEvent('popstate'));
   };
 
+  useEffect(() => {
+    if (showLanding) return;
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.loop = false;
+    video.muted = true;
+
+    const finish = () => closeVideo();
+
+    const onTimeUpdate = () => {
+      if (video.duration && video.currentTime >= video.duration - 0.15) {
+        finish();
+      }
+    };
+
+    video.addEventListener('ended', finish);
+    video.addEventListener('timeupdate', onTimeUpdate);
+
+    const play = async () => {
+      try {
+        await video.play();
+      } catch {
+        // if autoplay fails, show landing
+        finish();
+      }
+    };
+    void play();
+
+    return () => {
+      video.removeEventListener('ended', finish);
+      video.removeEventListener('timeupdate', onTimeUpdate);
+    };
+  }, [showLanding, closeVideo]);
+
   return (
-    <section id="hero" className="relative min-h-screen bg-black flex items-center justify-center overflow-hidden z-20">
-      <div className="absolute inset-0 bg-black z-0" />
-      
-      <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-14 py-32 text-center w-full flex flex-col justify-between min-h-screen lg:justify-center">
-        <div className="flex-1 flex items-center justify-center lg:flex-none lg:mb-20">
-          <div className="flex flex-col items-center gap-14 sm:gap-16 lg:gap-20 mb-12 lg:mb-0">
-            <video
-              src={landingVideo}
-              autoPlay
-              muted
-              playsInline
-              className="mx-auto max-w-full max-h-[50vh] lg:max-w-2xl lg:max-h-[46vh] w-auto h-auto animate-fade-in object-contain"
-              aria-label="BeThatSpace™"
+    <section id="hero" className="relative min-h-screen bg-black overflow-hidden z-20">
+      {!showLanding && (
+        <button
+          type="button"
+          onClick={closeVideo}
+          className="absolute inset-0 z-30 cursor-pointer border-0 p-0 bg-transparent"
+          aria-label="Skip intro"
+        >
+          <video
+            ref={videoRef}
+            src={introVideo}
+            autoPlay
+            muted
+            playsInline
+            preload="auto"
+            className="absolute inset-0 h-full w-full object-cover pointer-events-none"
+            aria-hidden
+          />
+        </button>
+      )}
+
+      {showLanding && (
+        <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-8 animate-in fade-in duration-500">
+          <div
+            className="mx-auto mb-12 w-full"
+            style={{ maxWidth: 'min(420px, 85vw)' }}
+          >
+            <img
+              src={logo}
+              alt="BeThatSpace™"
+              width={420}
+              height={236}
+              className="block w-full object-contain mb-8"
             />
-            <p className="text-white/70 text-xs sm:text-sm tracking-[0.28em] uppercase font-medium px-4">
-              Architecture <span className="text-white/30 mx-3">|</span> Interior Design <span className="text-white/30 mx-3">|</span> Design + Build
+
+            <p className="flex w-full items-center justify-between text-white text-[clamp(0.65rem,2.4vw,1.125rem)] tracking-[0.18em] font-medium whitespace-nowrap">
+              <span>Architecture</span>
+              <span className="text-red-600 shrink-0 mx-1">|</span>
+              <span>Interior Design</span>
+              <span className="text-red-600 shrink-0 mx-1">|</span>
+              <span>Design + Build</span>
             </p>
           </div>
-        </div>
 
-        <div className="flex flex-col items-center mb-10 lg:mb-20">
-          <button 
+          <button
             onClick={goToExplore}
-            className="group inline-flex items-center gap-3 text-white/70 hover:text-red-600 transition-colors duration-300"
+            className="group relative inline-flex items-center justify-center px-2 py-2 transition-transform duration-500 hover:scale-105"
             aria-label="Explore"
           >
-            <span className="tracking-[0.3em] text-xs font-medium uppercase">Explore</span>
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 group-hover:text-red-600 transition-all" />
+            <span className="explore-flow tracking-[0.3em] text-base sm:text-lg font-medium">
+              Explore
+            </span>
           </button>
+
+          <div className="absolute bottom-8 left-0 right-0 text-center pointer-events-none">
+            <p className="text-white/40 text-xs uppercase tracking-widest">
+              © {new Date().getFullYear()} BeThatSpace™. All Rights Reserved.
+            </p>
+          </div>
+          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-600/50 to-transparent" />
         </div>
-      </div>
-
-      <div className="absolute bottom-8 left-0 right-0 text-center">
-        <p className="text-white/40 text-xs uppercase tracking-widest">
-          © {new Date().getFullYear()} BeThatSpace™. All Rights Reserved.
-        </p>
-      </div>
-
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-600/50 to-transparent" />
+      )}
     </section>
   );
 }
