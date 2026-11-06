@@ -1,19 +1,49 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import introVideo from '../assets/bethat-intro.mp4';
+import introVideoDesktop from '../assets/BeThatSpace_Intro_2.mp4';
+import introVideoMobile from '../assets/BeThatSpace_Intro_Mobile.mp4';
 import logo from '../assets/Bethat Space White Logo Transparent Background-01-RGB.png';
+
+type Phase = 'video' | 'transition' | 'landing';
+
+const MOBILE_INTRO_MQ = '(max-width: 767px)';
 
 export function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [showLanding, setShowLanding] = useState(false);
+  const [phase, setPhase] = useState<Phase>('video');
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== 'undefined' ? window.matchMedia(MOBILE_INTRO_MQ).matches : false,
+  );
+  const closingRef = useRef(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia(MOBILE_INTRO_MQ);
+    const sync = () => setIsMobile(mq.matches);
+    sync();
+    mq.addEventListener('change', sync);
+    return () => mq.removeEventListener('change', sync);
+  }, []);
+
+  const introVideo = isMobile ? introVideoMobile : introVideoDesktop;
 
   const closeVideo = useCallback(() => {
+    if (closingRef.current) return;
+    closingRef.current = true;
+
     const video = videoRef.current;
     if (video) {
       video.pause();
-      video.removeAttribute('src');
-      video.load();
     }
-    setShowLanding(true);
+
+    setPhase('transition');
+
+    window.setTimeout(() => {
+      const v = videoRef.current;
+      if (v) {
+        v.removeAttribute('src');
+        v.load();
+      }
+      setPhase('landing');
+    }, 620);
   }, []);
 
   const goToExplore = () => {
@@ -22,7 +52,7 @@ export function Hero() {
   };
 
   useEffect(() => {
-    if (showLanding) return;
+    if (phase !== 'video') return;
     const video = videoRef.current;
     if (!video) return;
 
@@ -44,7 +74,6 @@ export function Hero() {
       try {
         await video.play();
       } catch {
-        // if autoplay fails, show landing
         finish();
       }
     };
@@ -54,34 +83,44 @@ export function Hero() {
       video.removeEventListener('ended', finish);
       video.removeEventListener('timeupdate', onTimeUpdate);
     };
-  }, [showLanding, closeVideo]);
+  }, [phase, closeVideo, introVideo]);
 
   return (
     <section id="hero" className="relative min-h-screen bg-black overflow-hidden z-20">
-      {!showLanding && (
+      {(phase === 'video' || phase === 'transition') && (
         <button
           type="button"
-          onClick={closeVideo}
+          onClick={phase === 'video' ? closeVideo : undefined}
           className="absolute inset-0 z-30 cursor-pointer border-0 p-0 bg-transparent"
           aria-label="Skip intro"
+          disabled={phase === 'transition'}
         >
           <video
+            key={introVideo}
             ref={videoRef}
             src={introVideo}
             autoPlay
             muted
             playsInline
             preload="auto"
-            className="absolute inset-0 h-full w-full object-cover pointer-events-none"
+            className={`hero-intro-video absolute inset-0 h-full w-full object-cover pointer-events-none ${
+              phase === 'transition' ? 'hero-intro-video--out' : ''
+            }`}
             aria-hidden
           />
         </button>
       )}
 
-      {showLanding && (
-        <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-8 animate-in fade-in duration-500">
+      {(phase === 'transition' || phase === 'landing') && (
+        <div
+          className={`relative z-40 min-h-screen flex flex-col items-center justify-center px-8 ${
+            phase === 'transition' ? 'hero-landing-reveal' : 'animate-in fade-in duration-500'
+          }`}
+        >
           <div
-            className="mx-auto mb-12 w-full"
+            className={`mx-auto mb-12 w-full hero-logo-wrap ${
+              phase === 'transition' ? 'hero-logo-wrap--pan' : ''
+            }`}
             style={{ maxWidth: 'min(420px, 85vw)' }}
           >
             <img
@@ -92,7 +131,11 @@ export function Hero() {
               className="block w-full object-contain mb-8"
             />
 
-            <p className="flex w-full items-center justify-between text-white text-[clamp(0.65rem,2.4vw,1.125rem)] tracking-[0.18em] font-medium whitespace-nowrap">
+            <p
+              className={`flex w-full items-center justify-between text-white text-[clamp(0.65rem,2.4vw,1.125rem)] tracking-[0.18em] font-medium whitespace-nowrap hero-landing-meta ${
+                phase === 'transition' ? 'hero-landing-meta--in' : ''
+              }`}
+            >
               <span>Architecture</span>
               <span className="text-red-600 shrink-0 mx-1">|</span>
               <span>Interior Design</span>
@@ -103,8 +146,11 @@ export function Hero() {
 
           <button
             onClick={goToExplore}
-            className="group relative inline-flex items-center justify-center px-2 py-2 transition-transform duration-500 hover:scale-105"
+            className={`group relative inline-flex items-center justify-center px-2 py-2 transition-transform duration-500 hover:scale-105 hero-landing-cta ${
+              phase === 'transition' ? 'hero-landing-cta--in' : ''
+            }`}
             aria-label="Explore"
+            disabled={phase === 'transition'}
           >
             <span className="explore-flow tracking-[0.3em] text-base sm:text-lg font-medium">
               Explore
@@ -112,7 +158,7 @@ export function Hero() {
           </button>
 
           <div className="absolute bottom-8 left-0 right-0 text-center pointer-events-none">
-            <p className="text-white/40 text-xs uppercase tracking-widest">
+            <p className="text-white/40 text-xs">
               © {new Date().getFullYear()} BeThatSpace™. All Rights Reserved.
             </p>
           </div>

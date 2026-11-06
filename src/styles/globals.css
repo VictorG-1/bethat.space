@@ -211,37 +211,8 @@ main {
   height: 100vh;
 }
 
-/* Marquee Animations */
-@keyframes marquee-left {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-@keyframes marquee-right {
-  0% {
-    transform: translateX(-50%);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
-.animate-marquee-left {
-  animation: marquee-left 5s linear infinite;
-}
-
-.animate-marquee-right {
-  animation: marquee-right 5s linear infinite;
-}
-
-.animate-marquee-left:hover,
-.animate-marquee-right:hover {
-  animation-play-state: paused;
-}
+/* Marquee — delegated to index.css (.clients-ticker / clients-marquee)
+   Avoid a second short-duration definition here; it caused a visible loop jerk. */
 
 /* Hero Animations */
 @keyframes fade-in {

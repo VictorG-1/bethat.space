@@ -4,7 +4,6 @@ import { About } from './About';
 import { Leadership } from './Leadership';
 import { Services } from './Services';
 import { ProjectsClients } from './ProjectsClients';
-import { Media } from './Media';
 import { Footer } from './Footer';
 import bgImage from 'figma:asset/c621f8e2b94cd37ccbe0edbb8d8595d829d1df5c.png';
 
@@ -12,34 +11,30 @@ export function MainSite() {
   return (
     <div className="min-h-screen bg-black scroll-smooth font-sans">
       <Header />
-      
+
       <main className="pt-20">
-        {/* Parallax Background Container for Home + About */}
-        <div 
+        <div
           className="relative"
           style={{
             backgroundImage: `url(${bgImage})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            backgroundAttachment: 'scroll'
+            backgroundAttachment: 'scroll',
           }}
         >
-          {/* Darker overlay so About text stays readable over the bg image */}
           <div className="absolute inset-0 bg-black/70" />
-          
+
           <div id="philosophy">
             <Punchline />
           </div>
           <About />
         </div>
-        
+
         <Leadership />
         <Services />
         <ProjectsClients />
-        <Media />
+        <Footer />
       </main>
-      
-      <Footer />
     </div>
   );
 }

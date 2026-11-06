@@ -1,28 +1,84 @@
 import { Header } from './Header';
 import { Footer } from './Footer';
-import aboutPageBg from '../assets/about/about-page-bg.jpg';
-import tathastuImage from 'figma:asset/a26bdc211f505ea4ce3e1426ab6f413f1f679ec9.png';
+import aboutPageSkyline from '../assets/about/about-page-skyline.jpg';
 import { useState, useEffect, useRef } from 'react';
+import {
+  Target,
+  Users,
+  Lightbulb,
+  Award,
+  Handshake,
+  TrendingUp,
+  MessageCircle,
+  type LucideIcon,
+} from 'lucide-react';
 
-function StatCounter({
+function AboutEyebrow({ className = '' }: { className?: string }) {
+  return (
+    <p className={`about-eyebrow text-xs uppercase tracking-[0.22em] text-white ${className}`.trim()}>
+      <span className="text-red-600 mr-1.5">/</span>
+      ABOUT US
+    </p>
+  );
+}
+
+function AboutHeadline({
+  first,
+  second,
+  as: Tag = 'h2',
+  className = '',
+}: {
+  first: string;
+  second?: string;
+  as?: 'h1' | 'h2';
+  className?: string;
+}) {
+  return (
+    <Tag
+      className={`bts-title about-headline ${className}`.trim()}
+      style={{ textAlign: 'left', textAlignLast: 'left' }}
+    >
+      <span
+        className="relative inline-block"
+        style={{ fontWeight: 300, paddingBottom: '0.7rem' }}
+      >
+        {first}
+        <span
+          className="absolute left-0 h-1 w-full bg-red-600"
+          style={{ bottom: 0 }}
+          aria-hidden
+        />
+      </span>
+      {second ? (
+        <>
+          {' '}
+          <span style={{ fontWeight: 300 }}>{second}</span>
+        </>
+      ) : null}
+    </Tag>
+  );
+}
+
+function ImpactStat({
   end,
   label,
   suffix = '',
   description,
+  Icon,
   delay = 0,
   toInfinity = false,
 }: {
   end: number;
   label: string;
   suffix?: string;
-  description?: string;
+  description: string;
+  Icon: LucideIcon;
   delay?: number;
   toInfinity?: boolean;
 }) {
   const [count, setCount] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [showInfinity, setShowInfinity] = useState(false);
-  const [done, setDone] = useState(false);
   const counterRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<number | null>(null);
 
@@ -55,10 +111,7 @@ function StatCounter({
       }
     };
 
-    const runCount = () => {
-      clearTimers();
-      setDone(false);
-      setShowInfinity(false);
+    const startTick = () => {
       setCount(0);
       const start = performance.now();
 
@@ -71,12 +124,12 @@ function StatCounter({
           frameRef.current = requestAnimationFrame(tick);
         } else {
           setCount(end);
-          setDone(true);
           if (toInfinity) {
+            // hold final number, then soft crossfade to ∞
             timers.push(
               window.setTimeout(() => {
                 if (!cancelled) setShowInfinity(true);
-              }, 1100)
+              }, 1600)
             );
           }
         }
@@ -85,11 +138,36 @@ function StatCounter({
       frameRef.current = requestAnimationFrame(tick);
     };
 
-    timers.push(window.setTimeout(runCount, delay));
+    const runCount = () => {
+      clearTimers();
+      if (toInfinity) {
+        // fade ∞ out first, then restart count
+        setShowInfinity(false);
+        timers.push(
+          window.setTimeout(() => {
+            if (!cancelled) startTick();
+          }, 1500)
+        );
+      } else {
+        startTick();
+      }
+    };
+
+    timers.push(
+      window.setTimeout(() => {
+        if (toInfinity) {
+          // first run: no fade-out wait
+          clearTimers();
+          startTick();
+        } else {
+          runCount();
+        }
+      }, delay)
+    );
 
     const loop = window.setInterval(() => {
       if (!cancelled) runCount();
-    }, 5500);
+    }, 9000);
 
     return () => {
       cancelled = true;
@@ -98,321 +176,325 @@ function StatCounter({
     };
   }, [isVisible, end, delay, toInfinity]);
 
-  const progress = Math.min(1, count / Math.max(end, 1));
+  const numSlots = String(end).length + (suffix ? suffix.length : 0);
 
   return (
     <div
       ref={counterRef}
-      className={`group relative border border-white/10 p-8 lg:p-10 transition-all duration-700 overflow-hidden ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-      } hover:border-red-600/50 hover:bg-white/[0.04] hover:shadow-[0_0_40px_rgba(220,38,38,0.12)]`}
+      className={`flex items-start gap-4 transition-opacity duration-700 ${
+        isVisible ? 'opacity-100' : 'opacity-0'
+      }`}
       style={{ transitionDelay: `${delay}ms` }}
     >
-      <div
-        className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-        style={{
-          background:
-            'radial-gradient(ellipse at 50% 0%, rgba(220,38,38,0.14), transparent 65%)',
-        }}
-      />
-
-      <div className="relative z-10 mb-4 h-20 lg:h-24 flex items-center justify-center">
-        <span
-          className={`absolute text-5xl lg:text-6xl text-red-600 font-bold leading-none tabular-nums transition-all duration-1000 ease-in-out ${
-            showInfinity ? 'opacity-0 scale-90' : 'opacity-100 scale-100'
-          } ${done && !showInfinity ? 'animate-[stat-glow_2.4s_ease-in-out_infinite]' : ''}`}
-        >
-          {count}{suffix}
-        </span>
-        {toInfinity && (
+      <Icon className="w-10 h-10 lg:w-11 lg:h-11 text-white shrink-0 mt-1" strokeWidth={1.25} aria-hidden />
+      <div className="min-w-0 text-left">
+        <div className="flex items-baseline gap-2 mb-1">
           <span
-            className={`absolute text-5xl lg:text-6xl text-red-600 font-bold leading-none transition-all duration-1000 ease-in-out ${
-              showInfinity
-                ? 'opacity-100 scale-100 animate-[stat-infinity_2.8s_ease-in-out_infinite]'
-                : 'opacity-0 scale-110'
-            }`}
+            className="relative inline-block shrink-0 text-3xl lg:text-4xl text-red-600 font-bold leading-none tabular-nums"
+            style={{ width: `${Math.max(numSlots, 3)}ch` }}
           >
-            ∞
+            <span
+              className={`absolute left-0 top-0 transition-all duration-[1500ms] ease-in-out will-change-transform ${
+                showInfinity ? 'opacity-0 scale-90' : 'opacity-100 scale-100'
+              }`}
+            >
+              {count}{suffix}
+            </span>
+            {toInfinity && (
+              <span
+                className={`absolute left-0 top-0 transition-all duration-[1500ms] ease-in-out will-change-transform ${
+                  showInfinity ? 'opacity-100 scale-100' : 'opacity-0 scale-110'
+                }`}
+              >
+                ∞
+              </span>
+            )}
+            {/* reserve height so layout never jumps */}
+            <span className="invisible" aria-hidden>
+              {end}{suffix}
+            </span>
           </span>
-        )}
-      </div>
-
-      <div className="relative z-10 mx-auto mb-6 h-px w-16 overflow-hidden bg-white/10">
-        <div
-          className="absolute inset-y-0 left-0 bg-red-600 transition-[width] duration-100 ease-out"
-          style={{
-            width: `${progress * 100}%`,
-            boxShadow: '0 0 8px rgba(220,38,38,0.6)',
-          }}
-        />
-      </div>
-
-      <p className="relative z-10 text-white text-sm uppercase tracking-[0.22em] font-medium mb-3">
-        {label}
-      </p>
-      {description && (
-        <p className="relative z-10 text-white text-sm font-light leading-relaxed text-center">
+          <span className="text-white text-sm tracking-wide font-medium shrink-0">
+            {label}
+          </span>
+        </div>
+        <p className="text-white/80 text-sm font-light leading-snug">
           {description}
         </p>
-      )}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-600 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-center" />
+      </div>
     </div>
   );
 }
 
-const VALUES = [
+const VALUES: {
+  title: string;
+  description: string;
+  Icon: LucideIcon;
+}[] = [
   {
     title: 'Purpose',
-    description: 'Every project begins with a reason to exist. We align design decisions with human needs, client aspirations and business objectives to create meaningful outcomes.',
+    description:
+      'Every project begins with a reason to exist. We align design decisions with human needs, client aspirations and business objectives to create meaningful outcomes.',
+    Icon: Target,
   },
   {
     title: 'Empathy',
-    description: 'We design with people in mind. By understanding their needs, behaviours and experiences, we create environments that respond to the people who inhabit them.',
+    description:
+      'We design with people in mind. By understanding their needs, behaviours and experiences, we create environments that respond to the people who inhabit them.',
+    Icon: Users,
   },
   {
     title: 'Innovation',
-    description: 'We challenge convention and explore new possibilities. Through curiosity and multidisciplinary thinking, we develop solutions that are relevant, considered and ready for what lies ahead.',
+    description:
+      'We challenge convention and explore new possibilities. Through curiosity and multidisciplinary thinking, we develop solutions that are relevant, considered and ready for what lies ahead.',
+    Icon: Lightbulb,
   },
   {
     title: 'Excellence',
-    description: 'We pursue quality through thoughtful design, technical rigour and precision in execution. Every decision and detail contributes to the integrity of the whole.',
+    description:
+      'We pursue quality through thoughtful design, technical rigour and precision in execution. Every decision and detail contributes to the integrity of the whole.',
+    Icon: Award,
   },
   {
     title: 'Collaboration',
-    description: 'Better outcomes emerge when perspectives come together. We share knowledge, respect expertise and work across disciplines to create solutions stronger than any one contribution.',
+    description:
+      'Better outcomes emerge when perspectives come together. We share knowledge, respect expertise and work across disciplines to create solutions stronger than any one contribution.',
+    Icon: Handshake,
   },
   {
     title: 'Impact',
-    description: 'We look beyond what we deliver to what it enables. Success lies in creating lasting value for people, clients, businesses and the environments we shape.',
+    description:
+      'We look beyond what we deliver to what it enables. Success lies in creating lasting value for people, clients, businesses and the environments we shape.',
+    Icon: TrendingUp,
   },
 ];
 
 export function AboutUsPage() {
   return (
-    <div className="relative min-h-screen bg-black scroll-smooth font-sans">
-      {/* Sticky bg: stays framed to the viewport while page text scrolls over it */}
-      <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
-        <div className="sticky top-0 h-screen w-full overflow-hidden">
-          <img
-            src={aboutPageBg}
-            alt=""
-            className="h-full w-full object-cover object-center grayscale opacity-[0.10] brightness-50"
-          />
-          <div className="absolute inset-0 bg-black/70" />
-        </div>
+    <div className="about-us-page relative min-h-screen bg-black scroll-smooth font-sans">
+      {/* Skyline travels with page content (no sticky lock) */}
+      <div className="about-page-bg pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden>
+        <img
+          src={aboutPageSkyline}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover object-center grayscale"
+        />
+        <div className="about-page-bg__veil" />
       </div>
 
       <Header />
       
       <main className="relative z-10 pt-20">
+        {/* Our Story */}
         <section
-          id="about"
-          className="relative min-h-[70vh] flex items-center justify-center border-b border-white/10"
+          id="story"
+          className="about-section relative min-h-screen flex items-start overflow-hidden"
         >
-          <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-14 w-full py-24 lg:py-32 pb-28 lg:pb-36 flex flex-col items-center">
-            <div className="w-full max-w-3xl mx-auto text-center">
-              <h1 className="bts-title mb-4">
-                About Us
-              </h1>
-              <div className="h-px w-32 bg-gradient-to-r from-transparent via-red-600/50 to-transparent mx-auto mb-8" />
+          <div className="bts-shell relative z-10 w-full">
+            <AboutEyebrow className="mb-5" />
 
-              <div className="about-copy space-y-6 text-white/80 text-base lg:text-lg font-light leading-[1.85] text-left">
+            <div className="w-full max-w-3xl lg:max-w-4xl">
+              <h1
+                className="bts-title about-headline"
+                style={{ textAlign: 'left', textAlignLast: 'left', fontWeight: 300 }}
+              >
+                Our Story
+              </h1>
+
+              <div className="mt-5 mb-3 sm:mt-6" aria-hidden>
+                <div className="h-1 w-16 bg-red-600" />
+              </div>
+
+              <p className="text-white text-lg sm:text-xl lg:text-2xl font-semibold leading-snug mb-6">
+                Every Space Begins With an Intent.
+              </p>
+
+              <div className="story-copy space-y-4 text-white text-base lg:text-lg font-light leading-[1.8]">
                 <p>
-                  We are an award-winning, multidisciplinary architecture, interior design and design+build practice with a strong presence across the Indian subcontinent.
+                  We are the architects of your space – for it to Be That Space.
                 </p>
                 <p>
-                  We bring together strategy, creativity and technical expertise to shape workplaces, hospitality environments and institutional spaces that elevate human experience and enable performance. By connecting perspectives across disciplines and working closely with our clients, we turn complex aspirations into clear, considered solutions - from the first idea to the finished environment. What unites it all is a shared commitment to purposeful thinking, design integrity and lasting impact.
+                  BeThatSpace is both our name and our philosophy: a belief that every environment holds the potential to become something more than its physical form.
                 </p>
-                <p className="text-white/90 font-normal">
-                  We don't just create spaces. We create the conditions for what happens within them.
+                <p>
+                  It begins with understanding what is unseen – the aspirations, needs and possibilities that give a space its purpose. Through reflection and clarity, these take shape as ideas, and through design and build, those ideas become tangible.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Our Values — same section top height as Story */}
+        <section
+          id="values"
+          className="about-section values-section relative min-h-screen flex items-start overflow-hidden"
+        >
+          <div className="bts-shell relative z-10 w-full">
+            <AboutEyebrow className="mb-5" />
+
+            <div className="values-intro mb-6 lg:mb-7">
+              <AboutHeadline first="Our" second="Values" />
+              <div className="values-intro__rule" aria-hidden />
+              <p className="values-intro__copy text-white text-base lg:text-lg font-light leading-[1.7]">
+                Our values shape how we think, how we work together and how we deliver. They guide our decisions, define our relationships and hold us accountable to the outcomes we create.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-3 gap-y-1 lg:gap-x-4 lg:gap-y-1.5 mb-6 lg:mb-7">
+              {VALUES.map(({ title, description, Icon }) => (
+                <div
+                  key={title}
+                  className="values-card group bg-black/30 px-4 py-4 lg:px-5 lg:py-5 transition-all duration-500 flex gap-3"
+                >
+                  <div className="shrink-0 pt-0.5">
+                    <Icon className="w-9 h-9 lg:w-10 lg:h-10 text-red-600" strokeWidth={1.25} aria-hidden />
+                  </div>
+                  <div className="border-l border-red-600 pl-3 min-w-0">
+                    <h3 className="text-lg lg:text-xl text-white font-semibold mb-1.5 leading-tight">
+                      {title}
+                    </h3>
+                    <p className="values-card-copy text-white/80 text-sm lg:text-[0.95rem] font-light leading-[1.6]">
+                      {description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="overflow-x-auto">
+              <p className="values-footer-line text-white text-sm lg:text-base font-semibold leading-none whitespace-nowrap">
+                Integrity, ownership and sustainability are the principles that underpin every value, and every decision we make.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Our Impact — reference layout */}
+        <section id="impact" className="about-section relative">
+          <div className="bts-shell relative z-10 w-full">
+            <AboutEyebrow className="mb-5" />
+
+            <h2
+              className="bts-title about-headline"
+              style={{ textAlign: 'left', textAlignLast: 'left', fontWeight: 300 }}
+            >
+              Our Impact
+            </h2>
+
+            <div className="mt-5 mb-3 sm:mt-6" aria-hidden>
+              <div className="h-1 w-16 bg-red-600" />
+            </div>
+
+            <div className="impact-copy max-w-3xl mb-4">
+              <p className="text-white text-lg sm:text-xl lg:text-2xl font-semibold leading-snug mb-6">
+                Beyond What We Build.
+              </p>
+              <div className="space-y-8 text-white text-base lg:text-lg font-light leading-[1.85]">
+                <p>
+                  The value of a space is measured not only by what it contains, but by what it makes possible. A well-considered environment can help people connect, enable ideas to develop, support better ways of working and help businesses move forward.
+                </p>
+                <p>
+                  Our aim is to translate design intent into tangible outcomes, creating places that serve their purpose today while remaining relevant to the possibilities of tomorrow.
                 </p>
               </div>
             </div>
 
-            <div className="h-5" aria-hidden />
-            <div className="h-5" aria-hidden />
-            <div className="pt-16 lg:pt-20 text-center max-w-4xl mx-auto w-full">
-              <div
-                className="text-white/90 text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-light tracking-tight"
-                style={{ lineHeight: 'calc(1.375em + 0.25px)' }}
-              >
-                <p className="block text-white">
-                  We are <span className="font-bold">BeThatSpace™</span>
-                </p>
-                <p className="block mt-3 sm:mt-4">A proclamation of intent.</p>
-                <p className="block mt-3 sm:mt-4">A blessing for every space we touch.</p>
-                <p className="block mt-3 sm:mt-4">A dialogue with the inanimate.</p>
-                <p className="block mt-3 sm:mt-4">Where the abstract gets manifested,</p>
+            <p className="text-white text-base lg:text-lg font-semibold leading-snug mb-4">
+              We measure our work by what it enables.
+            </p>
+
+            <div className="impact-stats">
+              <div className="impact-stats__cell">
+                <ImpactStat
+                  end={100}
+                  label="Ideas"
+                  Icon={Lightbulb}
+                  delay={0}
+                  toInfinity
+                  description="Endless creativity and design possibilities."
+                />
               </div>
-              <div className="flex justify-center mt-16 lg:mt-20">
-                <img
-                  src={tathastuImage}
-                  alt="तथास्तु"
-                  className="max-w-md w-full h-auto opacity-90"
+              <div className="impact-stats__cell">
+                <ImpactStat
+                  end={100}
+                  label="People"
+                  suffix="+"
+                  Icon={Users}
+                  delay={150}
+                  description="Lives touched by spaces we create."
+                />
+              </div>
+              <div className="impact-stats__cell">
+                <ImpactStat
+                  end={500}
+                  label="Businesses"
+                  suffix="+"
+                  Icon={TrendingUp}
+                  delay={300}
+                  description="Organisations we help move forward."
                 />
               </div>
             </div>
           </div>
         </section>
 
-        {/* Our Story */}
-        <section id="story" className="relative pt-28 lg:pt-40 pb-20 lg:pb-32 overflow-hidden">
-          <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-14">
-            <div className="max-w-3xl mx-auto mb-12 text-center">
-              <h2 className="bts-title mb-6">Our Story</h2>
-              <div className="h-px w-32 bg-gradient-to-r from-transparent via-red-600/50 to-transparent mx-auto" />
-            </div>
-
-            <div
-              className="story-copy max-w-3xl mx-auto space-y-6 text-white/80 text-base lg:text-lg font-light leading-[1.85]"
-              style={{ textAlign: 'justify', textAlignLast: 'left' }}
-            >
-              <p
-                className="text-white text-lg sm:text-xl lg:text-2xl font-semibold leading-snug"
-                style={{ textAlign: 'justify', textAlignLast: 'left' }}
-              >
-                Every Space Begins With an Intent.
-              </p>
-              <p style={{ textAlign: 'justify', textAlignLast: 'left' }}>
-                We are the architects of your space - for it to Be That Space.
-              </p>
-              <p style={{ textAlign: 'justify', textAlignLast: 'left' }}>
-                BeThatSpace is both our name and our philosophy: a belief that every environment holds the potential to become something more than its physical form.
-              </p>
-              <p style={{ textAlign: 'justify', textAlignLast: 'left' }}>
-                It begins with understanding what is unseen - the aspirations, needs and possibilities that give a space its purpose. Through reflection and clarity, these take shape as ideas, and through design and build, those ideas become tangible.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Our Values — all 6 cards in one section */}
+        {/* CTA — same section frame as Our Story so / ABOUT US sits at same height */}
         <section
-          id="values"
-          className="relative py-20 lg:py-28 border-t border-white/10 border-b border-white/10"
+          id="cta"
+          className="about-section relative min-h-screen flex items-start overflow-hidden"
         >
-          <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-14">
-            <div className="text-center mb-10 lg:mb-12">
-              <h2 className="bts-title mb-6">Our Values</h2>
-              <div className="h-px w-32 bg-gradient-to-r from-transparent via-red-600/50 to-transparent mx-auto mb-8" />
-              <p
-                className="bts-body text-white/70 text-base lg:text-lg max-w-3xl mx-auto"
-                style={{ textAlign: 'justify', textAlignLast: 'left' }}
-              >
-                Our values shape how we think, how we work together and how we deliver. They guide our decisions, define our relationships and hold us accountable to the outcomes we create.
-              </p>
-            </div>
+          <div className="bts-shell relative z-10 w-full">
+            <AboutEyebrow className="mb-5" />
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 mb-10">
-              {VALUES.map((value) => (
-                <div
-                  key={value.title}
-                  className="group border border-white/10 hover:border-red-600/50 p-6 lg:p-8 transition-all duration-500 flex flex-col"
+            <div className="w-full max-w-3xl lg:max-w-4xl">
+              <h2
+                className="bts-title about-headline"
+                style={{ textAlign: 'left', textAlignLast: 'left', fontWeight: 300 }}
+              >
+                Let&apos;s Make Space for Possibility.
+              </h2>
+
+              {/* ~1.5 body-lines of space */}
+              <div className="h-[2.6em] text-base lg:text-lg" aria-hidden />
+
+              <p className="text-white text-base lg:text-lg font-light leading-[1.8] mb-12 lg:mb-14">
+                Have a project in mind, an opportunity to collaborate, or an idea worth exploring? We would like to understand what you are working towards and how we might help bring it to life.
+              </p>
+
+              <div className="cta-actions flex flex-col items-start gap-8 lg:gap-10">
+                <button
+                  type="button"
+                  onClick={() => {
+                    window.history.pushState({}, '', '/explore');
+                    window.dispatchEvent(new PopStateEvent('popstate'));
+                    setTimeout(() => {
+                      document.getElementById('footer')?.scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
+                  }}
+                  className="cta-action group flex items-center gap-4 bg-transparent p-0"
                 >
-                  <h3 className="text-xl lg:text-2xl text-white font-semibold mb-3 group-hover:text-red-600 transition-colors text-left">
-                    {value.title}
-                  </h3>
-                  <p className="values-card-copy text-white/70 text-sm lg:text-base flex-1">
-                    {value.description}
-                  </p>
-                  <div className="mt-5 h-px w-0 bg-red-600 group-hover:w-full transition-all duration-700" />
-                </div>
-              ))}
-            </div>
+                  <MessageCircle className="w-8 h-8 text-red-600 shrink-0" strokeWidth={1.5} aria-hidden />
+                  <span className="cta-action__rule" aria-hidden />
+                  <span className="explore-flow text-base lg:text-lg font-semibold">
+                    Start a Conversation
+                  </span>
+                </button>
 
-            <p className="text-white text-sm lg:text-base font-bold text-center px-2">
-              Integrity, ownership and sustainability are the principles that underpin every value, and every decision we make.
-            </p>
-          </div>
-        </section>
-
-        {/* Our Impact */}
-        <section className="relative py-20 lg:py-32">
-          <div className="max-w-[1440px] mx-auto px-8 lg:px-14">
-            <div className="text-center mb-12">
-              <h2 className="bts-title mb-6">Our Impact</h2>
-              <div className="h-px w-32 bg-gradient-to-r from-transparent via-red-600/50 to-transparent mx-auto" />
-            </div>
-
-            <div className="about-copy max-w-3xl mx-auto space-y-6 text-white/80 text-base lg:text-lg font-light leading-[1.85] mb-16">
-              <p className="text-white text-lg sm:text-xl lg:text-2xl font-semibold leading-snug" style={{ textAlign: 'left', textAlignLast: 'left' }}>
-                Beyond What We Build.
-              </p>
-              <p>
-                The value of a space is measured not only by what it contains, but by what it makes possible. A well-considered environment can help people connect, enable ideas to develop, support better ways of working and help businesses move forward.
-              </p>
-              <p>
-                Our aim is to translate design intent into tangible outcomes, creating places that serve their purpose today while remaining relevant to the possibilities of tomorrow.
-              </p>
-              <p className="text-white/90 font-normal">
-                We measure our work by what it enables.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-6 lg:gap-8 text-center">
-              <StatCounter
-                end={100}
-                label="Ideas"
-                delay={0}
-                toInfinity
-                description="Endless creativity and design possibilities."
-              />
-              <StatCounter
-                end={100}
-                label="People"
-                suffix="+"
-                delay={150}
-                description="Lives touched by spaces we create."
-              />
-              <StatCounter
-                end={500}
-                label="Businesses"
-                suffix="+"
-                delay={300}
-                description="Organisations we help move forward."
-              />
-            </div>
-          </div>
-        </section>
-
-        <section className="relative py-20 lg:py-32">
-          <div className="max-w-[1440px] mx-auto px-8 lg:px-14 text-center">
-            <h2 className="bts-title mb-8">
-              Let's Make Space for Possibility.
-            </h2>
-            <p
-              className="bts-body text-white/70 text-base lg:text-lg mb-12 max-w-3xl mx-auto"
-              style={{ textAlign: 'justify', textAlignLast: 'left' }}
-            >
-              Have a project in mind, an opportunity to collaborate, or an idea worth exploring? We would like to understand what you are working towards and how we might help bring it to life.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-              <button
-                onClick={() => {
-                  window.history.pushState({}, '', '/explore');
-                  window.dispatchEvent(new PopStateEvent('popstate'));
-                  setTimeout(() => {
-                    document.getElementById('footer')?.scrollIntoView({ behavior: 'smooth' });
-                  }, 100);
-                }}
-                className="px-10 py-5 bg-transparent group min-w-[240px]"
-              >
-                <span className="tracking-[0.2em] text-sm font-medium text-white group-hover:text-red-600 transition-colors inline-block">
-                  Start a Conversation
-                </span>
-              </button>
-              
-              <button
-                onClick={() => {
-                  window.history.pushState({}, '', '/careers');
-                  window.dispatchEvent(new PopStateEvent('popstate'));
-                }}
-                className="px-10 py-5 bg-transparent group min-w-[240px]"
-              >
-                <span className="tracking-[0.2em] text-sm font-medium text-white group-hover:text-red-600 transition-colors inline-block">
-                  Join Our Team
-                </span>
-              </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    window.history.pushState({}, '', '/careers');
+                    window.dispatchEvent(new PopStateEvent('popstate'));
+                  }}
+                  className="cta-action group flex items-center gap-4 bg-transparent p-0"
+                >
+                  <Users className="w-8 h-8 text-red-600 shrink-0" strokeWidth={1.5} aria-hidden />
+                  <span className="cta-action__rule" aria-hidden />
+                  <span className="explore-flow text-base lg:text-lg font-semibold">
+                    Join Our Team
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
         </section>

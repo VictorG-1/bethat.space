@@ -37,11 +37,11 @@ export function Media() {
 
       <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-14 w-full">
         <div className="mb-12 max-w-3xl mx-auto">
-          <h2 className="bts-title mb-6 text-center">
-            Media
-          </h2>
-          <div className="flex justify-center mb-8">
-            <div className="h-px w-32 bg-gradient-to-r from-transparent via-red-600/50 to-transparent" />
+          <div className="bts-section-head mb-8">
+            <h2 className="bts-title">Media</h2>
+            <div className="bts-bar-wrap">
+              <div className="bts-bar" />
+            </div>
           </div>
           <p className="text-white text-xl lg:text-2xl font-semibold mb-6 text-center">
             Ideas Beyond the Space.

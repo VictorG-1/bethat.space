@@ -5,50 +5,63 @@ import { WhyWeChanged } from './components/WhyWeChanged';
 import { AboutUsPage } from './components/AboutUsPage';
 import { ServiceDetail } from './components/ServiceDetail';
 import { CareersPage } from './components/CareersPage';
+import { CulturePeoplePage } from './components/CulturePeoplePage';
+
+function pageFromPath(path: string): { page: string; serviceSlug: string | null } {
+  if (path === '/why-we-changed') return { page: 'why-we-changed', serviceSlug: null };
+  if (path === '/explore') return { page: 'explore', serviceSlug: null };
+  if (path === '/about-us') return { page: 'about-us', serviceSlug: null };
+  if (path.startsWith('/service/')) {
+    return { page: 'service', serviceSlug: path.replace('/service/', '') };
+  }
+  if (path === '/careers') return { page: 'careers', serviceSlug: null };
+  if (path === '/culture-people') return { page: 'culture-people', serviceSlug: null };
+  return { page: 'home', serviceSlug: null };
+}
+
+const SERVICE_TITLES: Record<string, string> = {
+  'architectural-design': 'Architectural Design',
+  'interior-design': 'Interior Design',
+  'urban-planning': 'Urban Planning',
+};
+
+function titleForPage(page: string, serviceSlug: string | null): string {
+  const brand = 'BeThatSpace™';
+  switch (page) {
+    case 'home':
+      return brand;
+    case 'explore':
+      return `Explore | ${brand}`;
+    case 'about-us':
+      return `About Us | ${brand}`;
+    case 'culture-people':
+      return `Culture & People | ${brand}`;
+    case 'careers':
+      return `Careers | ${brand}`;
+    case 'why-we-changed':
+      return `Why We Changed | ${brand}`;
+    case 'service':
+      return `${SERVICE_TITLES[serviceSlug ?? ''] ?? 'Service'} | ${brand}`;
+    default:
+      return brand;
+  }
+}
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('home');
   const [serviceSlug, setServiceSlug] = useState<string | null>(null);
 
   useEffect(() => {
-    // Simple routing based on URL path
-    const path = window.location.pathname;
-    if (path === '/why-we-changed') {
-      setCurrentPage('why-we-changed');
-    } else if (path === '/explore') {
-      setCurrentPage('explore');
-    } else if (path === '/about-us') {
-      setCurrentPage('about-us');
-    } else if (path.startsWith('/service/')) {
-      setCurrentPage('service');
-      setServiceSlug(path.replace('/service/', ''));
-    } else if (path === '/careers') {
-      setCurrentPage('careers');
-    } else {
-      setCurrentPage('home');
-    }
-
-    // Listen for URL changes
-    const handlePopState = () => {
-      const path = window.location.pathname;
-      if (path === '/why-we-changed') {
-        setCurrentPage('why-we-changed');
-      } else if (path === '/explore') {
-        setCurrentPage('explore');
-      } else if (path === '/about-us') {
-        setCurrentPage('about-us');
-      } else if (path.startsWith('/service/')) {
-        setCurrentPage('service');
-        setServiceSlug(path.replace('/service/', ''));
-      } else if (path === '/careers') {
-        setCurrentPage('careers');
-      } else {
-        setCurrentPage('home');
-      }
+    const applyPath = () => {
+      const { page, serviceSlug: slug } = pageFromPath(window.location.pathname);
+      setCurrentPage(page);
+      setServiceSlug(slug);
+      document.title = titleForPage(page, slug);
     };
 
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
+    applyPath();
+    window.addEventListener('popstate', applyPath);
+    return () => window.removeEventListener('popstate', applyPath);
   }, []);
 
   if (currentPage === 'why-we-changed') {
@@ -71,7 +84,10 @@ export default function App() {
     return <CareersPage />;
   }
 
-  // Landing page - just Hero section
+  if (currentPage === 'culture-people') {
+    return <CulturePeoplePage />;
+  }
+
   return (
     <div className="min-h-screen bg-black scroll-smooth font-sans">
       <Hero />

@@ -170,13 +170,14 @@ import vertivOffice from '../assets/projects/vertiv/Vertiv_Office-02-7372b217-12
 
 import orientalExterior from '../assets/projects/oriental/Oriental_Option-01-56d1a65a-e840-4b5f-836e-3aa5d363c0e3.jpg';
 
-const FEATURED_PROJECT_TITLES = [
-  'Times of India',
-  'Hindustan Unilever',
-  'UBS',
-  'Chettinad CCO',
-  'Galeries Lafayette',
-  'Radio Mirchi',
+/** Featured grid order — match by title + type (titles can repeat). */
+const FEATURED_PROJECTS = [
+  { title: 'The Times Group', type: 'Corporate Office' },
+  { title: 'Hindustan Unilever', type: 'Regional Office' },
+  { title: 'UBS', type: 'Command Centre' },
+  { title: 'Chettinad Group', type: 'Corporate Office' },
+  { title: 'Galeries Lafayette (Aditya Birla Fashion & Retail)', type: 'Corporate Office' },
+  { title: 'ENIL (Radio Mirchi)', type: 'Corporate Office & Studios' },
 ] as const;
 
 export function ProjectsClients() {
@@ -188,7 +189,7 @@ export function ProjectsClients() {
 
   const projectsList = [
     {
-      title: 'Times of India',
+      title: 'The Times Group',
       type: 'Corporate Office',
       location: 'Mumbai, India',
       description: 'A landmark corporate workplace for The Times Group in Mumbai. Reception, executive areas, training, daycare, cafe, gym, and terraces were designed as one cohesive environment that reflects brand, culture, and everyday media operations.',
@@ -222,10 +223,10 @@ export function ProjectsClients() {
       ],
     },
     {
-      title: 'Radio Mirchi',
+      title: 'ENIL (Radio Mirchi)',
       type: 'Corporate Office & Studios',
       location: 'Mumbai, India',
-      description: 'Corporate office and broadcast studios for Radio Mirchi (ENIL) in Mumbai. Reception, radio and Gaana studios, dressing room, collaboration zones, and open office. Brand-led spaces built for media and sound.',
+      description: 'Corporate office and broadcast studios for ENIL (Radio Mirchi) in Mumbai. Reception, radio and Gaana studios, dressing room, collaboration zones, and open office. Brand-led spaces built for media and sound.',
       images: [
         mirchiReception,
         mirchiRadioStudio,
@@ -272,10 +273,10 @@ export function ProjectsClients() {
       ],
     },
     {
-      title: 'Jaikumar Constructions',
+      title: 'Jaikumar Constructions (Parksyde)',
       type: 'Corporate Office',
       location: 'Nasik, India',
-      description: 'Corporate office for Jaikumar Constructions in Nasik. Reception lobby and workplace interiors express the developer’s identity while supporting day-to-day operations.',
+      description: 'Corporate office for Jaikumar Constructions (Parksyde) in Nasik. Reception lobby and workplace interiors express the developer’s identity while supporting day-to-day operations.',
       images: [
         parksydeReception01,
         parksydeReception02,
@@ -294,10 +295,10 @@ export function ProjectsClients() {
       ],
     },
     {
-      title: 'Galeries Lafayette',
+      title: 'Galeries Lafayette (Aditya Birla Fashion & Retail)',
       type: 'Corporate Office',
       location: 'Mumbai, India',
-      description: 'Corporate office for Galeries Lafayette under Aditya Birla Fashion & Retail in Mumbai. Reception, cabins, open office, collaboration zones, conference, and phone booths. Retail heritage in a refined workplace.',
+      description: 'Corporate office for Galeries Lafayette (Aditya Birla Fashion & Retail) in Mumbai. Reception, cabins, open office, collaboration zones, conference, and phone booths. Retail heritage in a refined workplace.',
       images: [
         abfrlReception,
         abfrlCeoCabin,
@@ -311,10 +312,10 @@ export function ProjectsClients() {
       ],
     },
     {
-      title: 'Miss India Organization',
+      title: 'Miss India Organization (Femina Miss India)',
       type: 'Corporate Office',
       location: 'Mumbai, India',
-      description: 'Corporate office for the Miss India Organization in Mumbai. Pre-function galleries and auditorium. Brand-led interiors for events, operations, and culture.',
+      description: 'Corporate office for the Miss India Organization (Femina Miss India) in Mumbai. Pre-function galleries and auditorium. Brand-led interiors for events, operations, and culture.',
       images: [
         mioPreFunction02,
         mioAuditorium,
@@ -347,10 +348,10 @@ export function ProjectsClients() {
       ],
     },
     {
-      title: 'Chettinad CCO',
+      title: 'Chettinad Group',
       type: 'Corporate Office',
       location: 'Chennai, India',
-      description: 'Corporate office floors CCO-11 / 12 for the Chettinad Group in Chennai. Reception, collaboration, meeting, and cafe. Consistent design language across floors for brand cohesion and everyday work.',
+      description: 'Corporate office floors for the Chettinad Group in Chennai. Reception, collaboration, meeting, and cafe. Consistent design language across floors for brand cohesion and everyday work.',
       images: [
         cco11Reception,
         cco11Collab01,
@@ -503,19 +504,19 @@ export function ProjectsClients() {
     },
   ];
 
+  const isFeatured = (project: { title: string; type: string }) =>
+    FEATURED_PROJECTS.some((f) => f.title === project.title && f.type === project.type);
+
   const projects = [
-    ...FEATURED_PROJECT_TITLES.map(
-      (title) => projectsList.find((project) => project.title === title)!
+    ...FEATURED_PROJECTS.map(
+      (f) => projectsList.find((project) => project.title === f.title && project.type === f.type)!
     ),
-    ...projectsList.filter(
-      (project) =>
-        !(FEATURED_PROJECT_TITLES as readonly string[]).includes(project.title)
-    ),
+    ...projectsList.filter((project) => !isFeatured(project)),
   ];
 
   const visibleProjects = showAllProjects
     ? projects
-    : projects.slice(0, FEATURED_PROJECT_TITLES.length);
+    : projects.slice(0, FEATURED_PROJECTS.length);
 
   const clientsRow1 = [
     'Amazon', 'American Express', 'Accor', 'Veolia', 'Chanel', 'Blackstone',
@@ -569,7 +570,7 @@ export function ProjectsClients() {
   }, [selectedProject, isCarouselHovered, projects, currentImageIndex]);
 
   return (
-    <section id="projects" className="relative min-h-screen bg-black py-20 lg:py-32 overflow-hidden flex items-center">
+    <section id="projects" className="relative bg-black py-20 lg:py-32 overflow-visible">
       {/* Subtle grid pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0" style={{
@@ -578,16 +579,17 @@ export function ProjectsClients() {
         }} />
       </div>
 
-      <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-14 w-full">
+      <div className="relative z-10 bts-shell w-full">
         {/* PROJECTS SECTION */}
-        <div className="text-center mb-12 max-w-3xl mx-auto">
-          <h2 className="bts-title mb-6">
-            Projects
-          </h2>
-          <div className="flex justify-center mb-8">
-            <div className="h-px w-32 bg-gradient-to-r from-transparent via-red-600/50 to-transparent" />
+        <div className="mb-12">
+          <div className="bts-section-head mb-6">
+            <h2 className="bts-title">Projects</h2>
+            <div className="bts-bar-wrap">
+              <div className="bts-bar" />
+            </div>
           </div>
-          <p className="text-white text-xl lg:text-2xl font-semibold mb-6">
+          <div className="main-copy">
+          <p className="main-sub text-white text-xl lg:text-2xl font-semibold mb-6">
             Ideas Made Real.
           </p>
           <div className="bts-body text-white/70 text-base lg:text-lg space-y-4">
@@ -598,11 +600,12 @@ export function ProjectsClients() {
               Explore the spaces we have helped shape, and the thinking behind them.
             </p>
           </div>
+          </div>
         </div>
 
         {/* Desktop: Project grid — top 6, rest on Read More */}
-        <div className="hidden lg:block mb-20">
-          <div className="grid lg:grid-cols-3 gap-8">
+        <div className="hidden lg:block">
+          <div className="main-copy project-cards grid lg:grid-cols-3 gap-6 lg:gap-8">
             {visibleProjects.map((project) => {
               const index = projects.findIndex((p) => p.title === project.title && p.images[0] === project.images[0]);
               return (
@@ -621,13 +624,13 @@ export function ProjectsClients() {
 
                   <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-7">
                     <h3
-                      className="text-white text-xl lg:text-2xl mb-2 font-semibold tracking-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]"
+                      className="text-white text-xl lg:text-2xl mb-2 font-light tracking-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]"
                       style={{ textAlign: 'left', textAlignLast: 'left' }}
                     >
                       {project.title}
                     </h3>
                     <p
-                      className="text-white text-sm uppercase tracking-[0.18em] font-medium drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
+                      className="text-white text-sm uppercase tracking-[0.18em] font-light drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
                       style={{ textAlign: 'left', textAlignLast: 'left' }}
                     >
                       {project.location}
@@ -639,7 +642,7 @@ export function ProjectsClients() {
             })}
           </div>
 
-          {projects.length > FEATURED_PROJECT_TITLES.length && (
+          {projects.length > FEATURED_PROJECTS.length && (
             <div className="flex justify-center mt-16 lg:mt-20">
               <button
                 onClick={() => {
@@ -661,7 +664,7 @@ export function ProjectsClients() {
         </div>
 
         {/* Mobile: Carousel */}
-        <div className="lg:hidden mb-16">
+        <div className="lg:hidden main-copy">
           <div className="relative px-0 overflow-visible">
             <div className="relative flex items-center justify-center overflow-visible">
               <div className="group absolute left-0 w-[30%] aspect-[4/3.5] bg-neutral-900/30 backdrop-blur-sm border border-white/20 scale-95 z-0 overflow-hidden opacity-80">
@@ -697,13 +700,13 @@ export function ProjectsClients() {
 
                 <div className="absolute bottom-0 left-0 right-0 p-6">
                   <h3
-                    className="text-white text-xl mb-2 font-semibold tracking-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]"
+                    className="text-white text-xl mb-2 font-light tracking-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]"
                     style={{ textAlign: 'left', textAlignLast: 'left' }}
                   >
                     {visibleProjects[currentProject].title}
                   </h3>
                   <p
-                    className="text-white text-sm uppercase tracking-[0.18em] font-medium drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
+                    className="text-white text-sm uppercase tracking-[0.18em] font-light drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
                     style={{ textAlign: 'left', textAlignLast: 'left' }}
                   >
                     {visibleProjects[currentProject].location}
@@ -750,7 +753,7 @@ export function ProjectsClients() {
             ))}
           </div>
 
-          {projects.length > FEATURED_PROJECT_TITLES.length && (
+          {projects.length > FEATURED_PROJECTS.length && (
             <div className="flex justify-center mt-14">
               <button
                 onClick={() => {
@@ -771,29 +774,24 @@ export function ProjectsClients() {
           )}
         </div>
 
-        {/* CLIENTS SECTION - Mobile Only */}
-        <div className="mb-16 lg:hidden -mx-6">
-          <div className="text-center mb-12 px-6">
-            <h2 className="bts-title mb-6">
-              Clients
-            </h2>
-            <div className="flex justify-center">
-              <div className="h-px w-32 bg-gradient-to-r from-transparent via-red-600/50 to-transparent" />
+        {/* Clients — 2 logo tickers after projects / Show Less */}
+        <div className="mt-16 lg:mt-20">
+          <div className="bts-section-head mb-10 lg:mb-12">
+            <h2 className="bts-title">Clients</h2>
+            <div className="bts-bar-wrap">
+              <div className="bts-bar" />
             </div>
           </div>
 
-          <div className="relative">
-            {/* Row 1 — scrolls left */}
-            <div className="relative mb-6 overflow-hidden">
-              <div className="flex w-max animate-marquee-left">
+          <div className="clients-tickers relative -mx-8 lg:-mx-14">
+            {/* Row 1 — scrolls left (two identical groups for seamless -50% loop) */}
+            <div className="clients-ticker clients-ticker--left mb-6">
+              <div className="clients-ticker__track">
                 {[0, 1].map((copy) => (
-                  <div key={`row1-${copy}`} className="flex shrink-0" aria-hidden={copy === 1}>
+                  <div key={`row1-${copy}`} className="clients-ticker__group" aria-hidden={copy === 1}>
                     {[capovitezLogo, chettinadLogo, enilLogo, galeriesLogo, howdenLogo, mirchiLogo, missIndiaLogo, nirmalLogo, parksydeLogo, adityaBirlaLogo].map((logo, index) => (
-                      <div
-                        key={`${copy}-${index}`}
-                        className="flex shrink-0 items-center justify-center px-6 py-5 border-r border-white/10 w-[160px]"
-                      >
-                        <img src={logo} alt="" className="h-10 w-auto max-w-[120px] object-contain opacity-70" />
+                      <div key={`${copy}-${index}`} className="clients-ticker__cell">
+                        <img src={logo} alt="" className="clients-ticker__logo" draggable={false} />
                       </div>
                     ))}
                   </div>
@@ -802,16 +800,13 @@ export function ProjectsClients() {
             </div>
 
             {/* Row 2 — scrolls right */}
-            <div className="relative overflow-hidden">
-              <div className="flex w-max animate-marquee-right">
+            <div className="clients-ticker clients-ticker--right">
+              <div className="clients-ticker__track">
                 {[0, 1].map((copy) => (
-                  <div key={`row2-${copy}`} className="flex shrink-0" aria-hidden={copy === 1}>
+                  <div key={`row2-${copy}`} className="clients-ticker__group" aria-hidden={copy === 1}>
                     {[worldBankLogo, suttattiLogo, rahejaUniversalLogo, tableSpaceLogo, timesNetworkLogo, timesMusicLogo, timesGroupLogo, unileverFragranceLogo, ubsLogo, unileverLogo].map((logo, index) => (
-                      <div
-                        key={`${copy}-${index}`}
-                        className="flex shrink-0 items-center justify-center px-6 py-5 border-r border-white/10 w-[160px]"
-                      >
-                        <img src={logo} alt="" className="h-10 w-auto max-w-[120px] object-contain opacity-70" />
+                      <div key={`${copy}-${index}`} className="clients-ticker__cell">
+                        <img src={logo} alt="" className="clients-ticker__logo" draggable={false} />
                       </div>
                     ))}
                   </div>
@@ -846,21 +841,14 @@ export function ProjectsClients() {
             {/* Desktop: image left | text right · Mobile: image top, text below */}
             <div className="flex flex-col lg:flex-row lg:items-stretch max-h-[92vh]">
               <div
-                className="relative bg-neutral-950 flex items-center justify-center p-4 lg:p-8 lg:w-[58%] lg:min-h-[70vh] shrink-0"
+                className="project-modal__stage relative lg:w-[58%] shrink-0"
                 onMouseEnter={() => setIsCarouselHovered(true)}
                 onMouseLeave={() => setIsCarouselHovered(false)}
               >
                 <img
+                  className="project-modal__img"
                   src={projects[selectedProject].images[currentImageIndex]}
                   alt={`${projects[selectedProject].title} - Image ${currentImageIndex + 1}`}
-                  style={{
-                    maxWidth: '100%',
-                    maxHeight: '75vh',
-                    width: 'auto',
-                    height: 'auto',
-                    objectFit: 'contain',
-                    display: 'block',
-                  }}
                 />
 
                 {projects[selectedProject].images.length > 1 && (
