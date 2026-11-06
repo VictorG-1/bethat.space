@@ -6,6 +6,8 @@ import logo from '../assets/Bethat Space White Logo Transparent Background-01-RG
 type Phase = 'video' | 'transition' | 'landing';
 
 const MOBILE_INTRO_MQ = '(max-width: 767px)';
+/** Normal video → logo crossfade */
+const HANDOFF_MS = 900;
 
 export function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -13,7 +15,9 @@ export function Hero() {
   const [isMobile, setIsMobile] = useState(() =>
     typeof window !== 'undefined' ? window.matchMedia(MOBILE_INTRO_MQ).matches : false,
   );
-  const closingRef = useRef(false);
+  const handoffStartedRef = useRef(false);
+  const settledRef = useRef(false);
+  const settleTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     const mq = window.matchMedia(MOBILE_INTRO_MQ);
@@ -25,26 +29,41 @@ export function Hero() {
 
   const introVideo = isMobile ? introVideoMobile : introVideoDesktop;
 
-  const closeVideo = useCallback(() => {
-    if (closingRef.current) return;
-    closingRef.current = true;
+  const settleLanding = useCallback((delayMs: number) => {
+    if (settledRef.current) return;
+    settledRef.current = true;
 
-    const video = videoRef.current;
-    if (video) {
-      video.pause();
+    if (settleTimerRef.current != null) {
+      window.clearTimeout(settleTimerRef.current);
     }
 
-    setPhase('transition');
-
-    window.setTimeout(() => {
+    settleTimerRef.current = window.setTimeout(() => {
       const v = videoRef.current;
       if (v) {
+        v.pause();
         v.removeAttribute('src');
         v.load();
       }
       setPhase('landing');
-    }, 620);
+    }, delayMs);
   }, []);
+
+  /** Logo fades in as video crossfades out */
+  const beginHandoff = useCallback(() => {
+    if (handoffStartedRef.current) return;
+    handoffStartedRef.current = true;
+
+    const video = videoRef.current;
+    if (video) video.pause();
+
+    setPhase('transition');
+    settleLanding(HANDOFF_MS);
+  }, [settleLanding]);
+
+  const skipIntro = useCallback(() => {
+    if (settledRef.current) return;
+    beginHandoff();
+  }, [beginHandoff]);
 
   const goToExplore = () => {
     window.history.pushState({}, '', '/explore');
@@ -52,45 +71,59 @@ export function Hero() {
   };
 
   useEffect(() => {
-    if (phase !== 'video') return;
+    handoffStartedRef.current = false;
+    settledRef.current = false;
+
     const video = videoRef.current;
     if (!video) return;
 
     video.loop = false;
     video.muted = true;
 
-    const finish = () => closeVideo();
-
     const onTimeUpdate = () => {
-      if (video.duration && video.currentTime >= video.duration - 0.15) {
-        finish();
+      if (!video.duration || !Number.isFinite(video.duration)) return;
+      if (video.currentTime >= video.duration - 0.05) {
+        beginHandoff();
       }
     };
 
-    video.addEventListener('ended', finish);
+    const onEnded = () => {
+      beginHandoff();
+    };
+
     video.addEventListener('timeupdate', onTimeUpdate);
+    video.addEventListener('ended', onEnded);
 
     const play = async () => {
       try {
         await video.play();
       } catch {
-        finish();
+        beginHandoff();
       }
     };
     void play();
 
     return () => {
-      video.removeEventListener('ended', finish);
       video.removeEventListener('timeupdate', onTimeUpdate);
+      video.removeEventListener('ended', onEnded);
     };
-  }, [phase, closeVideo, introVideo]);
+  }, [beginHandoff, introVideo]);
+
+  useEffect(() => {
+    return () => {
+      if (settleTimerRef.current != null) {
+        window.clearTimeout(settleTimerRef.current);
+      }
+    };
+  }, []);
 
   return (
     <section id="hero" className="relative min-h-screen bg-black overflow-hidden z-20">
+      {/* Keep video first in the tree so scaling down doesn't remount / restart playback */}
       {(phase === 'video' || phase === 'transition') && (
         <button
           type="button"
-          onClick={phase === 'video' ? closeVideo : undefined}
+          onClick={phase === 'video' ? skipIntro : undefined}
           className="absolute inset-0 z-30 cursor-pointer border-0 p-0 bg-transparent"
           aria-label="Skip intro"
           disabled={phase === 'transition'}
@@ -113,7 +146,7 @@ export function Hero() {
 
       {(phase === 'transition' || phase === 'landing') && (
         <div
-          className={`relative z-40 min-h-screen flex flex-col items-center justify-center px-8 ${
+          className={`absolute inset-0 z-20 flex flex-col items-center justify-center px-8 ${
             phase === 'transition' ? 'hero-landing-reveal' : 'animate-in fade-in duration-500'
           }`}
         >

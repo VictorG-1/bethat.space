@@ -213,9 +213,11 @@ export function CareersPage() {
             <div className="flex justify-center pt-4">
               <button
                 type="submit"
-                className="group relative px-12 py-4 bg-red-600 text-white hover:bg-white hover:text-black transition-all duration-500 uppercase tracking-[0.2em] text-sm font-semibold overflow-hidden"
+                className="group relative inline-flex items-center justify-center px-2 py-2 bg-transparent transition-transform duration-500 hover:scale-105"
               >
-                <span className="relative z-10">Submit Application</span>
+                <span className="explore-flow uppercase tracking-[0.2em] text-sm sm:text-base font-semibold">
+                  Submit Application
+                </span>
               </button>
             </div>
           </form>

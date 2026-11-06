@@ -3183,36 +3183,43 @@ main > section li,
 }
 
 @keyframes explore-flow {
-  0% {
-    background-position: 200% center;
+  0%,
+  20% {
+    color: #ffffff;
+    -webkit-text-fill-color: #ffffff;
+  }
+  50%,
+  70% {
+    color: #dc2626;
+    -webkit-text-fill-color: #dc2626;
   }
   100% {
-    background-position: -200% center;
+    color: #ffffff;
+    -webkit-text-fill-color: #ffffff;
   }
 }
 
 .explore-flow {
-  color: transparent;
-  background-image: linear-gradient(
-    90deg,
-    #ffffff 0%,
-    #ffffff 35%,
-    #ef4444 50%,
-    #ffffff 65%,
-    #ffffff 100%
-  );
-  background-size: 200% 100%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: explore-flow 2.4s linear infinite;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff;
+  background-image: none;
+  animation: explore-flow 3s ease-in-out infinite;
+  animation-delay: 0s;
 }
 
-.group:hover .explore-flow {
+.group:hover .explore-flow,
+.group\/btn:hover .explore-flow {
   animation: none;
-  background-image: none;
-  color: #dc2626;
-  -webkit-text-fill-color: #dc2626;
+  color: #dc2626 !important;
+  -webkit-text-fill-color: #dc2626 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .explore-flow {
+    animation: none;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+  }
 }
 
 /* Shared section titles — People style; unbold */
@@ -3327,7 +3334,7 @@ main > section li,
   }
 }
 
-/* Landing intro: quick zoom-out → logo settle (snappy, eased) */
+/* Landing intro: normal crossfade — video out, logo in */
 .hero-intro-video {
   transform: scale(1);
   opacity: 1;
@@ -3335,18 +3342,16 @@ main > section li,
   will-change: transform, opacity;
 }
 .hero-intro-video--out {
-  animation: hero-video-zoom-out 0.55s cubic-bezier(0.33, 0, 0.2, 1) forwards;
+  animation: hero-video-zoom-out 0.85s cubic-bezier(0.33, 0, 0.2, 1) forwards;
 }
 @keyframes hero-video-zoom-out {
   0% {
     transform: scale(1);
     opacity: 1;
-    filter: blur(0);
   }
   100% {
-    transform: scale(0.42);
+    transform: scale(1.04);
     opacity: 0;
-    filter: blur(3px);
   }
 }
 
@@ -3357,25 +3362,22 @@ main > section li,
   transform-origin: center center;
 }
 .hero-logo-wrap--pan {
-  animation: hero-logo-pan-out 0.58s cubic-bezier(0.22, 1, 0.36, 1) 0.04s both;
+  animation: hero-logo-pan-out 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 @keyframes hero-logo-pan-out {
   0% {
-    transform: scale(0.55) translateY(8px);
+    transform: scale(0.96);
     opacity: 0;
   }
-  40% {
-    opacity: 1;
-  }
   100% {
-    transform: scale(1) translateY(0);
+    transform: scale(1);
     opacity: 1;
   }
 }
 
 .hero-landing-meta--in,
 .hero-landing-cta--in {
-  animation: hero-landing-fade-up 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.22s both;
+  animation: hero-landing-fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.28s both;
 }
 @keyframes hero-landing-fade-up {
   from {
