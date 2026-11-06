@@ -3211,7 +3211,37 @@ main > section li,
   text-align-last: center;
 }
 
-/* Header burger — page titles slide onto navbar from right → left, reverse on close */
+/* Mobile burger panel — slide in from right, out to right */
+.header-menu {
+  transform: translate3d(100%, 0, 0);
+  transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+.header-menu--open {
+  transform: translate3d(0, 0, 0);
+}
+.header-menu-backdrop {
+  border: 0;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.38s ease;
+}
+.header-menu-backdrop--open {
+  opacity: 1;
+  pointer-events: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  .header-menu,
+  .header-menu-backdrop {
+    transition: none;
+  }
+}
+
+/* Desktop burger — page titles slide onto navbar from right → left, reverse on close */
 .header-inline-nav {
   display: flex;
   align-items: center;
@@ -3467,19 +3497,46 @@ main > section li,
   margin-right: auto;
 }
 
-/* Punchline: centered within that shared column */
+/* Punchline: same 3-line desktop format on all breakpoints */
 .punchline-copy {
   text-align: center;
 }
 .punchline-hero {
   margin: 0 auto;
+  width: 100%;
   text-align: center !important;
   text-align-last: center !important;
-  line-height: calc(1.375em + 0.25px);
+  /* Fit longest line (“We design…”) on one row like desktop */
+  font-size: clamp(0.7rem, calc((100vw - 4rem) / 23.5), 3rem);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
 }
 .punchline-hero span {
+  display: block;
+  white-space: nowrap;
   text-align: center !important;
   text-align-last: center !important;
+}
+.punchline-hero span + span {
+  margin-top: 0.75em;
+}
+@media (min-width: 640px) {
+  .punchline-hero {
+    font-size: clamp(1.35rem, calc((100vw - 4rem) / 22), 3rem);
+  }
+  .punchline-hero span + span {
+    margin-top: 1rem;
+  }
+}
+@media (min-width: 1024px) {
+  .punchline-hero {
+    font-size: clamp(2.25rem, 3.2vw, 3rem);
+  }
+}
+@media (min-width: 1280px) {
+  .punchline-hero {
+    font-size: 3rem;
+  }
 }
 
 /* Body paras in the same column: justified, left last line */

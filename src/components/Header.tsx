@@ -23,12 +23,28 @@ const SERVICE_TITLES: Record<string, string> = {
   'urban-planning': 'Urban Planning',
 };
 
+const DESKTOP_NAV_MQ = '(min-width: 1024px)';
+
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [menuMounted, setMenuMounted] = useState(false);
+  const [isDesktopNav, setIsDesktopNav] = useState(() =>
+    typeof window !== 'undefined' ? window.matchMedia(DESKTOP_NAV_MQ).matches : false,
+  );
   const [currentPath, setCurrentPath] = useState('/explore');
   const [isVisible, setIsVisible] = useState(true);
   const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const mq = window.matchMedia(DESKTOP_NAV_MQ);
+    const sync = () => {
+      setIsDesktopNav(mq.matches);
+      setMenuOpen(false);
+      setMenuMounted(false);
+    };
+    mq.addEventListener('change', sync);
+    return () => mq.removeEventListener('change', sync);
+  }, []);
 
   const openMenu = useCallback(() => {
     setMenuMounted(true);
@@ -174,90 +190,144 @@ export function Header() {
   ];
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 bg-black/50 backdrop-blur-md border-b border-white/10 z-50 transition-transform duration-300 ease-out will-change-transform ${
-        isVisible ? 'translate-y-0' : '-translate-y-full'
-      }`}
-    >
-      <div className="bts-shell w-full py-4 flex items-center gap-4 lg:gap-6">
-        <button
-          type="button"
-          onClick={handleLogoClick}
-          className="shrink-0 focus:outline-none focus:ring-0"
-        >
-          <img src={logo} alt="BeThatSpace™" className="h-12 lg:h-16 w-auto" />
-        </button>
+    <>
+      <header
+        className={`fixed top-0 left-0 right-0 bg-black/50 backdrop-blur-md border-b border-white/10 z-50 transition-transform duration-300 ease-out will-change-transform ${
+          isVisible ? 'translate-y-0' : '-translate-y-full'
+        }`}
+      >
+        <div className="bts-shell w-full py-4 flex items-center gap-4 lg:gap-6">
+          <button
+            type="button"
+            onClick={handleLogoClick}
+            className="shrink-0 focus:outline-none focus:ring-0"
+          >
+            <img src={logo} alt="BeThatSpace™" className="h-12 lg:h-16 w-auto" />
+          </button>
 
-        <div className="flex-1 min-w-0 flex items-center justify-end">
-          {isSubPage ? (
-            <div className="flex items-center gap-4 lg:gap-6">
-              <p className="hidden sm:block text-white text-xs lg:text-sm font-light tracking-[0.18em] uppercase truncate">
-                {subPageTitle}
-              </p>
-              {currentPath === '/why-we-changed' ? (
-                <button onClick={handleBackToMain} className="px-6 py-3 bg-transparent group shrink-0">
-                  <span className="tracking-[0.2em] text-sm font-medium text-white group-hover:text-red-600 transition-colors inline-block">
-                    Enter
-                  </span>
-                </button>
-              ) : (
-                <button
-                  onClick={handleBackToMain}
-                  className="flex items-center gap-2 text-white/60 hover:text-red-600 transition-colors duration-300 group p-2 shrink-0"
-                >
-                  <ArrowLeft className="w-7 h-7" />
-                  <span className="text-sm font-medium uppercase tracking-wider hidden sm:inline">
-                    Back to Main
-                  </span>
-                </button>
-              )}
-            </div>
-          ) : (
-            <div className="flex items-center justify-end gap-3 lg:gap-5 min-w-0 w-full">
-              {/* Inline nav titles — slide in from right on open, reverse on close */}
-              {menuMounted && (
-                <nav
-                  className={`header-inline-nav ${menuOpen ? 'header-inline-nav--open' : ''}`}
-                  onTransitionEnd={handleNavTransitionEnd}
-                  aria-hidden={!menuOpen}
-                >
-                  {navItems.map((item, index) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleNavClick(item.href);
-                      }}
-                      className="header-inline-nav__link"
-                      style={{ transitionDelay: menuOpen ? `${index * 40}ms` : `${(navItems.length - 1 - index) * 30}ms` }}
-                    >
-                      {item.name}
-                    </a>
-                  ))}
-                </nav>
-              )}
-
-              <button
-                onClick={toggleMenu}
-                className="p-2 transition-colors rounded font-medium group shrink-0"
-                aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-                aria-expanded={menuOpen}
-              >
-                {menuOpen ? (
-                  <X className="w-7 h-7 text-white group-hover:text-red-600 transition-colors" />
+          <div className="flex-1 min-w-0 flex items-center justify-end">
+            {isSubPage ? (
+              <div className="flex items-center gap-4 lg:gap-6">
+                <p className="hidden sm:block text-white text-xs lg:text-sm font-light tracking-[0.18em] uppercase truncate">
+                  {subPageTitle}
+                </p>
+                {currentPath === '/why-we-changed' ? (
+                  <button onClick={handleBackToMain} className="px-6 py-3 bg-transparent group shrink-0">
+                    <span className="tracking-[0.2em] text-sm font-medium text-white group-hover:text-red-600 transition-colors inline-block">
+                      Enter
+                    </span>
+                  </button>
                 ) : (
-                  <div className="flex flex-col gap-1.5">
-                    <div className="w-7 h-0.5 bg-white group-hover:bg-red-600 transition-all" />
-                    <div className="w-7 h-0.5 bg-white group-hover:bg-red-600 transition-all" />
-                    <div className="w-7 h-0.5 bg-white group-hover:bg-red-600 transition-all" />
-                  </div>
+                  <button
+                    onClick={handleBackToMain}
+                    className="flex items-center gap-2 text-white/60 hover:text-red-600 transition-colors duration-300 group p-2 shrink-0"
+                  >
+                    <ArrowLeft className="w-7 h-7" />
+                    <span className="text-sm font-medium uppercase tracking-wider hidden sm:inline">
+                      Back to Main
+                    </span>
+                  </button>
                 )}
+              </div>
+            ) : (
+              <div className="flex items-center justify-end gap-3 lg:gap-5 min-w-0 w-full">
+                {/* Desktop: titles slide onto the navbar */}
+                {isDesktopNav && menuMounted && (
+                  <nav
+                    className={`header-inline-nav ${menuOpen ? 'header-inline-nav--open' : ''}`}
+                    onTransitionEnd={handleNavTransitionEnd}
+                    aria-hidden={!menuOpen}
+                  >
+                    {navItems.map((item, index) => (
+                      <a
+                        key={item.name}
+                        href={item.href}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleNavClick(item.href);
+                        }}
+                        className="header-inline-nav__link"
+                        style={{
+                          transitionDelay: menuOpen
+                            ? `${index * 40}ms`
+                            : `${(navItems.length - 1 - index) * 30}ms`,
+                        }}
+                      >
+                        {item.name}
+                      </a>
+                    ))}
+                  </nav>
+                )}
+
+                <button
+                  onClick={toggleMenu}
+                  className="p-2 transition-colors rounded font-medium group shrink-0"
+                  aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+                  aria-expanded={menuOpen}
+                >
+                  {isDesktopNav && menuOpen ? (
+                    <X className="w-7 h-7 text-white group-hover:text-red-600 transition-colors" />
+                  ) : (
+                    <div className="flex flex-col gap-1.5">
+                      <div className="w-7 h-0.5 bg-white group-hover:bg-red-600 transition-all" />
+                      <div className="w-7 h-0.5 bg-white group-hover:bg-red-600 transition-all" />
+                      <div className="w-7 h-0.5 bg-white group-hover:bg-red-600 transition-all" />
+                    </div>
+                  )}
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </header>
+
+      {/* Mobile: previous slide-in panel from the right */}
+      {!isSubPage && !isDesktopNav && menuMounted && (
+        <>
+          <button
+            type="button"
+            aria-label="Close menu overlay"
+            className={`header-menu-backdrop fixed inset-0 z-40 ${
+              menuOpen ? 'header-menu-backdrop--open' : ''
+            }`}
+            onClick={closeMenu}
+          />
+          <nav
+            className={`header-menu fixed top-0 right-0 z-50 h-full w-full sm:w-1/2 max-w-md bg-black/90 backdrop-blur-md border-l border-white/10 px-8 py-8 flex flex-col ${
+              menuOpen ? 'header-menu--open' : ''
+            }`}
+            onTransitionEnd={handleNavTransitionEnd}
+            aria-hidden={!menuOpen}
+          >
+            <div className="flex justify-end mb-10">
+              <button
+                type="button"
+                onClick={closeMenu}
+                className="p-2 transition-colors rounded font-medium group"
+                aria-label="Close menu"
+              >
+                <X className="w-7 h-7 text-white group-hover:text-red-600 transition-colors" />
               </button>
             </div>
-          )}
-        </div>
-      </div>
-    </header>
+            <div className="flex flex-col items-start gap-5">
+              {navItems.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavClick(item.href);
+                  }}
+                  className="text-white text-lg tracking-wider font-medium hover:text-red-600 transition-colors duration-300"
+                  style={{ textAlign: 'left', textAlignLast: 'left' }}
+                >
+                  {item.name}
+                </a>
+              ))}
+            </div>
+          </nav>
+        </>
+      )}
+    </>
   );
 }
