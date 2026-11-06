@@ -19,14 +19,25 @@ const LAUNCH_CRUMBS = Array.from({ length: 36 }, (_, i) => {
 type Phase = 'launch' | 'launching' | 'video' | 'transition' | 'landing';
 
 const MOBILE_INTRO_MQ = '(max-width: 767px)';
+const LAUNCH_SEEN_KEY = 'bts-launch-seen';
 /** Normal video → logo crossfade */
 const HANDOFF_MS = 900;
 /** Launch button exit → video */
 const LAUNCH_OUT_MS = 900;
 
+function initialHeroPhase(): Phase {
+  if (typeof window === 'undefined') return 'launch';
+  try {
+    if (sessionStorage.getItem(LAUNCH_SEEN_KEY) === '1') return 'landing';
+  } catch {
+    /* ignore */
+  }
+  return 'launch';
+}
+
 export function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [phase, setPhase] = useState<Phase>('launch');
+  const [phase, setPhase] = useState<Phase>(initialHeroPhase);
   const [isMobile, setIsMobile] = useState(() =>
     typeof window !== 'undefined' ? window.matchMedia(MOBILE_INTRO_MQ).matches : false,
   );
@@ -45,24 +56,36 @@ export function Hero() {
 
   const introVideo = isMobile ? introVideoMobile : introVideoDesktop;
 
-  const settleLanding = useCallback((delayMs: number) => {
-    if (settledRef.current) return;
-    settledRef.current = true;
-
-    if (settleTimerRef.current != null) {
-      window.clearTimeout(settleTimerRef.current);
+  const markLaunchSeen = useCallback(() => {
+    try {
+      sessionStorage.setItem(LAUNCH_SEEN_KEY, '1');
+    } catch {
+      /* ignore */
     }
-
-    settleTimerRef.current = window.setTimeout(() => {
-      const v = videoRef.current;
-      if (v) {
-        v.pause();
-        v.removeAttribute('src');
-        v.load();
-      }
-      setPhase('landing');
-    }, delayMs);
   }, []);
+
+  const settleLanding = useCallback(
+    (delayMs: number) => {
+      if (settledRef.current) return;
+      settledRef.current = true;
+
+      if (settleTimerRef.current != null) {
+        window.clearTimeout(settleTimerRef.current);
+      }
+
+      settleTimerRef.current = window.setTimeout(() => {
+        const v = videoRef.current;
+        if (v) {
+          v.pause();
+          v.removeAttribute('src');
+          v.load();
+        }
+        markLaunchSeen();
+        setPhase('landing');
+      }, delayMs);
+    },
+    [markLaunchSeen],
+  );
 
   const beginHandoff = useCallback(() => {
     if (handoffStartedRef.current) return;
@@ -82,6 +105,7 @@ export function Hero() {
 
   const startLaunch = useCallback(() => {
     if (phase !== 'launch') return;
+    markLaunchSeen();
     setPhase('launching');
 
     if (launchTimerRef.current != null) {
@@ -92,7 +116,7 @@ export function Hero() {
       settledRef.current = false;
       setPhase('video');
     }, LAUNCH_OUT_MS);
-  }, [phase]);
+  }, [phase, markLaunchSeen]);
 
   const goToExplore = () => {
     window.history.pushState({}, '', '/explore');

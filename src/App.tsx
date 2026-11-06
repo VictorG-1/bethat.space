@@ -47,16 +47,27 @@ function titleForPage(page: string, serviceSlug: string | null): string {
   }
 }
 
+function readInitialRoute() {
+  if (typeof window === 'undefined') {
+    return { page: 'home', serviceSlug: null as string | null };
+  }
+  return pageFromPath(window.location.pathname);
+}
+
 export default function App() {
-  const [currentPage, setCurrentPage] = useState('home');
-  const [serviceSlug, setServiceSlug] = useState<string | null>(null);
+  const initial = readInitialRoute();
+  const [currentPage, setCurrentPage] = useState(initial.page);
+  const [serviceSlug, setServiceSlug] = useState<string | null>(initial.serviceSlug);
+
+  useEffect(() => {
+    document.title = titleForPage(currentPage, serviceSlug);
+  }, [currentPage, serviceSlug]);
 
   useEffect(() => {
     const applyPath = () => {
       const { page, serviceSlug: slug } = pageFromPath(window.location.pathname);
       setCurrentPage(page);
       setServiceSlug(slug);
-      document.title = titleForPage(page, slug);
     };
 
     applyPath();
