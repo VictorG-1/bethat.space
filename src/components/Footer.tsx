@@ -8,17 +8,17 @@ export function Footer() {
   const socialLinks = [
     {
       name: 'LinkedIn',
-      url: 'https://www.linkedin.com/company/kbnk-design-build-pvt-ltd',
+      url: 'https://www.linkedin.com/company/bethatspace/',
       icon: Linkedin,
     },
     {
       name: 'Instagram',
-      url: 'https://www.instagram.com/kbnk_db',
+      url: 'https://www.instagram.com/bethatspace',
       icon: Instagram,
     },
     {
       name: 'Facebook',
-      url: 'https://www.facebook.com/WixStudio',
+      url: 'https://www.facebook.com/share/1Hu6KbwqLp/?mibextid=wwXIfr',
       icon: Facebook,
     },
   ];
