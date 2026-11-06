@@ -3090,6 +3090,21 @@ main > section li,
   hyphens: none;
 }
 
+/* Project popup — above header / burger (z-50) */
+.project-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+}
+/* Project popup close — pinned to overlay viewport, never clipped by panel */
+.project-modal__close {
+  position: absolute;
+  top: max(1rem, env(safe-area-inset-top, 0px));
+  right: max(1rem, env(safe-area-inset-right, 0px));
+  z-index: 210;
+  box-sizing: border-box;
+}
+
 /* Project popup copy — left aligned, justified */
 /* Project popup: keep natural aspect; mask with margins (letterbox/pillarbox) */
 .project-modal__stage {
@@ -4031,6 +4046,19 @@ main > section li,
 
 section {
   scroll-snap-align: start;
+}
+
+/* Explore page: titles sit higher in the snap viewport */
+.explore-section {
+  padding-top: 2.25rem;
+  padding-bottom: 3.25rem;
+  scroll-margin-top: 0;
+}
+@media (min-width: 1024px) {
+  .explore-section {
+    padding-top: 2.75rem;
+    padding-bottom: 4rem;
+  }
 }
 
 main {

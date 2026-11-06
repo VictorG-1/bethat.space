@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { ChevronLeft, ChevronRight, Plus, Minus, X } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import capovitezLogo from 'figma:asset/ee8f8545dad18dc5b362fcc32f41e729a657b33b.png';
@@ -570,7 +571,7 @@ export function ProjectsClients() {
   }, [selectedProject, isCarouselHovered, projects, currentImageIndex]);
 
   return (
-    <section id="projects" className="relative bg-black py-20 lg:py-32 overflow-visible">
+    <section id="projects" className="explore-section relative bg-black overflow-visible">
       {/* Subtle grid pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0" style={{
@@ -589,15 +590,12 @@ export function ProjectsClients() {
             </div>
           </div>
           <div className="main-copy">
-          <p className="main-sub text-white text-xl lg:text-2xl font-semibold mb-6">
+          <p className="main-sub text-center text-white text-xl lg:text-2xl font-semibold mb-6">
             Ideas Made Real.
           </p>
-          <div className="bts-body text-white/70 text-base lg:text-lg space-y-4">
+          <div className="bts-body text-white/70 text-base lg:text-lg">
             <p>
-              Every project begins with a different set of aspirations, challenges and possibilities. Our work brings these together through considered design, technical integration and disciplined execution.
-            </p>
-            <p className="text-white/80">
-              Explore the spaces we have helped shape, and the thinking behind them.
+              Every project begins with a different set of aspirations, challenges and possibilities. Our work brings these together through considered design, technical integration and disciplined execution. Explore the spaces we have helped shape, and the thinking behind them.
             </p>
           </div>
           </div>
@@ -821,111 +819,115 @@ export function ProjectsClients() {
 
       </div>
 
-      {/* Project Modal */}
-      {selectedProject !== null && (
-        <div
-          className="project-modal fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4 lg:p-8 animate-in fade-in duration-300"
-          onClick={closeModal}
-        >
+      {/* Project Modal — portaled above header / page chrome */}
+      {selectedProject !== null &&
+        createPortal(
           <div
-            className="relative w-full max-w-7xl bg-black border border-white/20 shadow-2xl max-h-[92vh] overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
+            className="project-modal flex items-center justify-center bg-black/70 backdrop-blur-md p-4 sm:p-6 lg:p-8 pt-16 sm:pt-6 animate-in fade-in duration-300"
+            onClick={closeModal}
           >
             <button
+              type="button"
               onClick={closeModal}
-              className="absolute top-4 right-4 w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-red-600 hover:border-red-600 transition-all duration-300 group z-20 bg-black/60"
+              aria-label="Close project"
+              className="project-modal__close w-10 h-10 rounded-full border border-white/30 flex items-center justify-center hover:bg-red-600 hover:border-red-600 transition-all duration-300 group bg-black/80 shadow-lg"
             >
-              <X className="w-5 h-5 text-white/60 group-hover:text-white transition-colors" />
+              <X className="w-5 h-5 text-white/80 group-hover:text-white transition-colors" />
             </button>
 
-            {/* Desktop: image left | text right · Mobile: image top, text below */}
-            <div className="flex flex-col lg:flex-row lg:items-stretch max-h-[92vh]">
-              <div
-                className="project-modal__stage relative lg:w-[58%] shrink-0"
-                onMouseEnter={() => setIsCarouselHovered(true)}
-                onMouseLeave={() => setIsCarouselHovered(false)}
-              >
-                <img
-                  className="project-modal__img"
-                  src={projects[selectedProject].images[currentImageIndex]}
-                  alt={`${projects[selectedProject].title} - Image ${currentImageIndex + 1}`}
-                />
+            <div
+              className="relative w-full max-w-7xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Desktop: image left | text right · Mobile: image top, text below */}
+              <div className="flex flex-col lg:flex-row lg:items-stretch max-h-[min(92vh,calc(100dvh-2rem))] bg-black border border-white/20 shadow-2xl overflow-hidden">
+                <div
+                  className="project-modal__stage relative lg:w-[58%] shrink-0"
+                  onMouseEnter={() => setIsCarouselHovered(true)}
+                  onMouseLeave={() => setIsCarouselHovered(false)}
+                >
+                  <img
+                    className="project-modal__img"
+                    src={projects[selectedProject].images[currentImageIndex]}
+                    alt={`${projects[selectedProject].title} - Image ${currentImageIndex + 1}`}
+                  />
 
-                {projects[selectedProject].images.length > 1 && (
-                  <>
-                    <button
-                      onClick={prevImage}
-                      className="absolute left-2 lg:left-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full border border-white/40 bg-black/60 backdrop-blur-sm flex items-center justify-center hover:bg-red-600 hover:border-red-600 transition-all duration-300 group"
-                      aria-label="Previous image"
-                    >
-                      <ChevronLeft className="w-5 h-5 text-white/80 group-hover:text-white transition-colors" />
-                    </button>
-                    <button
-                      onClick={nextImage}
-                      className="absolute right-2 lg:right-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full border border-white/40 bg-black/60 backdrop-blur-sm flex items-center justify-center hover:bg-red-600 hover:border-red-600 transition-all duration-300 group"
-                      aria-label="Next image"
-                    >
-                      <ChevronRight className="w-5 h-5 text-white/80 group-hover:text-white transition-colors" />
-                    </button>
+                  {projects[selectedProject].images.length > 1 && (
+                    <>
+                      <button
+                        onClick={prevImage}
+                        className="absolute left-2 lg:left-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full border border-white/40 bg-black/60 backdrop-blur-sm flex items-center justify-center hover:bg-red-600 hover:border-red-600 transition-all duration-300 group"
+                        aria-label="Previous image"
+                      >
+                        <ChevronLeft className="w-5 h-5 text-white/80 group-hover:text-white transition-colors" />
+                      </button>
+                      <button
+                        onClick={nextImage}
+                        className="absolute right-2 lg:right-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full border border-white/40 bg-black/60 backdrop-blur-sm flex items-center justify-center hover:bg-red-600 hover:border-red-600 transition-all duration-300 group"
+                        aria-label="Next image"
+                      >
+                        <ChevronRight className="w-5 h-5 text-white/80 group-hover:text-white transition-colors" />
+                      </button>
 
-                    <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10 pointer-events-none">
-                      <div className="flex gap-2 pointer-events-auto">
-                        {projects[selectedProject].images.map((_, i) => (
-                          <button
-                            key={i}
-                            onClick={() => setCurrentImageIndex(i)}
-                            className={`h-1.5 rounded-full transition-all duration-300 ${
-                              i === currentImageIndex ? 'w-8 bg-red-600' : 'w-1.5 bg-white/40 hover:bg-white/60'
-                            }`}
-                          />
-                        ))}
+                      <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10 pointer-events-none">
+                        <div className="flex gap-2 pointer-events-auto">
+                          {projects[selectedProject].images.map((_, i) => (
+                            <button
+                              key={i}
+                              onClick={() => setCurrentImageIndex(i)}
+                              className={`h-1.5 rounded-full transition-all duration-300 ${
+                                i === currentImageIndex ? 'w-8 bg-red-600' : 'w-1.5 bg-white/40 hover:bg-white/60'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+
+                <div className="project-modal-copy p-8 lg:p-12 flex flex-col justify-center lg:w-[42%] border-t lg:border-t-0 lg:border-l border-white/10 overflow-y-auto">
+                  <p className="text-white/50 text-sm uppercase tracking-wider mb-2 font-medium">
+                    Client
+                  </p>
+                  <h3 className="text-3xl lg:text-4xl text-white font-semibold mb-2 tracking-tight">
+                    {projects[selectedProject].title}
+                  </h3>
+                  <p className="text-white/60 text-base mb-8 font-light">
+                    {projects[selectedProject].type}
+                  </p>
+
+                  <div className="h-px w-16 bg-red-600 mb-8" />
+
+                  <h4 className="text-white/40 uppercase tracking-widest text-xs font-semibold mb-6">
+                    Fact File
+                  </h4>
+
+                  <div className="space-y-6">
+                    <div className="border-l-2 border-red-600/30 pl-6">
+                      <div className="text-white/40 text-xs uppercase tracking-wider mb-1 font-medium">
+                        Location
+                      </div>
+                      <div className="text-white text-lg font-light">
+                        {projects[selectedProject].location}
                       </div>
                     </div>
-                  </>
-                )}
-              </div>
 
-              <div className="project-modal-copy p-8 lg:p-12 flex flex-col justify-center lg:w-[42%] border-t lg:border-t-0 lg:border-l border-white/10 overflow-y-auto">
-                <p className="text-white/50 text-sm uppercase tracking-wider mb-2 font-medium">
-                  Client
-                </p>
-                <h3 className="text-3xl lg:text-4xl text-white font-semibold mb-2 tracking-tight">
-                  {projects[selectedProject].title}
-                </h3>
-                <p className="text-white/60 text-base mb-8 font-light">
-                  {projects[selectedProject].type}
-                </p>
-
-                <div className="h-px w-16 bg-red-600 mb-8" />
-
-                <h4 className="text-white/40 uppercase tracking-widest text-xs font-semibold mb-6">
-                  Fact File
-                </h4>
-
-                <div className="space-y-6">
-                  <div className="border-l-2 border-red-600/30 pl-6">
-                    <div className="text-white/40 text-xs uppercase tracking-wider mb-1 font-medium">
-                      Location
-                    </div>
-                    <div className="text-white text-lg font-light">
-                      {projects[selectedProject].location}
-                    </div>
-                  </div>
-
-                  <div className="border-l-2 border-red-600/30 pl-6">
-                    <div className="text-white/40 text-xs uppercase tracking-wider mb-1 font-medium">
-                      Project Type
-                    </div>
-                    <div className="text-white text-lg font-light">
-                      {projects[selectedProject].type}
+                    <div className="border-l-2 border-red-600/30 pl-6">
+                      <div className="text-white/40 text-xs uppercase tracking-wider mb-1 font-medium">
+                        Project Type
+                      </div>
+                      <div className="text-white text-lg font-light">
+                        {projects[selectedProject].type}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      )}
+          </div>,
+          document.body,
+        )}
     </section>
   );
 }

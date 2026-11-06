@@ -2,7 +2,7 @@ export function Punchline() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center py-32 lg:py-40 overflow-hidden"
+      className="explore-section relative min-h-screen flex items-center justify-center overflow-hidden"
     >
       <div className="relative z-10 bts-shell w-full">
         <div className="explore-copy punchline-copy">

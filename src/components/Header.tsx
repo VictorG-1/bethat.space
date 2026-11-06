@@ -124,59 +124,104 @@ export function Header() {
     return PATH_TITLES[currentPath] ?? 'BeThatSpace™';
   })();
 
+  const getExploreScroller = () => {
+    const main = document.querySelector('main');
+    if (main && main.scrollHeight > main.clientHeight + 1) return main;
+    return null;
+  };
+
+  const scrollExploreToId = (id: string, behavior: ScrollBehavior = 'smooth') => {
+    const element = document.getElementById(id);
+    if (!element) return false;
+
+    const main = getExploreScroller();
+    if (main) {
+      const prevSnap = main.style.scrollSnapType;
+      main.style.scrollSnapType = 'none';
+      const top =
+        main.scrollTop +
+        element.getBoundingClientRect().top -
+        main.getBoundingClientRect().top;
+      main.scrollTo({ top: Math.max(0, top), behavior });
+      if (behavior === 'auto' || behavior === 'instant') {
+        main.style.scrollSnapType = prevSnap;
+      } else {
+        window.setTimeout(() => {
+          main.style.scrollSnapType = prevSnap;
+        }, 500);
+      }
+    } else {
+      element.scrollIntoView({ behavior, block: 'start' });
+    }
+    return true;
+  };
+
+  const waitAndScrollExploreToId = (id: string, attempts = 0) => {
+    if (scrollExploreToId(id, 'auto')) {
+      sessionStorage.removeItem('lastSection');
+      return;
+    }
+    if (attempts >= 40) {
+      sessionStorage.removeItem('lastSection');
+      return;
+    }
+    window.requestAnimationFrame(() => waitAndScrollExploreToId(id, attempts + 1));
+  };
+
   const handleLogoClick = () => {
     if (currentPath !== '/' && currentPath !== '/explore') {
       window.history.pushState({}, '', '/explore');
       window.dispatchEvent(new PopStateEvent('popstate'));
-      setTimeout(() => {
-        const el = document.getElementById('home');
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
+      waitAndScrollExploreToId('home');
     } else {
-      const el = document.getElementById('home');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      scrollExploreToId('home');
     }
   };
 
   const handleBackToMain = () => {
-    const lastSection = sessionStorage.getItem('lastSection');
+    const lastSection = sessionStorage.getItem('lastSection') || 'home';
     window.history.pushState({}, '', '/explore');
     window.dispatchEvent(new PopStateEvent('popstate'));
-
-    if (lastSection) {
-      setTimeout(() => {
-        const element = document.getElementById(lastSection);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-        sessionStorage.removeItem('lastSection');
-      }, 100);
-    }
+    waitAndScrollExploreToId(lastSection);
   };
 
   const handleNavClick = (href: string) => {
     if (href.startsWith('/') && !href.startsWith('/#')) {
-      const sections = ['home', 'about', 'leadership', 'services', 'projects', 'media', 'footer'];
-      const scrollPosition = window.scrollY + window.innerHeight / 2;
+      const sections = [
+        'home',
+        'about',
+        'manifesto',
+        'leadership',
+        'people',
+        'services',
+        'projects',
+        'media',
+        'footer',
+      ];
+      const main = getExploreScroller();
+      const scrollPosition =
+        (main ? main.scrollTop : window.scrollY || document.documentElement.scrollTop || 0) +
+        window.innerHeight / 2;
 
       let currentSection = 'home';
       for (const section of sections) {
         const element = document.getElementById(section);
-        if (element && element.offsetTop <= scrollPosition) {
-          currentSection = section;
-        }
+        if (!element) continue;
+        const top = main
+          ? main.scrollTop +
+            element.getBoundingClientRect().top -
+            main.getBoundingClientRect().top
+          : element.offsetTop;
+        if (top <= scrollPosition) currentSection = section;
       }
       sessionStorage.setItem('lastSection', currentSection);
     }
     closeMenu();
 
     if (href.startsWith('#')) {
-      const id = href.slice(1);
-      const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      scrollExploreToId(href.slice(1));
     } else if (href === '/') {
-      const el = document.getElementById('home');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      scrollExploreToId('home');
     }
   };
 

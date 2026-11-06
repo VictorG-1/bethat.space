@@ -105,7 +105,10 @@ export function Leadership() {
 
   return (
     <>
-      <section id="leadership" className="relative overflow-hidden bg-black">
+      <section
+        id="leadership"
+        className="explore-section relative min-h-screen overflow-hidden bg-black flex items-start"
+      >
         <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden>
           <video
             className="absolute inset-0 h-full w-full object-cover"
@@ -119,7 +122,7 @@ export function Leadership() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black" />
         </div>
 
-        <div className="bts-shell relative z-10 w-full py-20 lg:py-32">
+        <div className="bts-shell relative z-10 w-full">
           <div className="bts-section-head mb-10 lg:mb-12">
             <h2 className="bts-title">Culture</h2>
             <div className="bts-bar-wrap">
@@ -169,11 +172,14 @@ export function Leadership() {
         </div>
       </section>
 
-      <section id="people" className="people-section relative bg-black py-10 lg:py-12 min-h-[100svh]">
+      <section
+        id="people"
+        className="explore-section people-section relative min-h-screen bg-black flex items-start"
+      >
         <div className="bts-shell relative z-10 w-full">
           <div className="people-intro mb-6 lg:mb-7">
             <div className="bts-section-head mb-6">
-              <h3 className="bts-title">People</h3>
+              <h2 className="bts-title">People</h2>
               <div className="bts-bar-wrap">
                 <div className="bts-bar" />
               </div>

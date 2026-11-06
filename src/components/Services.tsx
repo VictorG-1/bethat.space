@@ -1,6 +1,6 @@
 import { Plus, Minus, Target, Box, Users } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import specialistCollaborationImg from '../assets/services/specialist-collaboration.png';
 import designBuildImg from '../assets/services/design-build.jpg';
 
@@ -24,6 +24,8 @@ const APPROACH = [
 
 export function Services() {
   const [expandedService, setExpandedService] = useState<number | null>(null);
+  const dropRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const savedScrollYRef = useRef<number | null>(null);
 
   const services = [
     {
@@ -59,14 +61,71 @@ export function Services() {
     },
   ];
 
+  const getScroller = () => {
+    const main = document.querySelector('main');
+    if (main && main.scrollHeight > main.clientHeight + 1) return main;
+    return null;
+  };
+
+  const getScrollTop = () => {
+    const main = getScroller();
+    if (main) return main.scrollTop;
+    return window.scrollY || document.documentElement.scrollTop || 0;
+  };
+
+  const scrollToY = (y: number) => {
+    const main = getScroller();
+    if (main) main.scrollTo({ top: y, behavior: 'smooth' });
+    else window.scrollTo({ top: y, behavior: 'smooth' });
+  };
+
+  const scrollDropIntoView = (index: number) => {
+    const panel = dropRefs.current[index];
+    if (!panel) return;
+
+    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+
+    window.requestAnimationFrame(() => {
+      const rect = panel.getBoundingClientRect();
+      const headerOffset = 108;
+      const bottomGap = 40;
+      const topOverflow = headerOffset - rect.top;
+      const bottomOverflow = rect.bottom - (window.innerHeight - bottomGap);
+      const delta = topOverflow > 0 ? -topOverflow : bottomOverflow > 0 ? bottomOverflow : 0;
+      if (!delta) return;
+      const main = getScroller();
+      if (main) main.scrollBy({ top: delta, behavior: 'smooth' });
+      else window.scrollBy({ top: delta, behavior: 'smooth' });
+    });
+  };
+
   const toggleExpand = (index: number) => {
+    const closing = expandedService === index;
+    const opening = expandedService !== index;
+
+    if (opening) {
+      savedScrollYRef.current = getScrollTop();
+    }
+
     setExpandedService((prev) => (prev === index ? null : index));
+
+    if (opening) {
+      window.requestAnimationFrame(() => {
+        window.setTimeout(() => scrollDropIntoView(index), 280);
+      });
+    } else if (closing && savedScrollYRef.current !== null) {
+      const y = savedScrollYRef.current;
+      savedScrollYRef.current = null;
+      window.requestAnimationFrame(() => {
+        window.setTimeout(() => scrollToY(y), 80);
+      });
+    }
   };
 
   return (
     <section
       id="services"
-      className="relative min-h-screen bg-black py-20 lg:py-32 flex items-start overflow-visible"
+      className="explore-section relative min-h-screen bg-black flex items-start overflow-visible"
     >
       <div className="absolute inset-0 opacity-5" aria-hidden>
         <div
@@ -80,7 +139,7 @@ export function Services() {
       </div>
 
       <div className="relative z-10 bts-shell w-full overflow-visible">
-        <div className="mb-12">
+        <div className="mb-6">
           <div className="bts-section-head mb-6">
             <h2 className="bts-title">Services</h2>
             <div className="bts-bar-wrap">
@@ -88,16 +147,14 @@ export function Services() {
             </div>
           </div>
           <div className="main-copy">
-            <p className="text-white text-xl lg:text-2xl font-semibold mb-6 text-center">
+            <p className="text-white text-xl lg:text-2xl font-semibold mb-1 text-center">
               From Intent to Impact.
             </p>
             <p className="about-copy text-white/70 text-base lg:text-lg font-light leading-[1.85]">
-              A space should do more than serve a function. It should respond to human needs, express a
-              clear purpose and enable better outcomes. At BeThatSpace™, we bring together design
-              intelligence, technical expertise and accountable execution to translate tangible
-              requirements and intangible aspirations into purposeful built environments. From the
-              first strategic question to the final detail on site, we connect the thinking, making and
-              collaboration required to bring an idea to life.
+              A space should do more than serve a function. It should meet human needs, express purpose
+              and enable better outcomes. At BeThatSpace™, we combine design intelligence, technical
+              expertise and accountable execution to transform ideas and aspirations into purposeful
+              built environments.
             </p>
           </div>
         </div>
@@ -140,16 +197,14 @@ export function Services() {
                     {!isOpen ? (
                       <div className="people-card__meta absolute inset-x-0 bottom-0 z-10 flex flex-col justify-end">
                         <div className="people-card__meta-panel">
-                          <div className="people-card__meta-copy">
-                            <h3 className="people-card__name text-sm lg:text-base text-white font-bold leading-snug mb-2">
+                          <div className="flex items-end justify-between gap-3">
+                            <h3 className="people-card__name text-sm lg:text-base text-white font-bold leading-snug min-w-0">
                               {service.title}
                             </h3>
-                          </div>
-                          <div className="flex items-center justify-start">
                             <button
                               type="button"
                               onClick={() => toggleExpand(index)}
-                              className="people-card__more flex items-center gap-1.5 font-medium tracking-wide text-white hover:text-red-600 transition-colors duration-300"
+                              className="people-card__more shrink-0 flex items-center gap-1.5 font-medium tracking-wide text-white hover:text-red-600 transition-colors duration-300"
                             >
                               <span className="w-4 h-4 shrink-0 rounded-full border border-white inline-flex items-center justify-center">
                                 <Plus className="w-2 h-2" />
@@ -173,6 +228,9 @@ export function Services() {
 
                   {isOpen && (
                     <div
+                      ref={(node) => {
+                        dropRefs.current[index] = node;
+                      }}
                       className="service-card__drop people-card__bio-panel relative border-2 border-red-600 bg-white animate-in fade-in slide-in-from-top-1 duration-300"
                       style={{ marginTop: '-66.666%', zIndex: 30 }}
                     >
@@ -184,7 +242,7 @@ export function Services() {
 
                       <button
                         type="button"
-                        onClick={() => setExpandedService(null)}
+                        onClick={() => toggleExpand(index)}
                         className="service-card__drop-less people-card__more inline-flex items-center gap-1.5 font-medium tracking-wide text-black hover:text-red-600 transition-colors duration-300"
                       >
                         <span className="w-4 h-4 shrink-0 rounded-full border border-black/80 inline-flex items-center justify-center">

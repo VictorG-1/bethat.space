@@ -1,4 +1,4 @@
-import { ArrowLeft, Upload, Phone } from 'lucide-react';
+import { ArrowLeft, Upload, Mail } from 'lucide-react';
 import { useState } from 'react';
 import { Header } from './Header';
 import { Footer } from './Footer';
@@ -66,17 +66,25 @@ export function CareersPage() {
 
         <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-14 text-center">
           <div className="h-1 w-20 bg-red-600 mx-auto mb-8" />
-          <h1 className="text-4xl lg:text-6xl text-white font-semibold mb-6 tracking-tight">
+          <h1
+            className="bts-title about-headline text-white mb-6"
+            style={{ textAlign: 'center', textAlignLast: 'center', fontWeight: 300 }}
+          >
             Join Our Team
           </h1>
-          <p className="text-xl lg:text-2xl text-white/60 font-light max-w-3xl mx-auto leading-relaxed">
-            Build the future with BeThatSpace™. We're looking for passionate, talented individuals to join our award-winning design studio.
+          <p className="text-white text-base lg:text-lg font-light leading-[1.8] max-w-3xl mx-auto">
+            Build the future with <span className="font-bold">BeThatSpace™</span>. We're looking for
+            passionate, talented individuals to join our award-winning design studio.
           </p>
-          
-          {/* Global Contact Number */}
+
           <div className="mt-12 flex items-center justify-center gap-3 text-white/80">
-            <Phone className="w-5 h-5 text-red-600" />
-            <span className="text-lg">Contact us: +91 98765 43210</span>
+            <Mail className="w-5 h-5 text-red-600" />
+            <a
+              href="mailto:hr@bethat.space"
+              className="text-base lg:text-lg font-light hover:text-red-600 transition-colors duration-300"
+            >
+              Email us: hr@bethat.space
+            </a>
           </div>
         </div>
       </section>
@@ -214,47 +222,6 @@ export function CareersPage() {
         </div>
       </section>
 
-      {/* Why Join Us */}
-      <section className="bg-black py-20 lg:py-32">
-        <div className="max-w-[1440px] mx-auto px-8 lg:px-14">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl text-white font-semibold mb-6 tracking-tight">
-              Why Join BeThatSpace™?
-            </h2>
-            <div className="flex justify-center">
-              <div className="h-px w-24 bg-gradient-to-r from-transparent via-red-600/50 to-transparent" />
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="text-5xl lg:text-6xl text-red-600 font-bold mb-4">01</div>
-              <h3 className="text-xl text-white font-semibold mb-3">Growth & Learning</h3>
-              <p className="text-white/60 text-sm font-light leading-relaxed">
-                Continuous professional development through mentorship, workshops, and exposure to diverse, challenging projects.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="text-5xl lg:text-6xl text-red-600 font-bold mb-4">02</div>
-              <h3 className="text-xl text-white font-semibold mb-3">Collaborative Culture</h3>
-              <p className="text-white/60 text-sm font-light leading-relaxed">
-                Work with talented professionals in a supportive environment that values creativity, innovation, and teamwork.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="text-5xl lg:text-6xl text-red-600 font-bold mb-4">03</div>
-              <h3 className="text-xl text-white font-semibold mb-3">Impactful Work</h3>
-              <p className="text-white/60 text-sm font-light leading-relaxed">
-                Contribute to transformative projects that shape communities and leave lasting positive impacts on society.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
       <Footer />
     </div>
   );
