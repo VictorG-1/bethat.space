@@ -1,23 +1,39 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
 import introVideoDesktop from '../assets/BeThatSpace_Intro_2.mp4';
 import introVideoMobile from '../assets/BeThatSpace_Intro_Mobile.mp4';
 import logo from '../assets/Bethat Space White Logo Transparent Background-01-RGB.png';
 
-type Phase = 'video' | 'transition' | 'landing';
+const LAUNCH_CRUMBS = Array.from({ length: 36 }, (_, i) => {
+  const fromLeft = i % 2 === 0;
+  const outward = fromLeft ? 1 : -1;
+  return {
+    origin: fromLeft ? 'left' : 'right',
+    tx: `${outward * (60 + (i * 19) % 200)}px`,
+    ty: `${-40 - (i * 19) % 260}px`,
+    rot: `${(i * 51) % 360}deg`,
+    delay: `${(i % 12) * 0.03}s`,
+    kind: (i % 6) + 1,
+  };
+});
+
+type Phase = 'launch' | 'launching' | 'video' | 'transition' | 'landing';
 
 const MOBILE_INTRO_MQ = '(max-width: 767px)';
 /** Normal video → logo crossfade */
 const HANDOFF_MS = 900;
+/** Launch button exit → video */
+const LAUNCH_OUT_MS = 900;
 
 export function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [phase, setPhase] = useState<Phase>('video');
+  const [phase, setPhase] = useState<Phase>('launch');
   const [isMobile, setIsMobile] = useState(() =>
     typeof window !== 'undefined' ? window.matchMedia(MOBILE_INTRO_MQ).matches : false,
   );
   const handoffStartedRef = useRef(false);
   const settledRef = useRef(false);
   const settleTimerRef = useRef<number | null>(null);
+  const launchTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     const mq = window.matchMedia(MOBILE_INTRO_MQ);
@@ -48,7 +64,6 @@ export function Hero() {
     }, delayMs);
   }, []);
 
-  /** Logo fades in as video crossfades out */
   const beginHandoff = useCallback(() => {
     if (handoffStartedRef.current) return;
     handoffStartedRef.current = true;
@@ -65,12 +80,28 @@ export function Hero() {
     beginHandoff();
   }, [beginHandoff]);
 
+  const startLaunch = useCallback(() => {
+    if (phase !== 'launch') return;
+    setPhase('launching');
+
+    if (launchTimerRef.current != null) {
+      window.clearTimeout(launchTimerRef.current);
+    }
+    launchTimerRef.current = window.setTimeout(() => {
+      handoffStartedRef.current = false;
+      settledRef.current = false;
+      setPhase('video');
+    }, LAUNCH_OUT_MS);
+  }, [phase]);
+
   const goToExplore = () => {
     window.history.pushState({}, '', '/explore');
     window.dispatchEvent(new PopStateEvent('popstate'));
   };
 
   useEffect(() => {
+    if (phase !== 'video') return;
+
     handoffStartedRef.current = false;
     settledRef.current = false;
 
@@ -107,19 +138,60 @@ export function Hero() {
       video.removeEventListener('timeupdate', onTimeUpdate);
       video.removeEventListener('ended', onEnded);
     };
-  }, [beginHandoff, introVideo]);
+  }, [phase, beginHandoff, introVideo]);
 
   useEffect(() => {
     return () => {
       if (settleTimerRef.current != null) {
         window.clearTimeout(settleTimerRef.current);
       }
+      if (launchTimerRef.current != null) {
+        window.clearTimeout(launchTimerRef.current);
+      }
     };
   }, []);
 
   return (
     <section id="hero" className="relative min-h-screen bg-black overflow-hidden z-20">
-      {/* Keep video first in the tree so scaling down doesn't remount / restart playback */}
+      {(phase === 'launch' || phase === 'launching') && (
+        <div
+          className={`absolute inset-0 z-40 flex flex-col items-center justify-center px-8 ${
+            phase === 'launching' ? 'hero-launch hero-launch--out' : 'hero-launch'
+          }`}
+        >
+          {phase === 'launching' && (
+            <div className="hero-launch__blast" aria-hidden>
+              <span className="hero-launch__popper hero-launch__popper--left" />
+              <span className="hero-launch__popper hero-launch__popper--right" />
+              {LAUNCH_CRUMBS.map((crumb, i) => (
+                <span
+                  key={i}
+                  className={`hero-launch__crumb hero-launch__crumb--${crumb.kind} hero-launch__crumb--${crumb.origin}`}
+                  style={
+                    {
+                      '--tx': crumb.tx,
+                      '--ty': crumb.ty,
+                      '--rot': crumb.rot,
+                      '--delay': crumb.delay,
+                    } as CSSProperties
+                  }
+                />
+              ))}
+            </div>
+          )}
+
+          <button
+            type="button"
+            onClick={startLaunch}
+            disabled={phase === 'launching'}
+            className={`hero-launch__btn group ${phase === 'launching' ? 'hero-launch__btn--go' : ''}`}
+            aria-label="Launch website"
+          >
+            <span className="hero-launch__btn-label">Launch Website</span>
+          </button>
+        </div>
+      )}
+
       {(phase === 'video' || phase === 'transition') && (
         <button
           type="button"
