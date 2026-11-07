@@ -182,7 +182,6 @@ const FEATURED_PROJECTS = [
 ] as const;
 
 export function ProjectsClients() {
-  const [currentProject, setCurrentProject] = useState(0);
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isCarouselHovered, setIsCarouselHovered] = useState(false);
@@ -529,14 +528,6 @@ export function ProjectsClients() {
     'Julius Bär', 'IWC', 'Microsoft', 'BMW'
   ];
 
-  const nextProject = () => {
-    setCurrentProject((prev) => (prev + 1) % visibleProjects.length);
-  };
-
-  const prevProject = () => {
-    setCurrentProject((prev) => (prev - 1 + visibleProjects.length) % visibleProjects.length);
-  };
-
   const openModal = (projectIndex: number) => {
     setSelectedProject(projectIndex);
     setCurrentImageIndex(0);
@@ -601,9 +592,9 @@ export function ProjectsClients() {
           </div>
         </div>
 
-        {/* Desktop: Project grid — top 6, rest on Read More */}
-        <div className="hidden lg:block">
-          <div className="main-copy project-cards grid lg:grid-cols-3 gap-6 lg:gap-8">
+        {/* Projects — 1-col mobile / 3-col desktop; top 6 then View More */}
+        <div>
+          <div className="main-copy project-cards grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
             {visibleProjects.map((project) => {
               const index = projects.findIndex((p) => p.title === project.title && p.images[0] === project.images[0]);
               return (
@@ -641,12 +632,9 @@ export function ProjectsClients() {
           </div>
 
           {projects.length > FEATURED_PROJECTS.length && (
-            <div className="flex justify-center mt-16 lg:mt-20">
+            <div className="flex justify-center mt-14 lg:mt-20">
               <button
-                onClick={() => {
-                  setShowAllProjects((prev) => !prev);
-                  setCurrentProject(0);
-                }}
+                onClick={() => setShowAllProjects((prev) => !prev)}
                 className="inline-flex items-center text-white/80 hover:text-red-600 transition-colors duration-300 group/btn leading-none"
                 style={{ gap: 12 }}
               >
@@ -654,118 +642,7 @@ export function ProjectsClients() {
                   {showAllProjects ? <Minus className="w-3 h-3" /> : <Plus className="w-3 h-3" />}
                 </span>
                 <span className="text-xs font-medium uppercase tracking-wider">
-                  {showAllProjects ? 'Show Less' : 'Read More'}
-                </span>
-              </button>
-            </div>
-          )}
-        </div>
-
-        {/* Mobile: Carousel */}
-        <div className="lg:hidden main-copy">
-          <div className="relative px-0 overflow-visible">
-            <div className="relative flex items-center justify-center overflow-visible">
-              <div className="group absolute left-0 w-[30%] aspect-[4/3.5] bg-neutral-900/30 backdrop-blur-sm border border-white/20 scale-95 z-0 overflow-hidden opacity-80">
-                <ImageWithFallback
-                  src={
-                    visibleProjects[
-                      currentProject > 0 ? currentProject - 1 : visibleProjects.length - 1
-                    ].images[0]
-                  }
-                  alt=""
-                  className="w-full h-full object-cover opacity-70 grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105"
-                />
-              </div>
-
-              <div
-                className="group relative w-[75%] aspect-[4/3.5] bg-neutral-900 border-2 border-white/40 z-10 overflow-hidden shadow-2xl mx-auto cursor-pointer"
-                onClick={() => {
-                  const project = visibleProjects[currentProject];
-                  const index = projects.findIndex(
-                    (p) => p.title === project.title && p.images[0] === project.images[0]
-                  );
-                  openModal(index);
-                }}
-              >
-                <div className="absolute bottom-0 left-0 right-0 h-1 w-0 bg-red-600 group-hover:w-full transition-all duration-700 ease-out z-10" />
-                <ImageWithFallback
-                  src={visibleProjects[currentProject].images[0]}
-                  alt={visibleProjects[currentProject].title}
-                  className="w-full h-full object-cover transition-all duration-700 grayscale group-hover:grayscale-0 group-hover:scale-105"
-                />
-
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
-
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <h3
-                    className="text-white text-xl mb-2 font-light tracking-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]"
-                    style={{ textAlign: 'left', textAlignLast: 'left' }}
-                  >
-                    {visibleProjects[currentProject].title}
-                  </h3>
-                  <p
-                    className="text-white text-sm uppercase tracking-[0.18em] font-light drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
-                    style={{ textAlign: 'left', textAlignLast: 'left' }}
-                  >
-                    {visibleProjects[currentProject].location}
-                  </p>
-                </div>
-              </div>
-
-              <div className="group absolute right-0 w-[30%] aspect-[4/3.5] bg-neutral-900/30 backdrop-blur-sm border border-white/20 scale-95 z-0 overflow-hidden opacity-80">
-                <ImageWithFallback
-                  src={
-                    visibleProjects[
-                      currentProject < visibleProjects.length - 1 ? currentProject + 1 : 0
-                    ].images[0]
-                  }
-                  alt=""
-                  className="w-full h-full object-cover opacity-70 grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105"
-                />
-              </div>
-            </div>
-
-            <button
-              onClick={prevProject}
-              className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm flex items-center justify-center hover:bg-red-600 hover:border-red-600 transition-all duration-300 group z-20"
-            >
-              <ChevronLeft className="w-5 h-5 text-white/60 group-hover:text-white transition-colors" />
-            </button>
-            <button
-              onClick={nextProject}
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm flex items-center justify-center hover:bg-red-600 hover:border-red-600 transition-all duration-300 group z-20"
-            >
-              <ChevronRight className="w-5 h-5 text-white/60 group-hover:text-white transition-colors" />
-            </button>
-          </div>
-
-          <div className="flex justify-center gap-3 mt-8">
-            {visibleProjects.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrentProject(i)}
-                className={`h-1 transition-all duration-300 ${
-                  i === currentProject ? 'w-12 bg-red-600' : 'w-8 bg-white/20 hover:bg-white/40'
-                }`}
-              />
-            ))}
-          </div>
-
-          {projects.length > FEATURED_PROJECTS.length && (
-            <div className="flex justify-center mt-14">
-              <button
-                onClick={() => {
-                  setShowAllProjects((prev) => !prev);
-                  setCurrentProject(0);
-                }}
-                className="inline-flex items-center text-white/80 hover:text-red-600 transition-colors duration-300 group/btn leading-none"
-                style={{ gap: 12 }}
-              >
-                <span className="w-5 h-5 shrink-0 rounded-full border border-white/80 group-hover/btn:border-red-600 inline-flex items-center justify-center transition-colors duration-300">
-                  {showAllProjects ? <Minus className="w-3 h-3" /> : <Plus className="w-3 h-3" />}
-                </span>
-                <span className="text-xs font-medium uppercase tracking-wider">
-                  {showAllProjects ? 'Show Less' : 'Read More'}
+                  {showAllProjects ? 'Show Less' : 'View More Projects'}
                 </span>
               </button>
             </div>
