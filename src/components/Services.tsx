@@ -125,7 +125,7 @@ export function Services() {
   return (
     <section
       id="services"
-      className="explore-section relative min-h-screen bg-black flex items-start overflow-visible"
+      className="explore-section relative min-h-screen bg-black flex items-center overflow-visible"
     >
       <div className="absolute inset-0 opacity-5" aria-hidden>
         <div
@@ -240,16 +240,18 @@ export function Services() {
                         </p>
                       ))}
 
-                      <button
-                        type="button"
-                        onClick={() => toggleExpand(index)}
-                        className="service-card__drop-less people-card__more inline-flex items-center gap-1.5 font-medium tracking-wide text-black hover:text-red-600 transition-colors duration-300"
-                      >
-                        <span className="w-4 h-4 shrink-0 rounded-full border border-black/80 inline-flex items-center justify-center">
-                          <Minus className="w-2 h-2" />
-                        </span>
-                        <span className="whitespace-nowrap">Read Less</span>
-                      </button>
+                      <div className="service-card__drop-actions">
+                        <button
+                          type="button"
+                          onClick={() => toggleExpand(index)}
+                          className="service-card__drop-less people-card__more inline-flex items-center gap-1.5 font-medium tracking-wide text-black hover:text-red-600 transition-colors duration-300"
+                        >
+                          <span className="w-4 h-4 shrink-0 rounded-full border border-black/80 inline-flex items-center justify-center">
+                            <Minus className="w-2 h-2" />
+                          </span>
+                          <span className="whitespace-nowrap">Read Less</span>
+                        </button>
+                      </div>
                     </div>
                   )}
                 </article>

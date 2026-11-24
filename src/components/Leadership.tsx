@@ -107,7 +107,7 @@ export function Leadership() {
     <>
       <section
         id="leadership"
-        className="explore-section relative min-h-screen overflow-hidden bg-black flex items-start"
+        className="explore-section relative min-h-screen overflow-hidden bg-black flex items-center"
       >
         <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden>
           <video
@@ -174,7 +174,7 @@ export function Leadership() {
 
       <section
         id="people"
-        className="explore-section people-section relative min-h-screen bg-black flex items-start"
+        className="explore-section people-section relative min-h-screen bg-black flex items-center"
       >
         <div className="bts-shell relative z-10 w-full">
           <div className="people-intro mb-6 lg:mb-7">
@@ -255,24 +255,18 @@ export function Leadership() {
                               </a>
                             </div>
 
-                            <button
-                              type="button"
-                              onClick={() => toggleExpand(person.name)}
-                              className={`people-card__more flex items-center gap-1.5 font-medium tracking-wide transition-colors duration-300 ${
-                                isOpen ? 'text-red-600' : 'text-white hover:text-red-600'
-                              }`}
-                            >
-                              <span
-                                className={`w-4 h-4 shrink-0 rounded-full border inline-flex items-center justify-center transition-colors duration-300 ${
-                                  isOpen ? 'border-red-600 bg-red-600/20' : 'border-white'
-                                }`}
+                            {!isOpen ? (
+                              <button
+                                type="button"
+                                onClick={() => toggleExpand(person.name)}
+                                className="people-card__more flex items-center gap-1.5 font-medium tracking-wide text-white hover:text-red-600 transition-colors duration-300"
                               >
-                                {isOpen ? <Minus className="w-2 h-2" /> : <Plus className="w-2 h-2" />}
-                              </span>
-                              <span className="whitespace-nowrap">
-                                {isOpen ? 'Read Less' : 'Read More'}
-                              </span>
-                            </button>
+                                <span className="w-4 h-4 shrink-0 rounded-full border border-white inline-flex items-center justify-center transition-colors duration-300">
+                                  <Plus className="w-2 h-2" />
+                                </span>
+                                <span className="whitespace-nowrap">Read More</span>
+                              </button>
+                            ) : null}
                           </div>
                         </div>
                       </div>
@@ -286,6 +280,18 @@ export function Leadership() {
                         <p className="people-card__bio text-black text-[11px] lg:text-xs font-light leading-[1.65]">
                           {person.bio}
                         </p>
+                        <div className="people-card__bio-actions">
+                          <button
+                            type="button"
+                            onClick={() => toggleExpand(person.name)}
+                            className="people-card__more flex items-center gap-1.5 font-medium tracking-wide transition-colors duration-300"
+                          >
+                            <span className="w-4 h-4 shrink-0 rounded-full border border-black/80 inline-flex items-center justify-center">
+                              <Minus className="w-2 h-2" />
+                            </span>
+                            <span className="whitespace-nowrap">Read Less</span>
+                          </button>
+                        </div>
                       </div>
                     )}
                   </article>

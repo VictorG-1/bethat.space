@@ -98,7 +98,7 @@ function ImpactStat({
 
     let cancelled = false;
     const timers: number[] = [];
-    const duration = 3200;
+    const duration = 1600;
 
     const clearTimers = () => {
       while (timers.length) {
@@ -129,7 +129,7 @@ function ImpactStat({
             timers.push(
               window.setTimeout(() => {
                 if (!cancelled) setShowInfinity(true);
-              }, 1600)
+              }, 700)
             );
           }
         }
@@ -146,7 +146,7 @@ function ImpactStat({
         timers.push(
           window.setTimeout(() => {
             if (!cancelled) startTick();
-          }, 1500)
+          }, 700)
         );
       } else {
         startTick();
@@ -167,7 +167,7 @@ function ImpactStat({
 
     const loop = window.setInterval(() => {
       if (!cancelled) runCount();
-    }, 9000);
+    }, 4500);
 
     return () => {
       cancelled = true;
@@ -194,7 +194,7 @@ function ImpactStat({
             style={{ width: `${Math.max(numSlots, 3)}ch` }}
           >
             <span
-              className={`absolute left-0 top-0 transition-all duration-[1500ms] ease-in-out will-change-transform ${
+              className={`absolute left-0 top-0 transition-all duration-700 ease-in-out will-change-transform ${
                 showInfinity ? 'opacity-0 scale-90' : 'opacity-100 scale-100'
               }`}
             >
@@ -202,7 +202,7 @@ function ImpactStat({
             </span>
             {toInfinity && (
               <span
-                className={`absolute left-0 top-0 transition-all duration-[1500ms] ease-in-out will-change-transform ${
+                className={`absolute left-0 top-0 transition-all duration-700 ease-in-out will-change-transform ${
                   showInfinity ? 'opacity-100 scale-100' : 'opacity-0 scale-110'
                 }`}
               >
@@ -272,23 +272,27 @@ const VALUES: {
 export function AboutUsPage() {
   return (
     <div className="about-us-page relative min-h-screen bg-black scroll-smooth font-sans">
-      {/* Skyline travels with page content (no sticky lock) */}
-      <div className="about-page-bg pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden>
-        <img
-          src={aboutPageSkyline}
-          alt=""
-          className="absolute inset-0 h-full w-full object-cover object-center grayscale"
-        />
-        <div className="about-page-bg__veil" />
-      </div>
-
       <Header />
-      
+
       <main className="relative z-10 pt-20">
+        {/* Same pattern as Explore: shared bg travels with sections (cover + scroll, monochrome) */}
+        <div className="about-page-bg relative">
+          <div
+            className="about-page-bg__skyline absolute inset-0 pointer-events-none"
+            style={{
+              backgroundImage: `url(${aboutPageSkyline})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundAttachment: 'scroll',
+            }}
+            aria-hidden
+          />
+          <div className="about-page-bg__veil absolute inset-0 pointer-events-none" aria-hidden />
+
         {/* Our Story */}
         <section
           id="story"
-          className="about-section relative min-h-screen flex items-start overflow-hidden"
+          className="about-section relative min-h-screen flex items-center overflow-hidden"
         >
           <div className="bts-shell relative z-10 w-full">
             <AboutEyebrow className="mb-5" />
@@ -498,8 +502,9 @@ export function AboutUsPage() {
             </div>
           </div>
         </section>
+        </div>
       </main>
-      
+
       <Footer />
     </div>
   );

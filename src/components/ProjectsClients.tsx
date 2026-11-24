@@ -171,6 +171,13 @@ import vertivOffice from '../assets/projects/vertiv/Vertiv_Office-02-7372b217-12
 
 import orientalExterior from '../assets/projects/oriental/Oriental_Option-01-56d1a65a-e840-4b5f-836e-3aa5d363c0e3.jpg';
 
+import valmetReception from '../assets/projects/valmet/Valmet_Reception-01-f7a01b19-9c3f-465d-8321-a6fe7e973e2e.jpg';
+import valmetOffice01 from '../assets/projects/valmet/Valmet_Office-01-bc57e580-c1f5-404c-9a1c-18850dbb0064.jpg';
+import valmetOffice02 from '../assets/projects/valmet/Valmet_Office-02-88a04637-fee9-4eca-9b69-d9a5ebedc3a6.jpg';
+import valmetMeeting from '../assets/projects/valmet/Valmet_Meeting-01-c1cbc0ae-150e-4eb4-aa5f-dcb0843ddfb4.jpg';
+import valmetCabin from '../assets/projects/valmet/Valmet_Cabin-01-d9559d96-1c02-434d-b873-8c477e936927.jpg';
+import valmetWorkCafe from '../assets/projects/valmet/Valmet_Work_Cafe-01-b088a321-3d7c-4b0d-95a3-97beb4e26193.jpg';
+
 /** Featured grid order — match by title + type (titles can repeat). */
 const FEATURED_PROJECTS = [
   { title: 'The Times Group', type: 'Corporate Office' },
@@ -502,6 +509,20 @@ export function ProjectsClients() {
       description: 'Mixed-use interiors for a confidential client in Navi Mumbai. Multiple programmes coordinated under one spatial identity.',
       images: [orientalExterior],
     },
+    {
+      title: 'Confidential',
+      type: 'Workplace',
+      location: 'India',
+      description: 'Workplace interiors for a confidential client. Reception, offices, meeting, cabin, and work cafe designed as one cohesive environment.',
+      images: [
+        valmetReception,
+        valmetOffice01,
+        valmetOffice02,
+        valmetMeeting,
+        valmetCabin,
+        valmetWorkCafe,
+      ],
+    },
   ];
 
   const isFeatured = (project: { title: string; type: string }) =>
@@ -562,7 +583,7 @@ export function ProjectsClients() {
   }, [selectedProject, isCarouselHovered, projects, currentImageIndex]);
 
   return (
-    <section id="projects" className="explore-section relative bg-black overflow-visible">
+    <section id="projects" className="explore-section relative min-h-screen bg-black overflow-visible flex items-center">
       {/* Subtle grid pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0" style={{
@@ -613,13 +634,13 @@ export function ProjectsClients() {
 
                   <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-7">
                     <h3
-                      className="text-white text-xl lg:text-2xl mb-2 font-light tracking-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]"
+                      className="text-white text-sm mb-1.5 font-light uppercase tracking-[0.12em] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
                       style={{ textAlign: 'left', textAlignLast: 'left' }}
                     >
                       {project.title}
                     </h3>
                     <p
-                      className="text-white text-sm uppercase tracking-[0.18em] font-light drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
+                      className="text-white text-sm font-light tracking-normal normal-case drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
                       style={{ textAlign: 'left', textAlignLast: 'left' }}
                     >
                       {project.location}
@@ -631,8 +652,11 @@ export function ProjectsClients() {
             })}
           </div>
 
+          <br />
+          <br />
+
           {projects.length > FEATURED_PROJECTS.length && (
-            <div className="flex justify-center mt-14 lg:mt-20">
+            <div className="flex justify-center">
               <button
                 onClick={() => setShowAllProjects((prev) => !prev)}
                 className="inline-flex items-center text-white/80 hover:text-red-600 transition-colors duration-300 group/btn leading-none"

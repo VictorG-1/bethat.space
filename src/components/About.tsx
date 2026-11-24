@@ -37,7 +37,7 @@ export function About() {
 
       <section
         id="manifesto"
-        className="explore-section relative min-h-screen flex items-start justify-center"
+        className="explore-section relative min-h-screen flex items-center justify-center"
       >
         <div className="relative z-10 bts-shell w-full">
           <div className="explore-copy text-center w-full">

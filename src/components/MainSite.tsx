@@ -12,7 +12,7 @@ export function MainSite() {
     <div className="min-h-screen bg-black scroll-smooth font-sans">
       <Header />
 
-      <main className="pt-20">
+      <main>
         <div
           className="relative"
           style={{

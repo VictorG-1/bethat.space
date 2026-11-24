@@ -3096,10 +3096,10 @@ main > section li,
   inset: 0;
   z-index: 200;
 }
-/* Project popup close — pinned to overlay viewport, never clipped by panel */
+/* Project popup close — bottom-right of overlay viewport */
 .project-modal__close {
   position: absolute;
-  top: max(1rem, env(safe-area-inset-top, 0px));
+  bottom: max(1rem, env(safe-area-inset-bottom, 0px));
   right: max(1rem, env(safe-area-inset-right, 0px));
   z-index: 210;
   box-sizing: border-box;
@@ -3399,7 +3399,7 @@ main > section li,
   }
 }
 
-/* So be it ↔ तथास्तु image alternate — 5s loop */
+/* So be it ↔ तथास्तु image alternate — 2.5s loop (2× previous speed) */
 .tathastu-swap {
   position: relative;
   display: flex;
@@ -3423,7 +3423,7 @@ main > section li,
   width: 100%;
   height: 100%;
   object-fit: contain;
-  animation-duration: 5s;
+  animation-duration: 2.5s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
@@ -3597,6 +3597,80 @@ main > section li,
   text-align-last: auto !important;
 }
 
+/* Fixed Back to Main — bottom-right on About Us / Culture & subpages */
+.bts-back-main {
+  position: fixed;
+  bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
+  right: max(1.25rem, env(safe-area-inset-right, 0px));
+  z-index: 80;
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.7rem 1.05rem 0.7rem 0.85rem;
+  margin: 0;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 0;
+  background: rgba(0, 0, 0, 0.72);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  color: rgba(255, 255, 255, 0.92);
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  transition:
+    color 0.28s ease,
+    border-color 0.28s ease,
+    background-color 0.28s ease,
+    box-shadow 0.28s ease;
+}
+.bts-back-main__accent {
+  display: block;
+  width: 2px;
+  height: 1.1rem;
+  flex-shrink: 0;
+  background: #dc2626;
+  transition: height 0.28s ease, background-color 0.28s ease;
+}
+.bts-back-main__icon {
+  width: 0.95rem;
+  height: 0.95rem;
+  flex-shrink: 0;
+  transition: transform 0.28s ease;
+}
+.bts-back-main__label {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  line-height: 1;
+}
+.bts-back-main:hover {
+  color: #fff;
+  border-color: rgba(220, 38, 38, 0.65);
+  background: rgba(0, 0, 0, 0.88);
+  box-shadow:
+    0 14px 36px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+.bts-back-main:hover .bts-back-main__accent {
+  height: 1.35rem;
+  background: #ef4444;
+}
+.bts-back-main:hover .bts-back-main__icon {
+  transform: translateX(-2px);
+  color: #ef4444;
+}
+.bts-back-main:hover .bts-back-main__label {
+  color: #ef4444;
+}
+.bts-back-main:focus-visible {
+  outline: 1px solid #dc2626;
+  outline-offset: 3px;
+}
+
 .bts-shell {
   max-width: 1440px;
   margin-left: auto;
@@ -3639,17 +3713,17 @@ main > section li,
   text-align-last: center !important;
 }
 
-/* About Us — skyline page background + soft veil */
+/* About Us — shared bg like Explore punchline/about/tathastu (cover + scrolls with block) */
 .about-page-bg {
   background-color: #000;
 }
-.about-page-bg img {
-  transform: scale(1.02);
+.about-page-bg__skyline {
+  z-index: 0;
+  background-repeat: no-repeat;
+  filter: grayscale(1);
 }
 .about-page-bg__veil {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
+  z-index: 0;
   background:
     linear-gradient(
       90deg,
@@ -3667,23 +3741,31 @@ main > section li,
       rgba(0, 0, 0, 0.65) 100%
     );
 }
-
-/* Shared section padding so / ABOUT US starts at the same height */
-.about-us-page .about-section {
-  padding-top: 4rem;
-  padding-bottom: 5rem;
+.about-page-bg > .about-section {
+  position: relative;
+  z-index: 1;
 }
-@media (min-width: 640px) {
-  .about-us-page .about-section {
-    padding-top: 5rem;
-    padding-bottom: 6rem;
-  }
+
+/* About Us sections — clear frosted navbar, vertically center content */
+.about-us-page .about-section {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: safe center;
+  align-items: stretch;
+  box-sizing: border-box;
+  padding-top: 6.75rem;
+  padding-bottom: 3.5rem;
 }
 @media (min-width: 1024px) {
   .about-us-page .about-section {
-    padding-top: 6rem;
-    padding-bottom: 7rem;
+    padding-top: 7.75rem;
+    padding-bottom: 4.25rem;
   }
+}
+.about-us-page .about-section > .bts-shell {
+  width: 100%;
 }
 
 .about-us-page .about-eyebrow {
@@ -3766,9 +3848,12 @@ main > section li,
   margin-left: 0 !important;
   margin-right: 0 !important;
 }
-.values-section .values-intro__copy {
-  text-align: left !important;
+.values-section .values-intro__copy,
+.values-section .values-intro__copy p {
+  text-align: justify !important;
   text-align-last: left !important;
+  text-justify: inter-word;
+  hyphens: none;
   max-width: 36rem;
 }
 @media (min-width: 1024px) {
@@ -3797,10 +3882,15 @@ main > section li,
   }
 }
 .values-section .values-card,
-.values-section .values-card h3,
-.values-section .values-card-copy {
+.values-section .values-card h3 {
   text-align: left !important;
   text-align-last: left !important;
+}
+.values-section .values-card-copy {
+  text-align: justify !important;
+  text-align-last: left !important;
+  text-justify: inter-word;
+  hyphens: none;
 }
 .values-section .values-footer-line {
   text-align: left !important;
@@ -3979,6 +4069,32 @@ main > section li,
 }
 .service-card__drop-less {
   text-shadow: none !important;
+  display: inline-flex;
+  margin-left: auto;
+  margin-top: 0.75rem;
+}
+.service-card__drop-actions {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: 0.75rem;
+}
+.people-card__bio-panel {
+  position: relative;
+}
+.people-card__bio-actions {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 0 var(--people-pad-x) var(--people-pad-y);
+  box-sizing: border-box;
+}
+.people-card__bio-actions .people-card__more {
+  text-shadow: none !important;
+  color: #111 !important;
+}
+.people-card__bio-actions .people-card__more:hover {
+  color: #dc2626 !important;
 }
 
 /* Services — Our Approach (icon row) */
@@ -4066,17 +4182,29 @@ section {
   scroll-snap-align: start;
 }
 
-/* Explore page: titles sit higher in the snap viewport */
+/* Explore page: clear frosted navbar, center section content when it fits */
 .explore-section {
-  padding-top: 2.25rem;
-  padding-bottom: 3.25rem;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: safe center;
+  align-items: stretch;
+  box-sizing: border-box;
+  /* Fixed header overlay — keep titles/copy below frosted band on snap */
+  padding-top: 6.75rem;
+  padding-bottom: 3.5rem;
   scroll-margin-top: 0;
 }
 @media (min-width: 1024px) {
   .explore-section {
-    padding-top: 2.75rem;
-    padding-bottom: 4rem;
+    padding-top: 7.75rem;
+    padding-bottom: 4.25rem;
   }
+}
+.explore-section > .bts-shell,
+.explore-section > .relative.z-10 {
+  width: 100%;
 }
 
 main {
@@ -4130,11 +4258,11 @@ main {
   will-change: transform;
   backface-visibility: hidden;
   transform: translate3d(0, 0, 0);
-  animation: clients-marquee-group 45s linear infinite;
+  animation: clients-marquee-group 22.5s linear infinite;
 }
 .clients-ticker--right .clients-ticker__group {
   animation-direction: reverse;
-  animation-duration: 50s;
+  animation-duration: 25s;
 }
 .clients-ticker__cell {
   display: flex;
@@ -4171,10 +4299,10 @@ main {
     width: 12rem;
   }
   .clients-ticker__group {
-    animation-duration: 55s;
+    animation-duration: 27.5s;
   }
   .clients-ticker--right .clients-ticker__group {
-    animation-duration: 60s;
+    animation-duration: 30s;
   }
 }
 

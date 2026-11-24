@@ -31,7 +31,9 @@ export function Header() {
   const [isDesktopNav, setIsDesktopNav] = useState(() =>
     typeof window !== 'undefined' ? window.matchMedia(DESKTOP_NAV_MQ).matches : false,
   );
-  const [currentPath, setCurrentPath] = useState('/explore');
+  const [currentPath, setCurrentPath] = useState(() =>
+    typeof window !== 'undefined' ? window.location.pathname : '/explore',
+  );
   const [isVisible, setIsVisible] = useState(true);
   const lastScrollY = useRef(0);
 
@@ -325,6 +327,19 @@ export function Header() {
           </div>
         </div>
       </header>
+
+      {isSubPage && currentPath !== '/why-we-changed' ? (
+        <button
+          type="button"
+          onClick={handleBackToMain}
+          className="bts-back-main group"
+          aria-label="Back to main"
+        >
+          <span className="bts-back-main__accent" aria-hidden />
+          <ArrowLeft className="bts-back-main__icon" strokeWidth={1.75} aria-hidden />
+          <span className="bts-back-main__label">Back to Main</span>
+        </button>
+      ) : null}
 
       {/* Mobile: previous slide-in panel from the right */}
       {!isSubPage && !isDesktopNav && menuMounted && (
